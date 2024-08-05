@@ -2,11 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const outletSchema = new Schema({
-    outlet_id: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    unique: true
-    },
+
   city: {
     type: String,
     required: true

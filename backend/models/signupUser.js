@@ -2,12 +2,6 @@ const mongoose = require('mongoose');
 const outlet = require('./outlets');
 
 const signupUserSchema = new mongoose.Schema({
-    staff_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        unique: true
-    },
-
     staff_name: {
         type: String,
         required: true,
