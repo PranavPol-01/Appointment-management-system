@@ -1,6 +1,11 @@
 const app = require("express");
+const { makeSignupUser } = require("./routes/signup_route");
+const router = app.Router();
+
 const server = app();
 const port = 5000
+
+server.use('/api',makeSignupUser)
 
 
 server.get('/',(req,res)=>{
