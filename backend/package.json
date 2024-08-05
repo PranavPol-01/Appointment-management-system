@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "dev" :"node index.js"
+    "dev": "node index.js"
   },
   "author": "SAPP",
   "license": "MIT",
@@ -16,6 +16,7 @@
     "express": "^4.19.2",
     "express-fileupload": "^1.5.1",
     "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.8.0",
     "mongoose": "^8.5.2",
     "nodemailer": "^6.9.14",
     "nodemon": "^3.1.4",
