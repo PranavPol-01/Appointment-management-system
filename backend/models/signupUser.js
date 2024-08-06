@@ -25,10 +25,9 @@ const signupUserSchema = new mongoose.Schema({
         required: true
     },
     outlet_id: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Object,
         ref: 'outlet',
         required: true,
-        unique: true
     },
     createdAt: {
         type: Date,

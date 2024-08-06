@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const outletSchema = new Schema({
+const outletCredSchema = new Schema({
   city: {
     type: String,
     required: true
@@ -33,17 +33,9 @@ const outletSchema = new Schema({
   telephone_number: {
     type: Number,
     required: true
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
-  },
-  outlet_password:{
-    type: String,
-    required:true
   }
 });
 
-const outlet = mongoose.model('outlet', outletSchema);
+const outlet = mongoose.model('outlet-credentials', outletCredSchema);
 
 module.exports = outlet;

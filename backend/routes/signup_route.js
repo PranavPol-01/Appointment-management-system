@@ -11,7 +11,7 @@ Router.post("/signup", async (req, res) => {
     staff_name: req.body.staff_name,
     gender: req.body.gender,
     role: req.body.role,
-    outlet_id: outlet._id,
+    outlet_id: outlet,
     email: req.body.email,
     password: hashedPassword,
   });
