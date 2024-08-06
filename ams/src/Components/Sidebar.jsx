@@ -1,29 +1,31 @@
-import React, { useState, useEffect } from "react";
-import newlogo from "../assets/newlogo.svg";
+import React, { useState } from "react";
+import newlogo from "../assets/newlogo.png";
 import logo from "../assets/logo.svg";
+import Home from "../Pages/Home";
 
 function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
-  // const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // const toggleMenu = () => {
-  //   setIsMenuOpen(!isMenuOpen);
-  // };
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
-  // const closeMenu = () => {
-  //   setIsMenuOpen(false);
-  // };
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
 
   const toggleExtra = () => {
     setIsOpen(!isOpen);
   };
+
   return (
     <div>
       <nav
-        className="fixed top-0  w-full bg-white border-b border-gray-200  dark:border-pink-200"
-        style={{ background: " #FFE4E1" }}
+        className="fixed top-0 w-full bg-white border-b border-gray-200 dark:border-pink-200"
+        style={{ background: "#FFE4E1" }}
       >
-        <div className="px-3 py-3 lg:px-5 lg:pl-3">
+        <div className="px-3 lg:py-0 py-2 lg:px-5 lg:pl-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start rtl:justify-end">
               <button
@@ -31,7 +33,8 @@ function Sidebar() {
                 data-drawer-toggle="logo-sidebar"
                 aria-controls="logo-sidebar"
                 type="button"
-                className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                onClick={toggleMenu}
+                className="inline-flex items-center text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
               >
                 <span className="sr-only">Open sidebar</span>
                 <svg
@@ -42,91 +45,87 @@ function Sidebar() {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    clip-rule="evenodd"
-                    fill-rule="evenodd"
+                    clipRule="evenodd"
+                    fillRule="evenodd"
                     d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
                   ></path>
                 </svg>
-                <a href="https://flowbite.com" className="flex ">
-                  <img src={newlogo} alt="logo" className="w-40 h-40" />
-                </a>
               </button>
+              <a href="https://flowbite.com" className="flex px-2">
+                <img src={newlogo} alt="logo" className="w-14" />
+              </a>
             </div>
             <div className="flex items-center">
-              <div className="flex items-center ms-3">
+              <div className="flex items-center ms-5">
                 <div onClick={toggleExtra}>
                   <button
                     type="button"
-                    className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                    className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-red-300"
                     aria-expanded="false"
                     data-dropdown-toggle="dropdown-user"
                   >
                     <img
-                      className="w-8 h-8 rounded-full"
+                      className="w-10 h-10 rounded-full"
                       src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
                       alt="user photo"
                     />
                   </button>
                 </div>
-                {isOpen && (
-                  <div
-                  className="absolute end-0 z-40 mt-2 w-40 rounded-md border border-gray-100 bg-white shadow-lg"
-                  
-                >
-                    <div className="px-4 py-3" role="none">
-                      <p
-                        className="text-sm text-gray-900 dark:text-white"
-                        role="none"
-                      >
-                        Neil Sims
-                      </p>
-                      <p
-                        className="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
-                        role="none"
-                      >
-                        neil.sims@flowbite.com
-                      </p>
+                <div className="absolute z-50 mt-2 right-2.5">
+                  {isOpen && (
+                    <div className="absolute end-0 z-40 mt-2 w-50 rounded-md border border-gray-100 bg-white shadow-lg">
+                      <div className="px-4 py-3" role="none">
+                        <p className="text-sm text-black" role="none">
+                          outletname
+                        </p>
+                        <p
+                          className="text-sm font-medium text-black truncate"
+                          role="none"
+                        >
+                          outlet@gmail.com
+                        </p>
+                      </div>
+                      <ul className="py-1" role="none">
+                        <li>
+                          <a
+                            href="#"
+                            className="block px-4 py-2 text-sm text-black hover:bg-red-200"
+                            role="menuitem"
+                          >
+                            Dashboard
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="block px-4 py-2 text-sm text-black hover:bg-red-200"
+                            role="menuitem"
+                          >
+                            Settings
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="block px-4 py-2 text-sm text-black hover:bg-red-200"
+                            role="menuitem"
+                          >
+                            Earnings
+                          </a>
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            className="block px-4 py-2 text-sm text-black hover:bg-red-200"
+                            role="menuitem"
+                          >
+                            Sign out
+                          </a>
+                        </li>
+                      </ul>
                     </div>
-                    <ul className="py-1" role="none">
-                      <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                          role="menuitem"
-                        >
-                          Dashboard
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                          role="menuitem"
-                        >
-                          Settings
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                          role="menuitem"
-                        >
-                          Earnings
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                          role="menuitem"
-                        >
-                          Sign out
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -135,16 +134,43 @@ function Sidebar() {
 
       <aside
         id="logo-sidebar"
-        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 "
+        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${
+          isMenuOpen ? "translate-x-0" : "-translate-x-full"
+        } bg-white border-r border-gray-200 sm:translate-x-0`}
         aria-label="Sidebar"
-        style={{ background: " #FFE4E1" }}
+        style={{ background: "#FFE4E1" }}
       >
-        <a href="#" className="flex items-center justify-center">
-          <img src={logo} alt="logo" className="flex " />
+        {/* x button */}
+        <div className="flex justify-between items-center p-4">
+          {isMenuOpen && (
+            <button
+              onClick={closeMenu}
+              className="text-gray-500 hover:text-gray-700 focus:outline-none"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+            </button>
+          )}
+        </div>
+        {/* logo */}
+        <a href="#" className="flex  justify-center">
+          <img src={newlogo} alt="logo" className=" w-28" />
         </a>
 
         <div
-          className="h-full px-3 pb-4 overflow-y-auto bg-white "
+          className="h-full  pb-4 overflow-y-auto bg-white "
           style={{ background: " #FFE4E1" }}
         >
           <div className="py-20">
@@ -358,6 +384,11 @@ function Sidebar() {
           </div>
         </div>
       </aside>
+      <div className="p-4 sm:ml-64">
+        <div className="p-4  border-gray-200   dark:border-gray-700 mt-14">
+          <Home />
+        </div>
+      </div>
     </div>
   );
 }
