@@ -51,7 +51,7 @@ function Sidebar() {
                   ></path>
                 </svg>
               </button>
-              <a href="https://flowbite.com" className="flex px-2">
+              <a href="http://localhost:5173/" className="flex px-2">
                 <img src={newlogo} alt="logo" className="w-14" />
               </a>
             </div>
