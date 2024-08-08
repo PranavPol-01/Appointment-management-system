@@ -170,10 +170,10 @@ function Sidebar() {
         </a>
 
         <div
-          className="h-full  pb-4 overflow-y-auto bg-white "
+          className="h-full pb-4 overflow-y-auto bg-white "
           style={{ background: " #FFE4E1" }}
         >
-          <div className="py-20">
+          <div className=" py-16">
             <ul className=" font-medium">
               <li>
                 <a
@@ -384,11 +384,11 @@ function Sidebar() {
           </div>
         </div>
       </aside>
-      <div className="p-4 sm:ml-64">
+      {/* <div className="p-4 sm:ml-64">
         <div className="p-4  border-gray-200   dark:border-gray-700 mt-14">
           <Home />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
