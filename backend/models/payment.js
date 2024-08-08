@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 
 const paymentSchema = new mongoose.Schema({
-    payment_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        unique: true
-    },
+
     mode: {
         type: String,
         required: true
@@ -27,13 +23,13 @@ const paymentSchema = new mongoose.Schema({
         required: true
     },
     customer_id: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Object,
         ref: 'customer',
         required: true,
         unique: true
     },
     appointment_id: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Object,
         ref: 'appointment',
         required: true,
         unique: true

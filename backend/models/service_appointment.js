@@ -2,11 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const serviceAppointmentSchema = new Schema({
-    service_appointment_id: {
-    type: Schema.Types.ObjectId,
-    ref: 'appointment',
-    required: true
-    },
+
   status: {
     type: String,
     required: true
@@ -16,22 +12,22 @@ const serviceAppointmentSchema = new Schema({
     required: true
   },
   staff_id: {
-    type: Schema.Types.ObjectId,
+    type: Object,
     ref: 'SignupUser',
     required: true
   },
   service_id: {
-    type: Schema.Types.ObjectId,
+    type: Object,
     ref: 'service',
     required: true
   },
   package_id: {
-    type: Schema.Types.ObjectId,
+    type: Object,
     ref: 'sackage',
     required: true
   },
   appointment_id: {
-    type: Schema.Types.ObjectId,
+    type: Object,
     ref: 'appointment',
     required: true
   }

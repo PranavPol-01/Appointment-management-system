@@ -2,11 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const appointmentSchema = new Schema({
-  appointment_id: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    unique: true
-  },
   date: {
     type: Date,
     required: true
@@ -24,19 +19,19 @@ const appointmentSchema = new Schema({
     required: false
   },
   staff_id: {
-    type: Schema.Types.ObjectId,
+    type: Object,
     ref: 'SignupUser',
     required: true,
     unique: true
   },
   outlet_id: {
-    type: Schema.Types.ObjectId,
+    type: Object,
     ref: 'outlet',
     required: true,
     unique: true
   },
   customer_id: {
-    type: Schema.Types.ObjectId,
+    type: Object,
     ref: 'customer',
     required: true,
     unique: true
