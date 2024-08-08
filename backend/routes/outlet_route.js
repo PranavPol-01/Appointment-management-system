@@ -6,24 +6,28 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const verifyToken = require("../middlewares/verify_jwt_token");
 
-
 Router.post("/outlet", async (req, res) => {
-  const hashedPassword = await bcrypt.hash(req.body.outlet_password, 10);
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.outlet_password, 10);
 
-  const outlet = new Outlets({
-    name: req.body.name,
-    email: req.body.email,
-    city: req.body.city,
-    state: req.body.state,
-    address: req.body.address,
-    pincode: req.body.pincode,
-    outlet_name: req.body.outlet_name,
-    google_map_link: req.body.google_map_link,
-    telephone_number: req.body.telephone_number,
-    outlet_password: hashedPassword,
-  });
-  await outlet.save();
-  res.json(outlet);
+    const outlet = new Outlets({
+      name: req.body.name,
+      email: req.body.email,
+      city: req.body.city,
+      state: req.body.state,
+      address: req.body.address,
+      pincode: req.body.pincode,
+      outlet_name: req.body.outlet_name,
+      google_map_link: req.body.google_map_link,
+      telephone_number: req.body.telephone_number,
+      outlet_password: hashedPassword,
+    });
+    await outlet.save();
+    res.status(200).json(outlet);
+  } catch (error) {
+    console.log("Some error occured while creating outlet", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 });
 
 Router.post("/staff-outlet-login", async (req, res) => {
@@ -49,8 +53,7 @@ Router.post("/staff-outlet-login", async (req, res) => {
         message: "You are logged in",
         token: jwt_token,
       });
-    }
-    else {
+    } else {
       res.status(401).json({ message: "Invalid credentials" });
     }
   } catch (error) {
@@ -60,7 +63,7 @@ Router.post("/staff-outlet-login", async (req, res) => {
 });
 
 Router.get("/logout", verifyToken, (req, res) => {
-  res.json({
+  res.status(200).json({
     message: "You are logged out",
   });
 });

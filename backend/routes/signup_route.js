@@ -1,10 +1,11 @@
+const verifyToken = require("../middlewares/verify_jwt_token");
 const Outlets = require("../models/outlets");
 const User = require("../models/signupUser");
 const bcrypt = require("bcrypt");
 const express = require("express");
 const Router = express.Router();
 
-Router.post("/signup", async (req, res) => {
+Router.post("/signup",verifyToken, async (req, res) => {
   const outlet = await Outlets.findById(req.body.outlet_id);
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
   const user = new User({
@@ -16,11 +17,11 @@ Router.post("/signup", async (req, res) => {
     password: hashedPassword,
   });
   await user.save();
-  res.json(user);
+  res.status(200).json(user);
   console.log(user);
 });
 
-Router.get("/signup", async (req, res) => {
+Router.get("/signup",verifyToken, async (req, res) => {
   const user = await User.find();
   res.json(user);
   console.log(user);
