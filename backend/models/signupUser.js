@@ -20,11 +20,11 @@ const signupUserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    gender:{
+    gender: {
         type: String,
         required: true
     },
-    outlet_id: {
+    outlet_id: {        
         type: Object,
         ref: 'outlet',
         required: true,

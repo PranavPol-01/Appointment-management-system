@@ -38,6 +38,6 @@ const appointmentSchema = new Schema({
   }
 });
 
-const appointment = mongoose.model('appointment', appointmentSchema);
+const Appointment = mongoose.model('appointment', appointmentSchema);
 
-module.exports = appointment;
+module.exports = Appointment;
