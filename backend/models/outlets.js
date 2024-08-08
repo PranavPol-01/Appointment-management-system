@@ -40,7 +40,7 @@ const outletSchema = new Schema({
   },
   outlet_password:{
     type: String,
-    required:true
+    required:false
   }
 });
 
