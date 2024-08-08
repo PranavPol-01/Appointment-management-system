@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 // import { BrowserRouter,  Route, Routes } from "react-router-dom";
 // import Login from './Pages/Login';
 // import Signup from './Pages/Signup';
@@ -7,17 +7,14 @@ import './App.css'
 // import AppointmentPage from './Pages/AppoinmentPage';
 // import EditAppointmentPage from './Pages/EditAppoinmentPage';
 // import BookAppointmentPage from './Pages/BookAppoinmentPage';
-import Sidebar from './Components/Sidebar';
+import Sidebar from "./Components/Sidebar";
 
 function App() {
-  
-
   return (
     <>
-    <Sidebar />
-      
+      <Sidebar />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

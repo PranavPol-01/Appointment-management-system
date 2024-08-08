@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "../Utils/axios"; 
+import axios from "../Utils/axios";
 // import Navbar from "./../Components/Navbar";
 
 function SignUp() {
@@ -32,7 +32,7 @@ function SignUp() {
             }
           );
           const { token } = response.data;
-           console.log(response.data);
+          console.log(response.data);
 
           localStorage.setItem("token", token);
           console.log("User added successfully:", response.data);
@@ -52,21 +52,21 @@ function SignUp() {
       alert("Please enter all details");
     }
   };
-//   const handleGoogleLogin = async () => {
-//     // Implement your Google login logic here
-//     // Example using Firebase:
-//     // try {
-//     //   const result = await signInWithPopup(auth, googleProvider);
-//     //   const user = result.user;
-//     //   const userEmail = user.email;
-//     //   localStorage.setItem('email', JSON.stringify(userEmail));
-//     //   alert('Successful Google login');
-//     //   navigate('/login');
-//     // } catch (error) {
-//     //   console.error('Error during Google login:', error.message);
-//     //   alert('Error during Google login. Please try again.');
-//     // }
-//   };
+  //   const handleGoogleLogin = async () => {
+  //     // Implement your Google login logic here
+  //     // Example using Firebase:
+  //     // try {
+  //     //   const result = await signInWithPopup(auth, googleProvider);
+  //     //   const user = result.user;
+  //     //   const userEmail = user.email;
+  //     //   localStorage.setItem('email', JSON.stringify(userEmail));
+  //     //   alert('Successful Google login');
+  //     //   navigate('/login');
+  //     // } catch (error) {
+  //     //   console.error('Error during Google login:', error.message);
+  //     //   alert('Error during Google login. Please try again.');
+  //     // }
+  //   };
 
   return (
     <>

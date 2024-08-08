@@ -1,12 +1,29 @@
-
-import React, { useState } from 'react';
-import Appointments from '../Components/Appoinments';
-import Sidebar from './../Components/Sidebar';
+import React, { useState } from "react";
+import Appointments from "../Components/Appoinments";
+import Sidebar from "./../Components/Sidebar";
 
 const initialAppointments = [
-  { id: 1, name: 'Jane Cooper', service: 'Service', inTime: 'In time', outTime: 'Out time' },
-  { id: 2, name: 'Jenny Wilson', service: 'Service', inTime: 'In time', outTime: 'Out time' },
-  { id: 3, name: 'Guy Hawkins', service: 'Service', inTime: 'In time', outTime: 'Out time' },
+  {
+    id: 1,
+    name: "Jane Cooper",
+    service: "Service",
+    inTime: "In time",
+    outTime: "Out time",
+  },
+  {
+    id: 2,
+    name: "Jenny Wilson",
+    service: "Service",
+    inTime: "In time",
+    outTime: "Out time",
+  },
+  {
+    id: 3,
+    name: "Guy Hawkins",
+    service: "Service",
+    inTime: "In time",
+    outTime: "Out time",
+  },
 ];
 
 const AppointmentPage = () => {
@@ -21,10 +38,13 @@ const AppointmentPage = () => {
   };
 
   return (
-    <><Appointments
-          appointments={appointments}
-          onConfirm={handleConfirm}
-          onCancel={handleCancel} /></>
+    <>
+      <Appointments
+        appointments={appointments}
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
+      />
+    </>
   );
 };
 

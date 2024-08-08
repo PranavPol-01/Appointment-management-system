@@ -1,8 +1,7 @@
-
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import AppointmentForm from '../Components/AppoinmentForm';
-import Sidebar from './../Components/Sidebar';
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import AppointmentForm from "../Components/AppoinmentForm";
+import Sidebar from "./../Components/Sidebar";
 
 const EditAppointmentPage = () => {
   const location = useLocation();
@@ -11,15 +10,17 @@ const EditAppointmentPage = () => {
 
   const handleSave = (formData) => {
     // Update appointment logic here
-    history.push('/appointments');
+    history.push("/appointments");
   };
 
   return (
     <>
-    <AppointmentForm
-          appointment={appointment}
-          onSave={handleSave}
-          onCancel={() => history.push('/appointments')} /></>
+      <AppointmentForm
+        appointment={appointment}
+        onSave={handleSave}
+        onCancel={() => history.push("/appointments")}
+      />
+    </>
   );
 };
 
