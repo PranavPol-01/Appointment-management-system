@@ -13,14 +13,14 @@
 //     .then(message => console.log(message.sid))
 //     .done();
 
-// the above code sent message successfully from twiolio account
+// the above code sent message successfully from twilio account
 
     // Import the Twilio module
 const twilio = require('twilio');
 
 // Your Account SID and Auth Token from twilio.com/console
-const accountSid = 'your_account_sid';
-const authToken = 'your_auth_token';
+const accountSid = 'AC182ac8edc4420b8bcf1df5c6554951e6';
+const authToken = '948cf14543f0f16bf35f223e58205f56';
 
 // Create a Twilio client
 const client = new twilio(accountSid, authToken);
@@ -29,7 +29,7 @@ const client = new twilio(accountSid, authToken);
 client.messages.create({
     body: 'Hello from Node.js!',
     from: '+1234567890', // Your Twilio phone number
-    to: '+918928877911'    // Recipient's phone number
+    to: '+919004178057'    // Recipient's phone number
 })
 .then(message => console.log(message.sid))
 .catch(error => console.error(error));
