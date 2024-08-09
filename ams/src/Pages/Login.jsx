@@ -3,16 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 // import Navbar from './../Components/Navbar';
 
-
-
 function Login() {
-  const [userName, setuserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false); 
+  const [email, setEmail] = useState("");
+  const [outlet_password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleuserNameChange = (e) => {
-    setuserName(e.target.value);
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
@@ -20,7 +18,7 @@ function Login() {
   };
 
   const handleLogin = async () => {
-    setLoading(true); 
+    setLoading(true);
 
     try {
       if (userName.trim() !== "" && password.trim() !== "") {
@@ -30,40 +28,36 @@ function Login() {
         const response = await axios.post(
           "https://localhost:5000/api/users/login",
           {
-            username: userName,
-            password,
+            email: email,
+            password:outlet_password,
+          },{
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
         );
-
-        const { token} = response.data;
-        // console.log(response.data)
-
+        const data = response.data;
         localStorage.setItem("token", token);
-
-      
-
-        console.log("Successful login");
-        navigate("/tasks");
+        console.log("Successful login",data);
+        navigate("/dashboard");
         console.log("navigated");
         alert("Successful login");
-        
       } else {
         alert("Please enter all the details");
       }
     } catch (error) {
       console.error("Error during login:", error);
       alert("Error during login. Please check your credentials.");
-    } 
+    }
   };
 
-
-//   const handleGoogleLogin = async () => {
-//     // Google login implementation
-//   };
+  //   const handleGoogleLogin = async () => {
+  //     // Google login implementation
+  //   };
 
   return (
     <>
-     {/* <Navbar/> */}
+      {/* <Navbar/> */}
       <div className="bg-url('https://images.unsplash.com/photo-1541417904950-b855846fe074?q=80&w=2041&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') bg-center bg-no-repeat">
         <div className="py-6 sm:py-8 lg:py-12 w-screen h-screen flex justify-center items-center">
           <div className="bg-white/40 max-w-md py-6 px-4 rounded-lg md:px-8 shadow-lg shadow-slate-200 sm:w-full">
@@ -81,10 +75,10 @@ function Login() {
                     User Name
                   </label>
                   <input
-                    id="userName" 
-                    type="text" 
-                    value={userName}
-                    onChange={handleuserNameChange}
+                    id="email"
+                    type="text"
+                    value={email}
+                    onChange={handleEmailChange}
                     className="w-full rounded border bg-slate-200 px-3 py-2 text-gray-800 outline-none ring-grey-300 transition duration-100 focus:ring"
                   />
                 </div>
@@ -97,9 +91,9 @@ function Login() {
                     Password
                   </label>
                   <input
-                    id="password"
+                    id="outlet_password"
                     type="password"
-                    value={password}
+                    value={outlet_password}
                     onChange={handlePasswordChange}
                     className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-blue-300 transition duration-100 focus:ring"
                   />

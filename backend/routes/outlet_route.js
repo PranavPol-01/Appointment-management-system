@@ -34,7 +34,7 @@ Router.post("/staff-outlet-login", async (req, res) => {
   if (!req.body || !req.body.id) {
     return res.status(400).json({ error: "id is required" });
   }
-  const id = req.body.id;
+  const email = req.body.email;
   const outlet_password = req.body.outlet_password;
   try {
     const outlet = await Outlets.findById(id);
