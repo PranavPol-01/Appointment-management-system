@@ -1,58 +1,107 @@
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import edit from "../assets/edit _button.svg"
 
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+
+const filterAppointments = (appointments, filter) => {
+  const now = new Date();
+  
+  switch (filter) {
+    case 'Today':
+      return appointments.filter(appointment => {
+        const inTime = new Date(appointment.inTime);
+        return inTime.toDateString() === now.toDateString();
+      });
+      
+    case 'Last Week':
+      const oneWeekAgo = new Date(now);
+      oneWeekAgo.setDate(now.getDate() - 7);
+      return appointments.filter(appointment => {
+        const inTime = new Date(appointment.inTime);
+        return inTime > oneWeekAgo && inTime <= now;
+      });
+
+    case 'Last Month':
+      const oneMonthAgo = new Date(now);
+      oneMonthAgo.setMonth(now.getMonth() - 1);
+      return appointments.filter(appointment => {
+        const inTime = new Date(appointment.inTime);
+        return inTime > oneMonthAgo && inTime <= now;
+      });
+
+    default:
+      return appointments;
+  }
+};
 
 const Appointments = ({ appointments, onConfirm, onCancel }) => {
-  const history = useNavigate();
+  const [filter, setFilter] = useState('Today');
 
-  const handleEdit = (appointment) => {
-    history.push(`/edit-appointment/${appointment.id}`, { appointment });
-  };
+  const filteredAppointments = filterAppointments(appointments, filter);
 
   return (
     <div className="p-4">
-      <h1 className="text-xl mb-4">Appointments to be Confirmed</h1>
-      <table className="min-w-full bg-white">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Service</th>
-            <th>In time</th>
-            <th>Out time</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {appointments.map((appointment) => (
-            <tr key={appointment.id}>
-              <td>{appointment.name}</td>
-              <td>{appointment.service}</td>
-              <td>{appointment.inTime}</td>
-              <td>{appointment.outTime}</td>
-              <td>
-                <button
-                  className="bg-green-500 text-white p-2 m-1"
-                  onClick={() => onConfirm(appointment.id)}
-                >
-                  Confirm
-                </button>
-                <button
-                  className="bg-red-500 text-white p-2 m-1"
-                  onClick={() => onCancel(appointment.id)}
-                >
-                  Cancel
-                </button>
-                <button
-                  className="bg-blue-500 text-white p-2 m-1"
-                  onClick={() => handleEdit(appointment)}
-                >
-                  Edit
-                </button>
-              </td>
+      <h1 className=" text-3xl mb-4">Appointments </h1>
+
+      <div className="flex justify-end mb-4">
+        <label className="mr-2">Sort by:</label>
+        <select
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          className="border border-gray-300 rounded px-2 py-1"
+        >
+          <option value="Today">Today</option>
+          <option value="Last Week">Last Week</option>
+          <option value="Last Month">Last Month</option>
+        </select>
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white border border-gray-200">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="px-4 py-2 border-b text-center">Name</th>
+              <th className="px-4 py-2 border-b text-center">Service</th>
+              <th className="px-4 py-2 border-b text-center">In time</th>
+              <th className="px-4 py-2 border-b text-center">Out time</th>
+              <th className="px-4 py-2 border-b text-center">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredAppointments.map((appointment) => (
+              <tr key={appointment.id} className="hover:bg-gray-50">
+                <td className="px-4 py-2 border-b text-center">{appointment.name}</td>
+                <td className="px-4 py-2 border-b text-center">{appointment.service}</td>
+                <td className="px-4 py-2 border-b text-center">{appointment.inTime}</td>
+                <td className="px-4 py-2 border-b text-center">{appointment.outTime}</td>
+                <td className="px-4 py-2 border-b text-center">
+                  <button
+                    className="text-green-500 px-3 py-1 rounded m-1"
+                    onClick={() => onConfirm(appointment.id)}
+                  >
+                    Confirm
+                  </button>
+                  <button
+                    className=" text-red-500 px-3 py-1 rounded m-1"
+                    onClick={() => onCancel(appointment.id)}
+                  >
+                    Cancel
+                  </button>
+                  <button className=''>
+                  <Link
+                    to={`/edit-appointment/${appointment.id}`}
+                    state={{ appointment }}
+                     className=" px-3 py-1 rounded m-1 flex justify-center items-center"
+                  >
+                    <img src={edit} alt="edit" className=" w-6" />
+                  </Link>
+                </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
