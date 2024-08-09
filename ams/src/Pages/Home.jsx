@@ -12,9 +12,10 @@ function Home() {
   return (
     <div>
       <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
+        <Routes>        
+          <Route path="/" element={<Login />} />
           <Route path="/register" element={<Signup />} />
+          
           <Route path="/appointments" element={<AppointmentPage />} />
           <Route
             path="/edit-appointment/:id"
