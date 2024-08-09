@@ -1,26 +1,42 @@
+
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AppointmentForm from "../Components/AppoinmentForm";
-import Sidebar from "./../Components/Sidebar";
 
 const EditAppointmentPage = () => {
   const location = useLocation();
-  const history = useNavigate();
+  const navigate = useNavigate();
   const { appointment } = location.state || {};
 
+  const allServices = [
+    { id: 1, name: 'Haircut' },
+    { id: 2, name: 'Manicure' },
+    { id: 3, name: 'Massage' },
+    // Add more services as needed
+  ];
+
+  const allPackages = [
+    { id: 1, name: 'Basic Package' },
+    { id: 2, name: 'Premium Package' },
+    // Add more packages as needed
+  ];
+
   const handleSave = (formData) => {
-    // Update appointment logic here
-    history.push("/appointments");
+    console.log("Updated appointment:", formData);
+    navigate("/appointments");
   };
 
   return (
-    <>
+    <div className="p-4">
+      <h1 className="text-3xl mb-4">Edit Appointment</h1>
       <AppointmentForm
         appointment={appointment}
         onSave={handleSave}
-        onCancel={() => history.push("/appointments")}
+        onCancel={() => navigate("/appointments")}
+        allServices={allServices}
+        allPackages={allPackages}
       />
-    </>
+    </div>
   );
 };
 

@@ -1,18 +1,18 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import edit from "../assets/edit _button.svg"
-
+import edit from "../assets/edit _button.svg";  
 
 const filterAppointments = (appointments, filter) => {
   const now = new Date();
-  
+
   switch (filter) {
     case 'Today':
       return appointments.filter(appointment => {
         const inTime = new Date(appointment.inTime);
         return inTime.toDateString() === now.toDateString();
       });
-      
+
     case 'Last Week':
       const oneWeekAgo = new Date(now);
       oneWeekAgo.setDate(now.getDate() - 7);
@@ -41,9 +41,9 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
 
   return (
     <div className="p-4">
-      <h1 className=" text-3xl mb-4">Appointments </h1>
+      <h1 className="text-3xl mb-4">Appointments</h1>
 
-      <div className="flex justify-end mb-4">
+      <div className="flex lg:justify-end mb-4">
         <label className="mr-2">Sort by:</label>
         <select
           value={filter}
@@ -74,7 +74,7 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
                 <td className="px-4 py-2 border-b text-center">{appointment.service}</td>
                 <td className="px-4 py-2 border-b text-center">{appointment.inTime}</td>
                 <td className="px-4 py-2 border-b text-center">{appointment.outTime}</td>
-                <td className="px-4 py-2 border-b text-center">
+                <td className="px-4 py-2 border-b text-center flex justify-center items-center">
                   <button
                     className="text-green-500 px-3 py-1 rounded m-1"
                     onClick={() => onConfirm(appointment.id)}
@@ -82,20 +82,20 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
                     Confirm
                   </button>
                   <button
-                    className=" text-red-500 px-3 py-1 rounded m-1"
+                    className="text-red-500 px-3 py-1 rounded m-1"
                     onClick={() => onCancel(appointment.id)}
                   >
                     Cancel
                   </button>
-                  <button className=''>
-                  <Link
-                    to={`/edit-appointment/${appointment.id}`}
-                    state={{ appointment }}
-                     className=" px-3 py-1 rounded m-1 flex justify-center items-center"
-                  >
-                    <img src={edit} alt="edit" className=" w-6" />
-                  </Link>
-                </button>
+                  <div className="flex justify-center items-center">
+                    <Link
+                      to={`/edit-appointment/${appointment.id}`}
+                      state={{ appointment }}
+                      className="px-3 py-1 rounded m-1 w-20"
+                    >
+                      <img src={edit} alt="edit" />
+                    </Link>
+                  </div>
                 </td>
               </tr>
             ))}

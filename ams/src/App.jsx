@@ -16,7 +16,7 @@ function App() {
   return (
     <>
       {!noSidebarRoutes.includes(location.pathname) && <Sidebar />}
-      <div className={noSidebarRoutes.includes(location.pathname) ? "" : "ml-64 p-5 mt-14"}>
+      <div className={noSidebarRoutes.includes(location.pathname) ? "" : "lg:ml-72 p-5 mt-14"}>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
