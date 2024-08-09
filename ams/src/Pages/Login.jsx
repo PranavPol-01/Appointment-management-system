@@ -21,24 +21,28 @@ function Login() {
     setLoading(true);
 
     try {
-      if (userName.trim() !== "" && password.trim() !== "") {
+      if (email.trim() !== "" && outlet_password.trim() !== "") {
         // console.log("Data sent to server:", { username: userName, password });
-        localStorage.setItem("username", userName);
 
+        console.log(3)
         const response = await axios.post(
-          "https://localhost:5000/api/users/login",
+          "https://localhost:5000/api/staff-outlet-login",
           {
             email: email,
-            password:outlet_password,
+            outlet_password:outlet_password,
           },{
             headers: {
               "Content-Type": "application/json",
             },
           }
         );
+        console.log(4)
         const data = response.data;
+        console.log(1);
+        
         localStorage.setItem("token", token);
         console.log("Successful login",data);
+        console.log(2)
         navigate("/dashboard");
         console.log("navigated");
         alert("Successful login");
