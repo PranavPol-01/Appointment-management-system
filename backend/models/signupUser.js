@@ -7,6 +7,11 @@ const signupUserSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    staff_mobile_number:{
+        type: Number,
+        required: true,
+        unique: true
+    },
     email: {
         type: String,
         required: true,

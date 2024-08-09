@@ -10,7 +10,7 @@ const server = app();
 const port = 5000
 
 // Middlewares
-server.use(cors());
+server.use(cors());  // should always be kept at the top
 server.use(app.json());
 server.use(app.urlencoded({ extended: true }));
 server.use('/api', makeSignupUser)

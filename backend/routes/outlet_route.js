@@ -31,13 +31,13 @@ Router.post("/outlet", async (req, res) => {
 });
 
 Router.post("/staff-outlet-login", async (req, res) => {
-  if (!req.body || !req.body.email || !req.body.outlet_password) {
+  if (!req.body || !req.body.mobile_number || !req.body.outlet_password) {
     return res.status(400).json({ error: "id is required" });
   }
-  const email = req.body.email;
+  const mobile_number = req.body.mobile_number;
   const outlet_password = req.body.outlet_password;
   try {
-    const outlet = await Outlets.findOne({ email: email });
+    const outlet = await Outlets.findOne({ staff_mobile_number: mobile_number });
     if (
       outlet &&
       (await bcrypt.compare(outlet_password, outlet.outlet_password))

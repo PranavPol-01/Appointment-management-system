@@ -5,7 +5,7 @@ import axios from "axios";
 
 function Login() {
   const [credentials, setCredentials] = useState({
-    email: "",
+    mobile_number: "",
     outlet_password: "",
   });
   const [loading, setLoading] = useState(false);
@@ -58,12 +58,12 @@ function Login() {
                     htmlFor="userName"
                     className="mb-2 inline-block text-sm text-bue-800 sm:text-base"
                   >
-                    User Name
+                    Mobile Number
                   </label>
                   <input
-                    id="email"
+                    id="mobile_number"
                     type="text"
-                    name="email"
+                    name="mobile_number"
                     onChange={(e) => {
                       setCredentials({ ...credentials, email: e.target.value });
                     }}
