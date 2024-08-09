@@ -4,54 +4,36 @@ import axios from "axios";
 // import Navbar from './../Components/Navbar';
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [outlet_password, setPassword] = useState("");
+  const [credentials, setCredentials] = useState({
+    email: "",
+    outlet_password: "",
+  });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
 
   const handleLogin = async () => {
     setLoading(true);
 
     try {
-      if (email.trim() !== "" && outlet_password.trim() !== "") {
-        // console.log("Data sent to server:", { username: userName, password });
+      console.log("Starting login process...");
+      console.log(credentials)
+      const response = await axios.post(
+        "http://127.0.0.1:5000/api/staff-outlet-login",
+        credentials,);
 
-        console.log(3)
-        const response = await axios.post(
-          "https://localhost:5000/api/staff-outlet-login",
-          {
-            email: email,
-            outlet_password:outlet_password,
-          },{
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        console.log(4)
-        const data = response.data;
-        console.log(1);
-        
-        localStorage.setItem("token", token);
-        console.log("Successful login",data);
-        console.log(2)
-        navigate("/dashboard");
-        console.log("navigated");
-        alert("Successful login");
-      } else {
-        alert("Please enter all the details");
-      }
+      console.log("Received response:", response);
+      const data = response.data;
+
+      localStorage.setItem("token", data.token);
+      console.log("Successful login", data);
+      navigate("/dashboard");
+      console.log("Navigated to dashboard");
+      alert("Successful login");
     } catch (error) {
       console.error("Error during login:", error);
       alert("Error during login. Please check your credentials.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -81,8 +63,10 @@ function Login() {
                   <input
                     id="email"
                     type="text"
-                    value={email}
-                    onChange={handleEmailChange}
+                    name="email"
+                    onChange={(e) => {
+                      setCredentials({ ...credentials, email: e.target.value });
+                    }}
                     className="w-full rounded border bg-slate-200 px-3 py-2 text-gray-800 outline-none ring-grey-300 transition duration-100 focus:ring"
                   />
                 </div>
@@ -97,8 +81,13 @@ function Login() {
                   <input
                     id="outlet_password"
                     type="password"
-                    value={outlet_password}
-                    onChange={handlePasswordChange}
+                    name="outlet_password"
+                    onChange={(e) => {
+                      setCredentials({
+                        ...credentials,
+                        outlet_password: e.target.value,
+                      });
+                    }}
                     className="w-full rounded border bg-gray-50 px-3 py-2 text-gray-800 outline-none ring-blue-300 transition duration-100 focus:ring"
                   />
                 </div>
