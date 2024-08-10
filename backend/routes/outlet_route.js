@@ -3,6 +3,7 @@ const express = require("express");
 const Router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const request = require("request");
 require("dotenv").config();
 const verifyToken = require("../middlewares/verify_jwt_token");
 
@@ -42,16 +43,16 @@ Router.post("/staff-outlet-login", async (req, res) => {
       outlet &&
       (await bcrypt.compare(outlet_password, outlet.outlet_password))
     ) {
-      const jwt_token = jwt.sign(
-        { id: outlet._id, outlet_password: outlet.outlet_password },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "1d",
-        }
-      );
+      // const jwt_token = jwt.sign(
+      //   { id: outlet._id, outlet_password: outlet.outlet_password },
+      //   process.env.JWT_SECRET,
+      //   {
+      //     expiresIn: "1d",
+      //   }
+      // );
       res.json({
         message: "You are logged in",
-        token: jwt_token,
+        // token: jwt_token,
       });
     } else {
       res.status(401).json({ message: "Invalid credentials" });
@@ -67,6 +68,35 @@ Router.get("/logout", verifyToken, (req, res) => {
     message: "You are logged out",
   });
 });
+
+
+Router.post("/verify-login",async(req,res)=>{
+  const {to, msg}=req.body;
+  var options = {
+    'method': 'POST',
+    'url': 'https://2factor.in/API/R1/',
+    'headers': {
+    },
+    form: {
+      'module': 'TRANS_SMS',
+      'apikey': process.env.TWO_FACTOR_API_KEY,
+      'to': to,
+      'from': 'SALONX',
+      'msg': msg,
+      'templatename':'OTPverification'
+    }
+  };
+  request(options, function (error, response) {
+    if (error) {
+      console.error(error);
+      return res.status(500).send('Failed to send SMS');
+    }
+    console.log(response.body);
+    res.send(response.body);
+  });
+});
+
+
 
 module.exports = {
   outletRoute: Router,
