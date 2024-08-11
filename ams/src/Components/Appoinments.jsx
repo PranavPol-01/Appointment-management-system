@@ -35,7 +35,7 @@ const filterAppointments = (appointments, filter) => {
 };
 
 const Appointments = ({ appointments, onConfirm, onCancel }) => {
-  const [filter, setFilter] = useState('Today');
+  const [filter, setFilter] = useState('Last Week');
 
   const filteredAppointments = filterAppointments(appointments, filter);
 
@@ -71,7 +71,7 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
             {filteredAppointments.map((appointment) => (
               <tr key={appointment.id} className="hover:bg-gray-50">
                 <td className="px-4 py-2 border-b text-center">{appointment.name}</td>
-                <td className="px-4 py-2 border-b text-center">{appointment.service}</td>
+                <td className="px-4 py-2 border-b text-center">{appointment.services.service}</td>
                 <td className="px-4 py-2 border-b text-center">{appointment.inTime}</td>
                 <td className="px-4 py-2 border-b text-center">{appointment.outTime}</td>
                 <td className="px-4 py-2 border-b text-center flex justify-center items-center">

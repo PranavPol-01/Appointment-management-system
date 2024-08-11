@@ -7,6 +7,10 @@ import AppointmentPage from './Pages/AppoinmentPage';
 import EditAppointmentPage from './Pages/EditAppoinmentPage';
 import BookAppointmentPage from './Pages/BookAppoinmentPage';
 import Sidebar from "./Components/Sidebar";
+import PackageForm from "./Pages/PackageForm";
+import PackageList from "./Pages/PackageList";
+import EditPackage from './Pages/EditPackage';
+import PackageMaster from './Pages/PackageMaster';
 
 
 function App() {
@@ -26,6 +30,10 @@ function App() {
             element={<EditAppointmentPage />}
           />
           <Route path="/book-appointment" element={<BookAppointmentPage />} />
+           <Route path="/package-master" element={<PackageMaster />} />
+        <Route path="/add-package" element={<PackageForm />} />
+        <Route path="/edit-package/:id" element={<PackageForm />}/>
+
         </Routes>
       </div>
     </>

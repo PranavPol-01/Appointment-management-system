@@ -16,8 +16,9 @@ const EditAppointmentPage = () => {
   ];
 
   const allPackages = [
-    { id: 1, name: 'Basic Package' },
-    { id: 2, name: 'Premium Package' },
+    { id: 1, name: 'Basic ' },
+    { id: 2, name: 'Deluxe ' },
+    { id: 3, name: 'Premium ' },
     // Add more packages as needed
   ];
 

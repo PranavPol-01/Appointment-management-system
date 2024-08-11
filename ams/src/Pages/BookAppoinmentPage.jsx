@@ -1,7 +1,6 @@
-
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import AppointmentForm from "..//Components/AppoinmentForm";
+import AppointmentForm from "../Components/AppoinmentForm";
 
 const BookAppointmentPage = () => {
   const navigate = useNavigate();
@@ -13,8 +12,9 @@ const BookAppointmentPage = () => {
   ];
 
   const allPackages = [
-    { id: 1, name: 'Basic Package' },
-    { id: 2, name: 'Premium Package' },
+    { id: 1, name: 'Basic ' },
+    { id: 2, name: 'Delux ' },
+    { id: 3, name: 'Premium ' },
   ];
 
   const handleSaveAppointment = (formData) => {
