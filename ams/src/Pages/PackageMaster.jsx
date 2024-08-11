@@ -34,7 +34,7 @@ const PackageMaster = () => {
                 <td className="px-4 py-2 border-b text-center">{pkg.time}</td>
                 <td className="px-4 py-2 border-b text-center">{pkg.category}</td>
                 <td className="px-4 py-2 border-b text-center">
-                  {pkg.services.join(', ')} {/* List services included in the package */}
+                  {pkg.services.join(', ')}
                 </td>
                 <td className="px-4 py-2 border-b text-center flex justify-center items-center">
                 <button

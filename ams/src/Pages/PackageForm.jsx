@@ -4,7 +4,7 @@ import { packages } from '../Data/package';
 import { services } from '../Data/service';
 
 const PackageForm = () => {
-  const { id } = useParams();  // Get the package ID from the URL
+  const { id } = useParams();  
   const navigate = useNavigate();
   const [packageData, setPackageData] = useState({
     name: '',
@@ -43,7 +43,6 @@ const PackageForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Logic to save the package (could involve an API call)
     console.log(packageData);
     navigate('/package-master');
   };
