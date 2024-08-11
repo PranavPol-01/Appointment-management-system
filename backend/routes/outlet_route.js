@@ -71,19 +71,11 @@ Router.get("/logout", verifyToken, (req, res) => {
 
 
 Router.post("/verify-login",async(req,res)=>{
-  const {to, msg}=req.body;
+  const {to}=req.body;
   var options = {
-    'method': 'POST',
-    'url': 'https://2factor.in/API/R1/',
+    'method': 'GET',
+    'url': `https://2factor.in/API/V1/${process.env.TWO_FACTOR_API_KEY}/SMS/+91${to}/AUTOGEN2/PalcoaTemplate`,
     'headers': {
-    },
-    form: {
-      'module': 'TRANS_SMS',
-      'apikey': process.env.TWO_FACTOR_API_KEY,
-      'to': to,
-      'from': 'SALONX',
-      'msg': msg,
-      'templatename':'OTPverification'
     }
   };
   request(options, function (error, response) {
