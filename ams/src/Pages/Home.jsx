@@ -22,6 +22,8 @@ function Home() {
             element={<EditAppointmentPage />}
           />
           <Route path="/book-appointment" element={<BookAppointmentPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/payment-form" element={<PaymentForm />} />
         </Routes>
       </BrowserRouter>
     </div>
