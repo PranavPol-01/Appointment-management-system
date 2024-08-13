@@ -7,6 +7,8 @@ import Signup from "../Pages/Signup";
 import AppointmentPage from "../Pages/AppoinmentPage";
 import EditAppointmentPage from "../Pages/EditAppoinmentPage";
 import BookAppointmentPage from "../Pages/BookAppoinmentPage";
+import PaymentPage from "./PaymentPage";
+import PaymentForm from "../Components/PaymentForm";
 
 function Home() {
   return (

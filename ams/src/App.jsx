@@ -10,7 +10,6 @@ import Sidebar from "./Components/Sidebar";
 import PackageForm from "./Pages/PackageForm";
 import PackageMaster from "./Pages/PackageMaster";
 import ServiceMaster from "./Pages/ServiceMaster";
-import EditService from "./Pages/EditService";
 import ServiceForm from "./Pages/ServiceForm";
 
 function App() {
