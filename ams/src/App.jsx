@@ -12,10 +12,11 @@ import PackageMaster from "./Pages/PackageMaster";
 import ServiceMaster from "./Pages/ServiceMaster";
 // import EditService from "./Pages/EditService";
 import ServiceForm from "./Pages/ServiceForm";
+import OtpverifyPage from "./Pages/OtpverifyPage";
 
 function App() {
   const location = useLocation();
-  const noSidebarRoutes = ["/", "/signup"];
+  const noSidebarRoutes = ["/", "/signup",'/verify-otp'];
 
   return (
     <>
@@ -35,6 +36,7 @@ function App() {
             path="/edit-appointment/:id"
             element={<EditAppointmentPage />}
           />
+          <Route path="/verify-otp" element={<OtpverifyPage />} />
           <Route path="/book-appointment" element={<BookAppointmentPage />} />
           <Route path="/package-master" element={<PackageMaster />} />
           <Route path="/add-package" element={<PackageForm />} />
