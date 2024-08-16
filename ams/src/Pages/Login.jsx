@@ -18,7 +18,7 @@ function Login() {
       console.log("Starting login process...");
       console.log(credentials)
       const response = await axios.post(
-        "http://127.0.0.1:5000/api/staff-outlet-login",
+        "http://127.0.0.1:5000/api/get-otp",
         credentials,);
 
       console.log("Received response:", response);
@@ -26,9 +26,9 @@ function Login() {
 
       localStorage.setItem("token", data.token);
       console.log("Successful login", data);
-      navigate("/dashboard");
-      console.log("Navigated to dashboard");
-      alert("Successful login");
+      navigate("/verify-otp");
+      console.log("Navigated to Verify OTP page");
+      // alert("Successful login");
     } catch (error) {
       console.error("Error during login:", error);
       alert("Error during login. Please check your credentials.");
