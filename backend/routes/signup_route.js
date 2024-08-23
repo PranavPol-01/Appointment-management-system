@@ -5,11 +5,13 @@ const bcrypt = require("bcrypt");
 const express = require("express");
 const Router = express.Router();
 
-Router.post("/signup",verifyToken, async (req, res) => {
+Router.post("/signup", async (req, res) => {
   const outlet = await Outlets.findById(req.body.outlet_id);
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
   const user = new User({
     staff_name: req.body.staff_name,
+    category: req.body.category,
+    staff_mobile_number: req.body.staff_mobile_number,
     gender: req.body.gender,
     role: req.body.role,
     outlet_id: outlet,

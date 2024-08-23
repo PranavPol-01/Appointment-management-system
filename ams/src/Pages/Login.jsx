@@ -65,7 +65,7 @@ function Login() {
                     type="text"
                     name="mobile_number"
                     onChange={(e) => {
-                      setCredentials({ ...credentials, email: e.target.value });
+                      setCredentials({ ...credentials, mobile_number: e.target.value });
                     }}
                     className="w-full rounded border bg-slate-200 px-3 py-2 text-gray-800 outline-none ring-grey-300 transition duration-100 focus:ring"
                   />

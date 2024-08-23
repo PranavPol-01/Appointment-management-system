@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const request = require("request");
 require("dotenv").config();
 const verifyToken = require("../middlewares/verify_jwt_token");
+const SignupUser = require("../models/signupUser");
 
 Router.post("/outlet", async (req, res) => {
   try {
@@ -65,35 +66,42 @@ Router.get("/logout", verifyToken, (req, res) => {
 
 
 Router.post("/get-otp", async (req, res) => {
-  const { to } = req.body;
-  const otp = Math.floor(100000 + Math.random() * 900000);
-  var options = {
-    'method': 'POST',
-    'url': 'https://2factor.in/API/R1/',
-    'headers': {
-    },
-    form: {
-      'module': 'TRANS_SMS',
-      'apikey': process.env.TWO_FACTOR_API_KEY,
-      'to': '91' + to,
-      'from': 'SALONX',
-      'msg': 'Hi Customer, Your one time password for phone verification is ' + otp,
-    }
-  };
-  request(options, function (error, response) {
-    if (error) {
-      console.error(error);
-      return res.status(500).send('Failed to send SMS');
-    }
-    console.log(response.body);
-    res.status(200).json({ msg: "OTP sent successfully", otp: otp });
-
-  });
+  const { outlet_password, mobile_number } = req.body;
+  const signupUser = await SignupUser.findOne({ staff_mobile_number: mobile_number });
+  console.log(signupUser);
+  if (signupUser &&
+    (await bcrypt.compare(outlet_password, signupUser.password))) {
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    var options = {
+      'method': 'POST',
+      'url': 'https://2factor.in/API/R1/',
+      'headers': {
+      },
+      form: {
+        'module': 'TRANS_SMS',
+        'apikey': process.env.TWO_FACTOR_API_KEY,
+        'to': '91' + mobile_number,
+        'from': 'SALONX',
+        'msg': 'Hi Customer, Your one time password for phone verification is ' + otp,
+      }
+    };
+    request(options, function (error, response) {
+      if (error) {
+        console.error(error);
+        return res.status(500).send('Failed to send SMS');
+      }
+      console.log(response.body);
+      res.status(200).json({ msg: "OTP sent successfully", otp: otp });
+    });
+  }
+  else {
+    res.status(401).json({ message: "Invalid credentials" });
+  }
 });
 
 Router.post('/verify-otp', async (req, res) => {
-  const { otp} = req.body;
-  try {    
+  const { otp } = req.body;
+  try {
     const jwt_token = jwt.sign(
       { otp: otp },
       process.env.JWT_SECRET,
@@ -102,7 +110,7 @@ Router.post('/verify-otp', async (req, res) => {
       }
     );
     res.status(200).send({ msg: "OTP verified", token: jwt_token });
-    
+
   } catch (error) {
     console.log("Some error occured while verifying OTP", error);
     res.status(500).json({ message: "Internal server error" });
