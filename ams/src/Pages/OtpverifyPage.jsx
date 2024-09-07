@@ -8,8 +8,10 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function OtpverifyPage() {
+  const navigate = useNavigate();
   const [otp, setOtp] = useState("");
   const [inputOtp, setInputOtp] = useState("");
   const handleSubmitOTP = async () => {
@@ -22,7 +24,8 @@ function OtpverifyPage() {
       })
       const data = response.data;
       console.log(data);
-      localStorage.setItem('token', data.token)
+      localStorage.setItem('token', data.token);
+      navigate('/dashboard');
     }
     else alert("Invalid OTP");
   };

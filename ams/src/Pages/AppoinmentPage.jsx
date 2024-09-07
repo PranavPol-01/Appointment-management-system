@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Appointments from "../Components/Appoinments";
 import initialAppointments from "../Data/initialAppointment";
-
-
+import LogoutWarning from "@/Components/LogoutWarning";
 
 const AppointmentPage = () => {
+
+  const [token, setToken] = useState(null);
   const [appointments, setAppointments] = useState(initialAppointments);
 
   const handleConfirm = (id) => {
@@ -13,15 +14,19 @@ const AppointmentPage = () => {
 
   const handleCancel = (id) => {
     // Cancel logic here
-  };
+  }; 
 
   return (
     <>
-      <Appointments
-        appointments={appointments}
-        onConfirm={handleConfirm}
-        onCancel={handleCancel}
-      />
+      {token ? (
+        <Appointments
+          appointments={appointments}
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+        />
+      ) : (
+        <LogoutWarning/>
+      )}
     </>
   );
 };
