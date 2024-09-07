@@ -24,7 +24,7 @@ function Login() {
       console.log("Received response:", response);
       const data = response.data;
 
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("OTP", data.otp);
       console.log("Successful login", data);
       navigate("/verify-otp");
       console.log("Navigated to Verify OTP page");
