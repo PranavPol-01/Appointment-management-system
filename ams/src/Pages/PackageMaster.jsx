@@ -13,7 +13,6 @@ const PackageMaster = () => {
   return (
     <div className="p-4">
       <h1 className="text-3xl mb-4">Package Master</h1>
-
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-200">
           <thead>

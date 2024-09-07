@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { packages } from '../Data/package';
 import { services } from '../Data/service';
+import LogoutWarning from '@/Components/LogoutWarning';
 
 const PackageForm = () => {
   const { id } = useParams();  
@@ -13,7 +14,7 @@ const PackageForm = () => {
     category: '',
     services: [],
   });
-
+  const [token,setToken] = useState(null);
   useEffect(() => {
     if (id) {
       const existingPackage = packages.find((pkg) => pkg.id === parseInt(id));
@@ -21,6 +22,7 @@ const PackageForm = () => {
         setPackageData(existingPackage);
       }
     }
+    setToken(localStorage.getItem('token'))
   }, [id]);
 
   const handleInputChange = (e) => {
@@ -48,7 +50,10 @@ const PackageForm = () => {
   };
 
   return (
-    <div className="p-4">
+    <>
+    {token ? (
+      <>
+      <div className="p-4">
       <h1 className="text-3xl mb-4">{id ? 'Edit Package' : 'Add Package'}</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -118,6 +123,11 @@ const PackageForm = () => {
         </button>
       </form>
     </div>
+      </>
+    ):(
+      <LogoutWarning/>
+    )}
+    </>
   );
 };
 

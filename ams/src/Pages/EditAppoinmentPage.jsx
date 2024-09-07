@@ -1,7 +1,8 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AppointmentForm from "../Components/AppoinmentForm";
+import LogoutWarning from "@/Components/LogoutWarning";
 
 const EditAppointmentPage = () => {
   const location = useLocation();
@@ -27,17 +28,28 @@ const EditAppointmentPage = () => {
     navigate("/appointments");
   };
 
+  const [token, setToken] = useState(null)
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, [])
+
   return (
-    <div className="p-4">
-      <h1 className="text-3xl mb-4">Edit Appointment</h1>
-      <AppointmentForm
-        appointment={appointment}
-        onSave={handleSave}
-        onCancel={() => navigate("/appointments")}
-        allServices={allServices}
-        allPackages={allPackages}
-      />
-    </div>
+    <>
+      {token ? (
+        <div className="p-4">
+          <h1 className="text-3xl mb-4">Edit Appointment</h1>
+          <AppointmentForm
+            appointment={appointment}
+            onSave={handleSave}
+            onCancel={() => navigate("/appointments")}
+            allServices={allServices}
+            allPackages={allPackages}
+          />
+        </div>
+      ) : (
+        <LogoutWarning />
+      )}
+    </>
   );
 };
 
