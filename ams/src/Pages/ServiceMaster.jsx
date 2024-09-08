@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { services } from '../Data/service';
 import edit from "../assets/edit _button.svg";  // Your edit icon
-import { useState } from 'react';
+import { useState ,useEffect  } from 'react';
 import LogoutWarning from '@/Components/LogoutWarning';
 
 const ServiceMaster = () => {
@@ -12,6 +12,9 @@ const ServiceMaster = () => {
         // const updatedServices = services.filter(service => service.id !== id);
         // setServices(updatedServices);
     //   };
+    useEffect(() => {
+      setToken(localStorage.getItem("token"));
+    }, [])
   return (
     <>
       {token ?(

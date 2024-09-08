@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import Payment from "../Components/Payment";
 import Sidebar from "./../Components/Sidebar";
 import LogoutWarning from "@/Components/LogoutWarning";
@@ -34,6 +34,9 @@ const PaymentPage = () => {
   const handleConfirm = (id) => {
     // Confirm logic here
   };
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, [])
 
   return (
     <>

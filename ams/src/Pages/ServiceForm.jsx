@@ -35,6 +35,9 @@ const ServiceForm = () => {
     console.log(serviceData);
     navigate('/services');
   };
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, [])
 
   return (
     <>

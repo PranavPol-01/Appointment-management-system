@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { packages } from '../Data/package';
 import edit from "../assets/edit _button.svg";  // Your edit icon
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import LogoutWarning from '@/Components/LogoutWarning';
 
 const PackageMaster = () => {
@@ -12,6 +12,10 @@ const PackageMaster = () => {
   // setPackages(updatedPackages);
   //   };
   const [token, setToken] = useState(null);
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+    console.log("This is package master")
+  }, [])
   return (
     <>
       {
