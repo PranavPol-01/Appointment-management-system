@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Payment from "../Components/Payment";
 import Sidebar from "./../Components/Sidebar";
+import LogoutWarning from "@/Components/LogoutWarning";
 
 const initialAppointments = [
   {
@@ -27,6 +28,7 @@ const initialAppointments = [
 ];
 
 const PaymentPage = () => {
+  const [token, setToken] = useState(null);
   const [appointments, setAppointments] = useState(initialAppointments);
 
   const handleConfirm = (id) => {
@@ -35,7 +37,11 @@ const PaymentPage = () => {
 
   return (
     <>
-      <Payment appointments={appointments} onConfirm={handleConfirm} />
+      {token ?(
+        <Payment appointments={appointments} onConfirm={handleConfirm} />
+      ):(
+        <LogoutWarning/>
+      )}
     </>
   );
 };

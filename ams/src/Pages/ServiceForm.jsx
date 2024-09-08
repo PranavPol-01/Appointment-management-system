@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { services } from '../Data/service';
+import LogoutWarning from '@/Components/LogoutWarning';
 
 const ServiceForm = () => {
   const { id } = useParams();  
+  const[token, setToken] = useState(null);
   const navigate = useNavigate();
   const [serviceData, setServiceData] = useState({
     name: '',
@@ -35,7 +37,9 @@ const ServiceForm = () => {
   };
 
   return (
-    <div className="p-4">
+    <>
+    {token ?(
+      <div className="p-4">
       <h1 className="text-3xl mb-4">{id ? 'Edit Service' : 'Add Service'}</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -76,6 +80,10 @@ const ServiceForm = () => {
         </button>
       </form>
     </div>
+    ):(
+      <LogoutWarning/>
+    )}
+    </>
   );
 };
 
