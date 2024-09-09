@@ -6,18 +6,21 @@ import { useState ,useEffect  } from 'react';
 import LogoutWarning from '@/Components/LogoutWarning';
 
 const ServiceMaster = () => {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState({
+    token: null,
+    user_data:{}
+  });
     // const [services, setServices] = useState(services);
     // const handleDelete = (id) => {
         // const updatedServices = services.filter(service => service.id !== id);
         // setServices(updatedServices);
     //   };
     useEffect(() => {
-      setToken(localStorage.getItem("token"));
+      setToken(JSON.parse(localStorage.getItem("auth_data")));
     }, [])
   return (
     <>
-      {token ?(
+      {token.token ?(
         <div className="p-4">
         <h1 className="text-3xl mb-4">Service Master</h1>
   

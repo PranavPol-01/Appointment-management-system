@@ -28,14 +28,17 @@ const EditAppointmentPage = () => {
     navigate("/appointments");
   };
 
-  const [token, setToken] = useState(null)
+  const [token, setToken] = useState({
+    token: null,
+    user_data:{}
+  });
   useEffect(() => {
-    setToken(localStorage.getItem("token"));
+    setToken(JSON.parse(localStorage.getItem("auth_data")));
   }, [])
 
   return (
     <>
-      {token ? (
+      {token.token ? (
         <div className="p-4">
           <h1 className="text-3xl mb-4">Edit Appointment</h1>
           <AppointmentForm

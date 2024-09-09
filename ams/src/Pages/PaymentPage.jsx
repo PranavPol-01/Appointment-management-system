@@ -28,19 +28,22 @@ const initialAppointments = [
 ];
 
 const PaymentPage = () => {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState({
+    token: null,
+    user_data:{}
+  });
   const [appointments, setAppointments] = useState(initialAppointments);
 
   const handleConfirm = (id) => {
     // Confirm logic here
   };
   useEffect(() => {
-    setToken(localStorage.getItem("token"));
+    setToken(JSON.parse(localStorage.getItem("auth_data")));
   }, [])
 
   return (
     <>
-      {token ?(
+      {token.token ?(
         <Payment appointments={appointments} onConfirm={handleConfirm} />
       ):(
         <LogoutWarning/>

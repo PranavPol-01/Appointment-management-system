@@ -11,15 +11,18 @@ const PackageMaster = () => {
   // const updatedPackages = packages.filter(pkg => pkg.id !== id);
   // setPackages(updatedPackages);
   //   };
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState({
+    token: null,
+    user_data:{}
+  });
   useEffect(() => {
-    setToken(localStorage.getItem("token"));
+    setToken(JSON.parse(localStorage.getItem("auth_data")));
     console.log("This is package master")
   }, [])
   return (
     <>
       {
-        token ? (
+        token.token ? (
           <div className="p-4">
             <h1 className="text-3xl mb-4">Package Master</h1>
             <div className="overflow-x-auto">

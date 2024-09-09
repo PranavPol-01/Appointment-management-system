@@ -5,10 +5,13 @@ import LogoutWarning from "@/Components/LogoutWarning";
 
 const AppointmentPage = () => {
 
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState({
+    token: null,
+    user_data:{}
+  });
   const [appointments, setAppointments] = useState(initialAppointments);
   useEffect(() => {
-    setToken(localStorage.getItem("token"));
+    setToken(JSON.parse(localStorage.getItem("auth_data")));
   }, [])
   const handleConfirm = (id) => {
     // Confirm logic here
@@ -20,7 +23,7 @@ const AppointmentPage = () => {
 
   return (
     <>
-      {token ? (
+      {token.token ? (
         <Appointments
           appointments={appointments}
           onConfirm={handleConfirm}

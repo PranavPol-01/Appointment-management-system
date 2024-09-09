@@ -8,6 +8,8 @@ require("dotenv").config();
 const verifyToken = require("../middlewares/verify_jwt_token");
 const SignupUser = require("../models/signupUser");
 
+const inMemoryUserDetails = new Object();
+
 Router.post("/outlet", async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.outlet_password, 10);
@@ -93,6 +95,7 @@ Router.post("/get-otp", async (req, res) => {
       console.log(response.body);
       res.status(200).json({ msg: "OTP sent successfully", otp: otp });
     });
+    inMemoryUserDetails['user_data']=signupUser;
   }
   else {
     res.status(401).json({ message: "Invalid credentials" });
@@ -101,6 +104,7 @@ Router.post("/get-otp", async (req, res) => {
 
 Router.post('/verify-otp', async (req, res) => {
   const { otp } = req.body;
+  
   try {
     const jwt_token = jwt.sign(
       { otp: otp },
@@ -109,7 +113,7 @@ Router.post('/verify-otp', async (req, res) => {
         expiresIn: "1d",
       }
     );
-    res.status(200).send({ msg: "OTP verified", token: jwt_token });
+    res.status(200).send({ msg: "OTP verified", token: jwt_token , user_data: inMemoryUserDetails.user_data});
 
   } catch (error) {
     console.log("Some error occured while verifying OTP", error);

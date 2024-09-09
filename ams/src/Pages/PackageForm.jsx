@@ -14,7 +14,10 @@ const PackageForm = () => {
     category: '',
     services: [],
   });
-  const [token,setToken] = useState(null);
+  const [token, setToken] = useState({
+    token: null,
+    user_data:{}
+  });
   useEffect(() => {
     if (id) {
       const existingPackage = packages.find((pkg) => pkg.id === parseInt(id));
@@ -22,7 +25,7 @@ const PackageForm = () => {
         setPackageData(existingPackage);
       }
     }
-    setToken(localStorage.getItem('token'))
+    setToken(JSON.parse(localStorage.getItem('auth_data')))
   }, [id]);
 
   const handleInputChange = (e) => {
@@ -51,7 +54,7 @@ const PackageForm = () => {
 
   return (
     <>
-    {token ? (
+    {token.token ? (
       <>
       <div className="p-4">
       <h1 className="text-3xl mb-4">{id ? 'Edit Package' : 'Add Package'}</h1>
