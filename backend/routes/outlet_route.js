@@ -106,13 +106,7 @@ Router.post('/verify-otp', async (req, res) => {
   const { otp } = req.body;
   
   try {
-    const jwt_token = jwt.sign(
-      { otp: otp },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1d",
-      }
-    );
+    const jwt_token = jwt.sign({ otp: otp }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.status(200).send({ msg: "OTP verified", token: jwt_token , user_data: inMemoryUserDetails.user_data});
 
   } catch (error) {

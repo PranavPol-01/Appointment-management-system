@@ -2,6 +2,7 @@ import React, { useState ,useEffect} from "react";
 import Payment from "../Components/Payment";
 import Sidebar from "./../Components/Sidebar";
 import LogoutWarning from "@/Components/LogoutWarning";
+import { jwtDecode } from "jwt-decode";
 
 const initialAppointments = [
   {
@@ -29,7 +30,7 @@ const initialAppointments = [
 
 const PaymentPage = () => {
   const [token, setToken] = useState({
-    token: null,
+    token: "",
     user_data:{}
   });
   const [appointments, setAppointments] = useState(initialAppointments);
@@ -39,11 +40,22 @@ const PaymentPage = () => {
   };
   useEffect(() => {
     setToken(JSON.parse(localStorage.getItem("auth_data")));
+    console.log(token.token);
+    try {
+      const decoded = jwtDecode(token.token)
+      const currentTime = Date.now() / 1000;
+      if (decoded.exp < currentTime) {
+        localStorage.removeItem("auth_data");
+        setToken({ token: null, user_data: {} });
+      }
+    } catch (error) {
+      console.log(error);      
+    }
   }, [])
 
   return (
     <>
-      {token.token ?(
+      {token ?(
         <Payment appointments={appointments} onConfirm={handleConfirm} />
       ):(
         <LogoutWarning/>
