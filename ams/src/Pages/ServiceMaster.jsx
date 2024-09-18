@@ -24,7 +24,7 @@ const ServiceMaster = () => {
       const currentTime = Date.now() / 1000;
       if (decoded.exp < currentTime) {
         localStorage.removeItem("auth_data");
-        setToken({ token: null, user_data: {} });
+        setToken({ token: "", user_data: {} });
       }
     } catch (error) {
       console.log(error);

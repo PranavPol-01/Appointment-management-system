@@ -7,7 +7,7 @@ const signupUserSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    category:{
+    category:{                      // Employee , Manager or Admin
         type: String,
         required: true,
     },
@@ -25,7 +25,7 @@ const signupUserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    role: {
+    role: {                  // Barber, Hair Stylist, Nail Technician, Masseuse, Facialist, Receptionist
         type: String,
         required: true
     },

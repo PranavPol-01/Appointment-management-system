@@ -61,3 +61,13 @@ Router.delete('/delete-appointment-staff/:id',verifyToken,async(req,res)=>{
         res.status(500).json({message:"Internal server error"});
     }
 })
+
+Router.get('/get-all-appointments-staff',verifyToken,async(req,res)=>{
+    try {
+        const service_appointments = await ServiceAppointment.find();
+        res.status(200).json({service_appointments});
+    } catch (error) {
+        console.log("Some error occured while fetching appointments",error);
+        res.status(500).json({message:"Internal server error"});
+    }
+})
