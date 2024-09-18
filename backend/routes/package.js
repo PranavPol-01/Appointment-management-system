@@ -7,6 +7,7 @@ const Service = require('../models/services');  // Assuming you have a Service m
 router.get('/packages', async (req, res) => {
   try {
     const packages = await Package.find().populate('services');  // Populate services
+    // console.log(packages)
     res.status(200).json(packages);
   } catch (err) {
     res.status(500).json({ message: err.message });

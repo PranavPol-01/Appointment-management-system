@@ -65,7 +65,7 @@ const ServiceMaster = () => {
               <thead>
                 <tr className="bg-gray-100">
                   <th className="px-4 py-2 border-b text-center">Name</th>
-                  <th className="px-4 py-2 border-b text-center">Price</th>
+                  <th className="px-4 py-2 border-b text-center">Price(Rs.)</th>
                   <th className="px-4 py-2 border-b text-center">Duration</th>
                   <th className="px-4 py-2 border-b text-center">Actions</th>
                 </tr>

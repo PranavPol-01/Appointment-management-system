@@ -111,19 +111,10 @@ const PackageMaster = () => {
 
   // Fetch the packages from the backend on component mount
   useEffect(() => {
-<<<<<<< HEAD
-    setToken(JSON.parse(localStorage.getItem("auth_data")));
-    console.log(token.token);
-    try {
-      const decoded = jwtDecode(token.token)
-      const currentTime = Date.now() / 1000;
-      if (decoded.exp < currentTime) {
-        localStorage.removeItem("auth_data");
-        setToken({ token: "", user_data: {} });
-=======
     const fetchPackages = async () => {
       try {
         const response = await axios.get('http://127.0.0.1:5000/api/packages');
+        console.log(response.data)
         setPackages(response.data);  // Set the fetched packages
       } catch (error) {
         console.error('Error fetching packages:', error);
@@ -144,7 +135,6 @@ const PackageMaster = () => {
         }
       } catch (error) {
         console.log(error);      
->>>>>>> refs/remotes/origin/main
       }
     }
   }, []);
@@ -179,12 +169,12 @@ const PackageMaster = () => {
               <tbody>
                 {packages.map((pkg) => (
                   <tr key={pkg._id} className="hover:bg-gray-50">
-                    <td className="px-4 py-2 border-b text-center">{pkg.name}</td>
+                    <td className="px-4 py-2 border-b text-center">{pkg.package_name}</td>
                     <td className="px-4 py-2 border-b text-center">{pkg.price}</td>
-                    <td className="px-4 py-2 border-b text-center">{pkg.time}</td>
+                    <td className="px-4 py-2 border-b text-center">{pkg.estimated_time}</td>
                     <td className="px-4 py-2 border-b text-center">{pkg.category}</td>
                     <td className="px-4 py-2 border-b text-center">
-                      {pkg.services.map((service) => service.name).join(', ')}
+                      {pkg.services.map((service) => service.service_name).join(', ')}
                     </td>
                     <td className="px-4 py-2 border-b text-center flex justify-center items-center">
                       <button

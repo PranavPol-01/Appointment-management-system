@@ -198,11 +198,29 @@ const PackageForm = () => {
     fetchServices();
 
     // If editing an existing package, fetch the package data
+    // if (id) {
+    //   const fetchPackage = async () => {
+    //     const existingPackage = await axios.get(`http://127.0.0.1:5000/api/packages/${id}`);
+    //     console.log("existingPackage",existingPackage.data)
+    //     if (existingPackage) {
+    //       setPackageData(existingPackage.data);
+    //     }
+    //   };
+    //   fetchPackage();
+    // }
     if (id) {
       const fetchPackage = async () => {
-        const existingPackage = await axios.get(`http://127.0.0.1:5000/api/packages/${id}`);
-        if (existingPackage) {
-          setPackageData(existingPackage.data);
+        try {
+          const response = await axios.get(`http://127.0.0.1:5000/api/packages/${id}`);
+          const existingPackage = response.data;
+
+          // Set package data, including selected services
+          setPackageData({
+            ...existingPackage,
+            services: existingPackage.services.map(service => service._id),  // Set services to an array of IDs
+          });
+        } catch (error) {
+          console.error('Error fetching package:', error);
         }
       };
       fetchPackage();

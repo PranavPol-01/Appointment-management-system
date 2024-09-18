@@ -1,4 +1,5 @@
 // const mongoose = require('mongoose');
+// import { services } from './../../ams/src/Data/service';
 // const Schema = mongoose.Schema;
 
 // const packageSchema = new Schema({
@@ -26,6 +27,7 @@
 // module.exports = package;
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const service = require('./services');
 
 // Define the schema for a package
 const packageSchema = new Schema({
@@ -47,7 +49,7 @@ const packageSchema = new Schema({
   },
   services: [{
     type: Schema.Types.ObjectId,
-    ref: 'Services'  // Assuming you have a Service model
+    ref: 'service'  // Assuming you have a Service model
   }]
 });
 
