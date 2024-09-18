@@ -1,14 +1,15 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/Components/ui/button";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot, 
-} from "@/components/ui/input-otp";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+} from "@/Components/ui/input-otp";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/Components/ui/card";
 import axios from "axios";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { clsx } from 'clsx';
 
 function OtpverifyPage() {
   const navigate = useNavigate();

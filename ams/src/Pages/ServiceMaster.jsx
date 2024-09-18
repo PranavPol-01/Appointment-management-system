@@ -2,11 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { services } from '../Data/service';
 import edit from "../assets/edit _button.svg";  // Your edit icon
+import axios from 'axios'; // Axios to handle API calls
 import { useState, useEffect } from 'react';
 import LogoutWarning from '@/Components/LogoutWarning';
 import { jwtDecode } from 'jwt-decode';
 
 const ServiceMaster = () => {
+  const [services, setServices] = useState([]);
   const [token, setToken] = useState({
     token: "",
     user_data: {}
@@ -30,6 +32,28 @@ const ServiceMaster = () => {
       console.log(error);
     }
   }, [])
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:5000/api/services');
+        setServices(response.data);
+      } catch (error) {
+        console.error("There was an error fetching services!", error);
+      }
+    };
+
+    fetchServices();
+  }, []);
+
+    // Delete service
+    const handleDelete = async (id) => {
+      try {
+        await axios.delete(`http://127.0.0.1:5000/api/services/${id}`);
+        setServices(services.filter(service => service._id !== id));
+      } catch (error) {
+        console.error('Error deleting service:', error);
+      }
+    };
   return (
     <>
       {token ? (
@@ -47,20 +71,20 @@ const ServiceMaster = () => {
                 </tr>
               </thead>
               <tbody>
-                {services.map((service) => (
-                  <tr key={service.id} className="hover:bg-gray-50">
-                    <td className="px-4 py-2 border-b text-center">{service.name}</td>
-                    <td className="px-4 py-2 border-b text-center">{service.price}</td>
-                    <td className="px-4 py-2 border-b text-center">{service.duration}</td>
+              {services.map((service) => (
+                  <tr key={service._id} className="hover:bg-gray-50">
+                    <td className="px-4 py-2 border-b text-center">{service.service_name}</td>
+                    <td className="px-4 py-2 border-b text-center">{service.price.$numberDecimal}</td>
+                    <td className="px-4 py-2 border-b text-center">{service.estimated_time}</td>
                     <td className="px-4 py-2 border-b text-center flex justify-center items-center">
                       <button
                         className="px-3 py-1 ml-2 w-20"
-                      // onClick={() => handleDelete(service.id)}
+                        onClick={() => handleDelete(service._id)}
                       >
                         🗑️
                       </button>
                       <Link
-                        to={`/edit-service/${service.id}`}
+                        to={`/edit-service/${service._id}`}
                         className="px-3 py-1 rounded m-1 w-20"
                       >
                         <img src={edit} alt="edit" />
@@ -68,6 +92,7 @@ const ServiceMaster = () => {
                     </td>
                   </tr>
                 ))}
+
               </tbody>
             </table>
           </div>
