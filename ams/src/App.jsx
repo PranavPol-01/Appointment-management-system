@@ -10,11 +10,15 @@ import Sidebar from "./Components/Sidebar";
 import PackageForm from "./Pages/PackageForm";
 import PackageMaster from "./Pages/PackageMaster";
 import ServiceMaster from "./Pages/ServiceMaster";
+// import EditService from "./Pages/EditService";
 import ServiceForm from "./Pages/ServiceForm";
+import OtpverifyPage from "./Pages/OtpverifyPage";
+import PaymentPage from './Pages/PaymentPage';
+import PaymentForm from './Components/PaymentForm';
 
 function App() {
   const location = useLocation();
-  const noSidebarRoutes = ["/", "/signup"];
+  const noSidebarRoutes = ["/", "/signup",'/verify-otp'];
 
   return (
     <>
@@ -34,6 +38,7 @@ function App() {
             path="/edit-appointment/:id"
             element={<EditAppointmentPage />}
           />
+          <Route path="/verify-otp" element={<OtpverifyPage />} />
           <Route path="/book-appointment" element={<BookAppointmentPage />} />
           <Route path="/package-master" element={<PackageMaster />} />
           <Route path="/add-package" element={<PackageForm />} />
@@ -41,6 +46,8 @@ function App() {
           <Route path="/services" element={<ServiceMaster />} />
           <Route path="/add-service" element={<ServiceForm />} />
           <Route path="/edit-service/:id" element={<ServiceForm />} />
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/payment-form" element={<PaymentForm />} />
         </Routes>
       </div>
     </>

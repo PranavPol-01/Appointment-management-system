@@ -6,6 +6,9 @@ const jwt = require("jsonwebtoken");
 const request = require("request");
 require("dotenv").config();
 const verifyToken = require("../middlewares/verify_jwt_token");
+const SignupUser = require("../models/signupUser");
+
+const inMemoryUserDetails = new Object();
 
 Router.post("/outlet", async (req, res) => {
   try {
@@ -43,13 +46,7 @@ Router.post("/staff-outlet-login", async (req, res) => {
       outlet &&
       (await bcrypt.compare(outlet_password, outlet.outlet_password))
     ) {
-      // const jwt_token = jwt.sign(
-      //   { id: outlet._id, outlet_password: outlet.outlet_password },
-      //   process.env.JWT_SECRET,
-      //   {
-      //     expiresIn: "1d",
-      //   }
-      // );
+      // 
       res.json({
         message: "You are logged in",
         // token: jwt_token,
@@ -70,24 +67,53 @@ Router.get("/logout", verifyToken, (req, res) => {
 });
 
 
-Router.post("/verify-login",async(req,res)=>{
-  const {to}=req.body;
-  var options = {
-    'method': 'GET',
-    'url': `https://2factor.in/API/V1/${process.env.TWO_FACTOR_API_KEY}/SMS/+91${to}/AUTOGEN2/PalcoaTemplate`,
-    'headers': {
-    }
-  };
-  request(options, function (error, response) {
-    if (error) {
-      console.error(error);
-      return res.status(500).send('Failed to send SMS');
-    }
-    console.log(response.body);
-    res.send(response.body);
-  });
+Router.post("/get-otp", async (req, res) => {
+  const { outlet_password, mobile_number } = req.body;
+  const signupUser = await SignupUser.findOne({ staff_mobile_number: mobile_number });
+  console.log(signupUser);
+  if (signupUser &&
+    (await bcrypt.compare(outlet_password, signupUser.password))) {
+    const otp = Math.floor(100000 + Math.random() * 900000);
+    var options = {
+      'method': 'POST',
+      'url': 'https://2factor.in/API/R1/',
+      'headers': {
+      },
+      form: {
+        'module': 'TRANS_SMS',
+        'apikey': process.env.TWO_FACTOR_API_KEY,
+        'to': '91' + mobile_number,
+        'from': 'SALONX',
+        'msg': 'Hi Customer, Your one time password for phone verification is ' + otp,
+      }
+    };
+    request(options, function (error, response) {
+      if (error) {
+        console.error(error);
+        return res.status(500).send('Failed to send SMS');
+      }
+      console.log(response.body);
+      res.status(200).json({ msg: "OTP sent successfully", otp: otp });
+    });
+    inMemoryUserDetails['user_data']=signupUser;
+  }
+  else {
+    res.status(401).json({ message: "Invalid credentials" });
+  }
 });
 
+Router.post('/verify-otp', async (req, res) => {
+  const { otp } = req.body;
+  
+  try {
+    const jwt_token = jwt.sign({ otp: otp }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    res.status(200).send({ msg: "OTP verified", token: jwt_token , user_data: inMemoryUserDetails.user_data});
+
+  } catch (error) {
+    console.log("Some error occured while verifying OTP", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 
 module.exports = {

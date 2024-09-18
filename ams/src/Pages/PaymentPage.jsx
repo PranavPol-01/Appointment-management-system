@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import Payment from "../Components/Payment";
 import Sidebar from "./../Components/Sidebar";
+import LogoutWarning from "@/Components/LogoutWarning";
+import { jwtDecode } from "jwt-decode";
 
 const initialAppointments = [
   {
@@ -27,15 +29,37 @@ const initialAppointments = [
 ];
 
 const PaymentPage = () => {
+  const [token, setToken] = useState({
+    token: "",
+    user_data:{}
+  });
   const [appointments, setAppointments] = useState(initialAppointments);
 
   const handleConfirm = (id) => {
     // Confirm logic here
   };
+  useEffect(() => {
+    setToken(JSON.parse(localStorage.getItem("auth_data")));
+    console.log(token.token);
+    try {
+      const decoded = jwtDecode(token.token)
+      const currentTime = Date.now() / 1000;
+      if (decoded.exp < currentTime) {
+        localStorage.removeItem("auth_data");
+        setToken({ token: null, user_data: {} });
+      }
+    } catch (error) {
+      console.log(error);      
+    }
+  }, [])
 
   return (
     <>
-      <Payment appointments={appointments} onConfirm={handleConfirm} />
+      {token ?(
+        <Payment appointments={appointments} onConfirm={handleConfirm} />
+      ):(
+        <LogoutWarning/>
+      )}
     </>
   );
 };

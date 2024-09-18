@@ -4,7 +4,7 @@ export const packages = [
     {
       id: 1,
       name: 'Relaxation Package',
-      price: '$100',
+      price: 'Rs.1000',
       time: '90 mins',
       category: 'Spa',
       services: ['Massage', 'Manicure'], 
@@ -12,7 +12,7 @@ export const packages = [
     {
       id: 2,
       name: 'Beauty Package',
-      price: '$150',
+      price: 'Rs.1500',
       time: '120 mins',
       category: 'Beauty',
       services: ['Facial', 'Pedicure'], 
@@ -20,7 +20,7 @@ export const packages = [
     {
       id: 3,
       name: 'Luxury Package',
-      price: '$200',
+      price: 'Rs.2000',
       time: '150 mins',
       category: 'Deluxe',
       services: ['Massage', 'Facial', 'Manicure'], 

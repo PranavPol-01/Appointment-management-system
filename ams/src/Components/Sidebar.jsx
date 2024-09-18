@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import newlogo from "../assets/newlogo.png";
 import { Link } from "react-router-dom";
 import Appointments from "./Appoinments";
@@ -7,6 +7,20 @@ import Appointments from "./Appoinments";
 function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [userData, setUserData] = useState({
+    token: null,
+    user_data: {
+      _id: "",
+      staff_name: "",
+      staff_mobile_number: "",
+      email: "",
+      category: "",
+      gender: "",
+      outlet_id: "",
+      password: "",
+      role:"", 
+    },
+  });
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -19,7 +33,9 @@ function Sidebar() {
   const toggleExtra = () => {
     setIsOpen(!isOpen);
   };
-
+  useEffect(()=>{
+    setUserData(JSON.parse(localStorage.getItem("auth_data")));
+  },[])
   return (
     <div>
       <nav
@@ -77,13 +93,13 @@ function Sidebar() {
                     <div className="absolute end-0 z-40 mt-2 w-50 rounded-md border border-gray-100 bg-white shadow-lg">
                       <div className="px-4 py-3" role="none">
                         <p className="text-sm text-black" role="none">
-                          outletname
+                          {userData.user_data.email}
                         </p>
                         <p
                           className="text-sm font-medium text-black truncate"
                           role="none"
                         >
-                          outlet@gmail.com
+                          {userData.user_data.staff_name}
                         </p>
                       </div>
                       <ul className="py-1" role="none">
@@ -273,7 +289,7 @@ function Sidebar() {
               </li>
               <li>
                 <Link
-                  to={``}
+                  to={`/services`}
                   className="flex items-center p-2 text-black hover:bg-red-200 group "
                 >
                   <svg

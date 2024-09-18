@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 // import Navbar from './../Components/Navbar';
@@ -18,17 +18,17 @@ function Login() {
       console.log("Starting login process...");
       console.log(credentials)
       const response = await axios.post(
-        "http://127.0.0.1:5000/api/staff-outlet-login",
+        "http://127.0.0.1:5000/api/get-otp",
         credentials,);
 
       console.log("Received response:", response);
       const data = response.data;
 
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("OTP", data.otp);
       console.log("Successful login", data);
-      navigate("/dashboard");
-      console.log("Navigated to dashboard");
-      alert("Successful login");
+      navigate("/verify-otp");
+      console.log("Navigated to Verify OTP page");
+      // alert("Successful login");
     } catch (error) {
       console.error("Error during login:", error);
       alert("Error during login. Please check your credentials.");
@@ -36,6 +36,12 @@ function Login() {
       setLoading(false);
     }
   };
+
+  useEffect(()=>{
+    setTimeout(()=>{
+      localStorage.removeItem("OTP")
+    },120000)
+  })
 
   //   const handleGoogleLogin = async () => {
   //     // Google login implementation
@@ -65,7 +71,7 @@ function Login() {
                     type="text"
                     name="mobile_number"
                     onChange={(e) => {
-                      setCredentials({ ...credentials, email: e.target.value });
+                      setCredentials({ ...credentials, mobile_number: e.target.value });
                     }}
                     className="w-full rounded border bg-slate-200 px-3 py-2 text-gray-800 outline-none ring-grey-300 transition duration-100 focus:ring"
                   />
