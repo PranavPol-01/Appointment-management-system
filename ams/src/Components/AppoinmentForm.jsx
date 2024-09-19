@@ -268,18 +268,18 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
   useEffect(() => {
     const fetchServicesAndPackages = async () => {
       try {
-        const servicesResponse = await axios.get('http://127.0.0.1:5000/api/services');
+        const servicesResponse = await axios.get("http://127.0.0.1:5000/api/services");
         const packagesResponse = await axios.get("http://127.0.0.1:5000/api/packages");
 
         // Map services and packages to the react-select format (label, value)
-        const servicesOptions = servicesResponse.data.map(service => ({
+        const servicesOptions = servicesResponse.data.map((service) => ({
           label: service.service_name,
-          value: service.id,
+          value: service._id, // Assuming _id is the correct field for the service ID
         }));
 
-        const packagesOptions = packagesResponse.data.map(pkg => ({
+        const packagesOptions = packagesResponse.data.map((pkg) => ({
           label: pkg.package_name,
-          value: pkg.id,
+          value: pkg._id, // Assuming _id is the correct field for the package ID
         }));
 
         setAllServices(servicesOptions);
@@ -295,8 +295,8 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
     if (appointment) {
       setFormData({
         ...appointment,
-        services: appointment.services?.map(s => ({ value: s.id, label: s.name })) || [],
-        packages: appointment.packages?.map(p => ({ value: p.id, label: p.name })) || [],
+        services: appointment.services?.map((s) => s._id) || [], // Assuming _id for services
+        packages: appointment.packages?.map((p) => p._id) || [], // Assuming _id for packages
       });
     }
   }, [appointment]);
@@ -309,25 +309,32 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
     });
   };
 
-  // Handle service and package changes using react-select
+  // Handle service selection using react-select
   const handleServiceChange = (selectedOptions) => {
-    setFormData({
-      ...formData,
-      services: selectedOptions || [],
-    });
+    const selectedServices = selectedOptions ? selectedOptions.map((option) => option.value) : [];
+    setFormData((prevState) => ({
+      ...prevState,
+      services: selectedServices,
+    }));
   };
 
+  // Handle package selection using react-select
   const handlePackageChange = (selectedOptions) => {
-    setFormData({
-      ...formData,
-      packages: selectedOptions || [],
-    });
+    const selectedPackages = selectedOptions ? selectedOptions.map((option) => option.value) : [];
+    setFormData((prevState) => ({
+      ...prevState,
+      packages: selectedPackages,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     onSave(formData);
   };
+
+  // Pre-select services and packages by matching their IDs
+  const selectedServices = allServices.filter((service) => formData.services.includes(service.value));
+  const selectedPackages = allPackages.filter((pkg) => formData.packages.includes(pkg.value));
 
   return (
     <div className="p-4">
@@ -389,7 +396,7 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
           <Select
             isMulti
             options={allServices}
-            value={formData.services}
+            value={selectedServices} // Pre-select services
             onChange={handleServiceChange}
             placeholder="Search and select services"
             className="basic-multi-select"
@@ -403,7 +410,7 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
           <Select
             isMulti
             options={allPackages}
-            value={formData.packages}
+            value={selectedPackages} // Pre-select packages
             onChange={handlePackageChange}
             placeholder="Search and select packages"
             className="basic-multi-select"
