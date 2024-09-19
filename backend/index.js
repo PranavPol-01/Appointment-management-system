@@ -5,6 +5,7 @@ const { makeSignupUser } = require("./routes/signup_route");
 const { outletRoute } = require("./routes/outlet_route");
 const { serviceRoutes } = require("./routes/services");
 const {packageRoutes} = require("./routes/package")
+const {AppointmentRoutes} = require("./routes/add_appointments")
 const cors = require('cors')
 
 // Server configuration
@@ -19,6 +20,7 @@ server.use('/api', makeSignupUser)
 server.use('/api', outletRoute)
 server.use('/api', serviceRoutes);
 server.use('/api', packageRoutes)
+server.use('/api',AppointmentRoutes);
 
 require("dotenv").config();
 
