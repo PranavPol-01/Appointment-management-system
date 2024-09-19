@@ -292,6 +292,21 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
   }, []);
 
   useEffect(() => {
+    // const userData = JSON.parse();
+    const userData = JSON.parse(localStorage.getItem("auth_data"));
+    const staffId = userData ? userData.user_data._id : null;
+   
+    console.log(userData);
+    console.log(staffId)
+    if (staffId) {
+      setFormData((prevState) => ({
+        ...prevState,
+        staff_id: staffId,
+      }));
+    }
+  }, []);
+
+  useEffect(() => {
     if (appointment) {
       setFormData({
         ...appointment,

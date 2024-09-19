@@ -8,7 +8,7 @@ const filterAppointments = (appointments, filter) => {
   switch (filter) {
     case "Today":
       return appointments.filter((appointment) => {
-        const inTime = new Date(appointment.inTime);
+        const inTime = new Date(appointment.time);
         return inTime.toDateString() === now.toDateString();
       });
 
@@ -16,7 +16,7 @@ const filterAppointments = (appointments, filter) => {
       const oneWeekAgo = new Date(now);
       oneWeekAgo.setDate(now.getDate() - 7);
       return appointments.filter((appointment) => {
-        const inTime = new Date(appointment.inTime);
+        const inTime = new Date(appointment.time);
         return inTime > oneWeekAgo && inTime <= now;
       });
 
@@ -24,7 +24,7 @@ const filterAppointments = (appointments, filter) => {
       const oneMonthAgo = new Date(now);
       oneMonthAgo.setMonth(now.getMonth() - 1);
       return appointments.filter((appointment) => {
-        const inTime = new Date(appointment.inTime);
+        const inTime = new Date(appointment.time);
         return inTime > oneMonthAgo && inTime <= now;
       });
 
@@ -34,7 +34,7 @@ const filterAppointments = (appointments, filter) => {
 };
 
 const Appointments = ({ appointments, onConfirm, onCancel }) => {
-  const [filter, setFilter] = useState("Last Month");
+  const [filter, setFilter] = useState("Today");
   const filteredAppointments = filterAppointments(appointments, filter);
 
   return (
@@ -60,40 +60,52 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
             <tr className="bg-gray-100">
               <th className="px-4 py-2 border-b text-center">Name</th>
               <th className="px-4 py-2 border-b text-center">Services</th>
-              <th className="px-4 py-2 border-b text-center">In time</th>
-              <th className="px-4 py-2 border-b text-center">Out time</th>
+              <th className="px-4 py-2 border-b text-center">Packages</th>
+              <th className="px-4 py-2 border-b text-center">Time</th>
               <th className="px-4 py-2 border-b text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
             {filteredAppointments.map((appointment) => (
-              <tr key={appointment.id} className="hover:bg-gray-50">
-                <td className="px-4 py-2 border-b text-center">{appointment.name}</td>
+              <tr key={appointment._id} className="hover:bg-gray-50">
+                <td className="px-4 py-2 border-b text-center">{appointment.customer_name}</td>
+
+                {/* Rendering services */}
                 <td className="px-4 py-2 border-b text-center">
-                  {appointment.services.map((service, index) => (
-                    <div key={index}>
-                      {service.service} ({service.package})
-                    </div>
+                  {appointment.service_id.map((service, index) => (
+                    <div key={index}>{service.service_name}</div>
                   ))}
                 </td>
-                <td className="px-4 py-2 border-b text-center">{appointment.inTime}</td>
-                <td className="px-4 py-2 border-b text-center">{appointment.outTime}</td>
+
+                {/* Rendering packages */}
+                <td className="px-4 py-2 border-b text-center">
+                  {appointment.package_id.map((pkg, index) => (
+                    <div key={index}>{pkg.package_name}</div>
+                  ))}
+                </td>
+
+                {/* Rendering time */}
+                <td className="px-4 py-2 border-b text-center">
+                  {new Date(appointment.time).toLocaleString()}
+                </td>
+
+                {/* Action buttons */}
                 <td className="px-4 py-2 border-b text-center flex justify-center items-center">
                   <button
                     className="text-green-500 px-3 py-1 rounded m-1"
-                    onClick={() => onConfirm(appointment.id)}
+                    onClick={() => onConfirm(appointment._id)}
                   >
                     Confirm
                   </button>
                   <button
                     className="text-red-500 px-3 py-1 rounded m-1"
-                    onClick={() => onCancel(appointment.id)}
+                    onClick={() => onCancel(appointment._id)}
                   >
                     Cancel
                   </button>
                   <div className="flex justify-center items-center">
                     <Link
-                      to={`/edit-appointment/${appointment.id}`}
+                      to={`/edit-appointment/${appointment._id}`}
                       state={{ appointment }} // Pass the appointment data to EditAppointmentPage
                       className="px-3 py-1 rounded m-1 w-20"
                     >
@@ -109,6 +121,5 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
     </div>
   );
 };
-
 
 export default Appointments;

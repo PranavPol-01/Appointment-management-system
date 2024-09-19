@@ -59,10 +59,13 @@ import LogoutWarning from "@/Components/LogoutWarning";
 import {jwtDecode} from "jwt-decode";
 
 const BookAppointmentPage = () => {
+  
   const navigate = useNavigate();
 
   const handleSaveAppointment = async (formData) => {
     try {
+      console.log(formData); // Add this line to check the data being sent
+
       const response = await axios.post("http://127.0.0.1:5000/api/add-appointment-staff", formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("auth_data")?.token}`,

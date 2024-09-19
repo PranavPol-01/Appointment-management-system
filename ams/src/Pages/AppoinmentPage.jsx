@@ -67,12 +67,18 @@ const AppointmentPage = () => {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:5000/api/get-all-appointments-staff", {
+    //     const userData = JSON.parse(localStorage.getItem("auth_data"));
+    // const outletId = userData ? userData.user_data.outlet_id : null;
+    //    // Replace with actual outlet ID
+    //     const response = await axios.get(`http://127.0.0.1:5000/api/get-all-appointments-staff/${outletId}`, {
+      const response = await axios.get("http://127.0.0.1:5000/api/get-all-appointments-staff", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("auth_data")?.token}`,
           },
         });
+        console.log(response.data.service_appointments)
         setAppointments(response.data.service_appointments);
+        // console.log(appointments);
       } catch (error) {
         console.error("Error fetching appointments:", error);
       }
