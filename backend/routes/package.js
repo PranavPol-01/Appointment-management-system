@@ -30,7 +30,7 @@ router.post('/packages', async (req, res) => {
   try {
     const { package_name, price, estimated_time, category, services } = req.body;
     console.log(req.body)
-    const serviceIds = await Service.find({ name: { $in: services } }).select('_id');  // Find service IDs by name
+    const serviceIds = await Service.find({ _id: { $in: services } }).select('_id');  // Find service IDs by name
     const newPackage = new Package({
       package_name:package_name,
       price,

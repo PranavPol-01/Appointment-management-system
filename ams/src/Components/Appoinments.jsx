@@ -8,6 +8,7 @@ const filterAppointments = (appointments, filter) => {
   switch (filter) {
     case "Today":
       return appointments.filter((appointment) => {
+        console.log(appointment.time);
         const inTime = new Date(appointment.time);
         return inTime.toDateString() === now.toDateString();
       });

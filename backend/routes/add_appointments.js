@@ -149,9 +149,10 @@ Router.put('/update-appointment-staff/:id', async (req, res) => {
         service_appointment.package_id = await Package.findById(package_id);
         service_appointment.appointment_id = await Appointment.findById(appointment_id);
         service_appointment.outlet_id = await Outlet.findById(outlet_id);
-
+        
         await service_appointment.save();
         res.status(200).json({ message: "Appointment updated successfully", service_appointment });
+
     } catch (error) {
         console.log("Error while updating appointment", error);
         res.status(500).json({ message: "Internal server error" });

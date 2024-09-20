@@ -103,7 +103,7 @@ function Sidebar() {
                         </p>
                       </div>
                       <ul className="py-1" role="none">
-                        <li>
+                        {/* <li>
                           <Link
                             to={``}
                             className="block px-4 py-2 text-sm text-black hover:bg-red-200"
@@ -111,7 +111,7 @@ function Sidebar() {
                           >
                             Dashboard
                           </Link>
-                        </li>
+                        </li> */}
                         <li>
                           <Link
                             to={``}
@@ -192,7 +192,7 @@ function Sidebar() {
         >
           <div className=" py-16">
             <ul className=" font-medium">
-              <li>
+              {/* <li>
                 <Link
                   to={``}
                   className="flex items-center p-2 text-black hover:bg-red-200  "
@@ -209,7 +209,7 @@ function Sidebar() {
                   </svg>
                   <span className="ms-3">Dashboard</span>
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   to={`/appointments`}

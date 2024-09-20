@@ -26,7 +26,7 @@ function OtpverifyPage() {
       const data = response.data;
       console.log(data);
       localStorage.setItem('auth_data', JSON.stringify(data));
-      navigate('/dashboard');
+      navigate('/appointments');
     }
     else alert("Invalid OTP");
   };
