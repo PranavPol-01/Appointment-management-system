@@ -96,9 +96,9 @@ Router.post('/add-appointment-staff',verifyToken, async (req, res) => {
         const serviceObjects = await Service.find({ '_id': { $in: services } });
         const packageObjects = await Package.find({ '_id': { $in: packages } });
 
-        if (!staff || !serviceObjects.length || !packageObjects.length) {
-            return res.status(404).json({ message: "Staff, services, or packages not found." });
-        }
+        // if (!staff || !serviceObjects.length || !packageObjects.length) {
+        //     return res.status(404).json({ message: "Staff, services, or packages not found." });
+        // }
 
         const service_appointment = new ServiceAppointment({
             customer_name,
@@ -130,7 +130,7 @@ Router.put('/update-appointment-staff/:id',  async (req, res) => {
             staff_id, services, packages, appointment_id, outlet_id
         } = req.body;
 
-        console.log("update_req_body", req.body);
+        // console.log("update_req_body", req.body);
 
         const service_appointment = await ServiceAppointment.findById(req.params.id);
 
@@ -168,26 +168,10 @@ Router.put('/update-appointment-staff/:id',  async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 });
-// Delete an appointment
-Router.delete('/delete-appointment-staff/:id', async (req, res) => {
-    try {
-        const service_appointment = await ServiceAppointment.findById(req.params.id);
-
-        if (!service_appointment) {
-            return res.status(404).json({ message: "Appointment not found" });
-        }
-
-        await service_appointment.remove();
-        res.status(200).json({ message: "Appointment deleted successfully", service_appointment });
-    } catch (error) {
-        console.log("Error while deleting appointment", error);
-        res.status(500).json({ message: "Internal server error" });
-    }
-});
 // Get all appointments without any filtering
 Router.get('/get-all-appointments-staff', async (req, res) => {
     try {
-        const service_appointments = await ServiceAppointment.find()
+        const service_appointments = await ServiceAppointment.find({ status: 'pending' })
             .populate('staff_id', 'staff_name email')  
             .populate('service_id', 'service_name')   
             .populate('package_id', 'package_name')  
@@ -198,6 +182,41 @@ Router.get('/get-all-appointments-staff', async (req, res) => {
         // console.log(service_appointments)
     } catch (error) {
         console.log("Error while fetching appointments", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+
+// Confirm an appointment
+Router.put('/confirm-appointment/:id', async (req, res) => {
+    try {
+        const service_appointment = await ServiceAppointment.findById(req.params.id);
+        if (!service_appointment) {
+            return res.status(404).json({ message: "Appointment not found" });
+        }
+
+        service_appointment.status = "confirmed"; // Update status to confirmed
+        await service_appointment.save();
+        
+        res.status(200).json({ message: "Appointment confirmed successfully", service_appointment });
+    } catch (error) {
+        console.log("Error while confirming appointment", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
+Router.delete('/delete-appointment-staff/:id',  async (req, res) => {
+    try {
+        const service_appointment = await ServiceAppointment.findById(req.params.id);
+        if (!service_appointment) {
+            return res.status(404).json({ message: "Appointment not found" });
+        }
+
+        await ServiceAppointment.deleteOne({ _id: req.params.id });
+        
+        res.status(200).json({ message: "Appointment deleted successfully" });
+    } catch (error) {
+        console.log("Error while deleting appointment", error);
         res.status(500).json({ message: "Internal server error" });
     }
 });

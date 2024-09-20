@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import edit from "../assets/edit _button.svg";
+import axios from "axios";
 
 const filterAppointments = (appointments, filter) => {
   const now = new Date();
@@ -36,6 +37,33 @@ const filterAppointments = (appointments, filter) => {
 
 const Appointments = ({ appointments, onConfirm, onCancel }) => {
   const [filter, setFilter] = useState("Today");
+
+  const handleConfirm = async (id) => {
+    try {
+      const response = await axios.put(`http://127.0.0.1:5000/api/confirm-appointment/${id}`);
+      console.log(response.data.message);
+      
+      onConfirm(); // Callback to refresh appointments
+      
+    } catch (error) {
+      console.error("Error confirming appointment:", error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this appointment?");
+    if (confirmDelete) {
+      try {
+        const response = await axios.delete(`http://127.0.0.1:5000/api/delete-appointment-staff/${id}`);
+        console.log(response.data.message);
+        
+        onCancel(); // Callback to refresh appointments
+      } catch (error) {
+        console.error("Error deleting appointment:", error);
+      }
+    }
+  };
+
   const filteredAppointments = filterAppointments(appointments, filter);
 
   return (
@@ -96,13 +124,14 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
                 <td className="px-4 py-2 border-b text-center flex justify-center items-center">
                   <button
                     className="text-green-500 px-3 py-1 rounded m-1"
-                    onClick={() => onConfirm(appointment._id)}
+                    onClick={() => handleConfirm(appointment._id)}
+
                   >
                     Confirm
                   </button>
                   <button
                     className="text-red-500 px-3 py-1 rounded m-1"
-                    onClick={() => onCancel(appointment._id)}
+                    onClick={() => handleDelete(appointment._id)}
                   >
                     Cancel
                   </button>

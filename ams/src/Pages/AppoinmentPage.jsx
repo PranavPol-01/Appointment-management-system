@@ -101,6 +101,8 @@ const AppointmentPage = () => {
     }
   }, []);
 
+  
+
   return (
     <>
       {token ? (
