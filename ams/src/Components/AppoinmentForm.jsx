@@ -296,7 +296,7 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
     const userData = JSON.parse(localStorage.getItem("auth_data"));
     const staffId = userData ? userData.user_data._id : null;
    
-    console.log(userData);
+    // console.log(userData);
     console.log(staffId)
     if (staffId) {
       setFormData((prevState) => ({
@@ -310,11 +310,13 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
     if (appointment) {
       setFormData({
         ...appointment,
-        services: appointment.services?.map((s) => s._id) || [], // Assuming _id for services
-        packages: appointment.packages?.map((p) => p._id) || [], // Assuming _id for packages
+        services: appointment.services?.map((s) => s._id) || [],
+        packages: appointment.packages?.map((p) => p._id) || [], 
+        time: appointment.time || "",
       });
     }
   }, [appointment]);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;

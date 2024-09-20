@@ -68,7 +68,9 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
           <tbody>
             {filteredAppointments.map((appointment) => (
               <tr key={appointment._id} className="hover:bg-gray-50">
-                <td className="px-4 py-2 border-b text-center">{appointment.customer_name}</td>
+                <td className="px-4 py-2 border-b text-center">
+                  {appointment.customer_name}
+                </td>
 
                 {/* Rendering services */}
                 <td className="px-4 py-2 border-b text-center">
@@ -106,7 +108,14 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
                   <div className="flex justify-center items-center">
                     <Link
                       to={`/edit-appointment/${appointment._id}`}
-                      state={{ appointment }} // Pass the appointment data to EditAppointmentPage
+                      state={{
+                        appointment: {
+                          ...appointment,
+                          services: appointment.service_id, 
+                          packages: appointment.package_id, 
+                          time: appointment.time,  
+                        },
+                      }}
                       className="px-3 py-1 rounded m-1 w-20"
                     >
                       <img src={edit} alt="edit" />

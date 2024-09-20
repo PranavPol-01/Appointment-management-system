@@ -127,6 +127,8 @@ Router.put('/update-appointment-staff/:id', async (req, res) => {
             staff_id, service_id, package_id, appointment_id
         } = req.body;
 
+        console.log(req.body)
+
         const service_appointment = await ServiceAppointment.findById(req.params.id);
 
         if (!service_appointment) {
@@ -171,10 +173,10 @@ Router.delete('/delete-appointment-staff/:id', async (req, res) => {
 Router.get('/get-all-appointments-staff', async (req, res) => {
     try {
         const service_appointments = await ServiceAppointment.find()
-            .populate('staff_id', 'staff_name email')  // Populate staff details
-            .populate('service_id', 'service_name')    // Populate service details
-            .populate('package_id', 'package_name')    // Populate package details
-            .populate('appointment_id', 'date');       // Populate appointment details
+            .populate('staff_id', 'staff_name email')  
+            .populate('service_id', 'service_name')   
+            .populate('package_id', 'package_name')    
+            .populate('appointment_id', 'date');      
 
         res.status(200).json({ service_appointments });
         // console.log(service_appointments)
