@@ -73,7 +73,7 @@ const AppointmentPage = () => {
     //     const response = await axios.get(`http://127.0.0.1:5000/api/get-all-appointments-staff/${outletId}`, {
       const response = await axios.get("http://127.0.0.1:5000/api/get-all-appointments-staff", {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("auth_data")?.token}`,
+            Authorization: `Bearer ${token.token}`,
           },
         });
         console.log(response.data.service_appointments)

@@ -259,6 +259,7 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
     services: [],
     packages: [],
     staff_id: "",
+    outlet_id: "",
   });
 
   const [allServices, setAllServices] = useState([]);
@@ -295,17 +296,39 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
     // const userData = JSON.parse();
     const userData = JSON.parse(localStorage.getItem("auth_data"));
     const staffId = userData ? userData.user_data._id : null;
+    const outlet_id = userData ? userData.user_data.outlet_id : null;
    
     // console.log(userData);
-    console.log(staffId)
+    // console.log(staffId)
+    console.log(outlet_id)
     if (staffId) {
       setFormData((prevState) => ({
         ...prevState,
         staff_id: staffId,
+        
       }));
     }
   }, []);
-
+  
+  useEffect(() => {
+    // const userData = JSON.parse();
+    const userData = JSON.parse(localStorage.getItem("auth_data"));
+    // const staffId = userData ? userData.user_data._id : null;
+    const outlet_id = userData ? userData.user_data.outlet_id : null;
+   
+    // console.log(userData);
+    // console.log(staffId)
+    console.log(outlet_id)
+    if (outlet_id) {
+      setFormData((prevState) => ({
+        ...prevState,
+        outlet_id: outlet_id,
+        
+      }));
+    }
+  }, []);
+  
+  
   useEffect(() => {
     if (appointment) {
       setFormData({

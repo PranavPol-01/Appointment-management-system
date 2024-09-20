@@ -68,7 +68,7 @@ const BookAppointmentPage = () => {
 
       const response = await axios.post("http://127.0.0.1:5000/api/add-appointment-staff", formData, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("auth_data")?.token}`,
+          Authorization: `Bearer ${token.token}`,
         },
       });
       console.log("New appointment:", response.data);

@@ -76,20 +76,23 @@ const ServiceAppointment = require("../models/service_appointment");
 const SignupUser = require("../models/signupUser");
 const Service = require('../models/services'); 
 const Package = require("../models/packages");
+const Outlet = require("../models/outlets");
 const Appointment = require("../models/appointments");
 const express = require("express");
 const Router = express.Router();
+const verifyToken = require("../middlewares/verify_jwt_token");
 
 // Add a new appointment
-Router.post('/add-appointment-staff', async (req, res) => {
+Router.post('/add-appointment-staff',verifyToken, async (req, res) => {
     try {
         const {
             customer_name, customer_email, customer_mobile_phone, status, time,
-            staff_id, services, packages, appointment_id
+            staff_id, services, packages, appointment_id,outlet_id
         } = req.body;
 
         // Validate if staff, services, and packages exist
         const staff = await SignupUser.findById(staff_id);
+        const outlet = await Outlet.findById(outlet_id);
         const serviceObjects = await Service.find({ '_id': { $in: services } });
         const packageObjects = await Package.find({ '_id': { $in: packages } });
 
@@ -104,6 +107,7 @@ Router.post('/add-appointment-staff', async (req, res) => {
             status,
             time,
             staff_id: staff._id,
+            outlet_id: outlet._id,
             service_id: serviceObjects.map(s => s._id),
             package_id: packageObjects.map(p => p._id),
             appointment_id: appointment_id ? await Appointment.findById(appointment_id) : null
@@ -124,7 +128,7 @@ Router.put('/update-appointment-staff/:id', async (req, res) => {
     try {
         const {
             customer_name, customer_email, customer_mobile_phone, status, time,
-            staff_id, service_id, package_id, appointment_id
+            staff_id, service_id, package_id, appointment_id,outlet_id
         } = req.body;
 
         console.log(req.body)
@@ -144,6 +148,7 @@ Router.put('/update-appointment-staff/:id', async (req, res) => {
         service_appointment.service_id = await Service.findById(service_id);
         service_appointment.package_id = await Package.findById(package_id);
         service_appointment.appointment_id = await Appointment.findById(appointment_id);
+        service_appointment.outlet_id = await Outlet.findById(outlet_id);
 
         await service_appointment.save();
         res.status(200).json({ message: "Appointment updated successfully", service_appointment });
@@ -175,7 +180,8 @@ Router.get('/get-all-appointments-staff', async (req, res) => {
         const service_appointments = await ServiceAppointment.find()
             .populate('staff_id', 'staff_name email')  
             .populate('service_id', 'service_name')   
-            .populate('package_id', 'package_name')    
+            .populate('package_id', 'package_name')  
+            .populate('outlet_id', 'outlet_name') 
             .populate('appointment_id', 'date');      
 
         res.status(200).json({ service_appointments });
