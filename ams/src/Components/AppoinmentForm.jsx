@@ -351,21 +351,25 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
 
   // Handle service selection using react-select
   const handleServiceChange = (selectedOptions) => {
-    const selectedServices = selectedOptions ? selectedOptions.map((option) => option.value) : [];
+    const selectedServices = selectedOptions
+      ? selectedOptions.map((option) => option.value) 
+      : [];
     setFormData((prevState) => ({
       ...prevState,
-      services: selectedServices,
+      services: selectedServices, 
     }));
   };
-
-  // Handle package selection using react-select
+  
   const handlePackageChange = (selectedOptions) => {
-    const selectedPackages = selectedOptions ? selectedOptions.map((option) => option.value) : [];
+    const selectedPackages = selectedOptions
+      ? selectedOptions.map((option) => option.value) 
+      : [];
     setFormData((prevState) => ({
       ...prevState,
-      packages: selectedPackages,
+      packages: selectedPackages, 
     }));
   };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();

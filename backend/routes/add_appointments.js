@@ -123,15 +123,14 @@ Router.post('/add-appointment-staff',verifyToken, async (req, res) => {
 
 
 
-// Update an existing appointment
-Router.put('/update-appointment-staff/:id', async (req, res) => {
+Router.put('/update-appointment-staff/:id',  async (req, res) => {
     try {
         const {
             customer_name, customer_email, customer_mobile_phone, status, time,
-            staff_id, service_id, package_id, appointment_id,outlet_id
+            staff_id, services, packages, appointment_id, outlet_id
         } = req.body;
 
-        console.log(req.body)
+        console.log("update_req_body", req.body);
 
         const service_appointment = await ServiceAppointment.findById(req.params.id);
 
@@ -139,18 +138,29 @@ Router.put('/update-appointment-staff/:id', async (req, res) => {
             return res.status(404).json({ message: "Appointment not found" });
         }
 
+        // Validate if staff, services, and packages exist
+        const staff = await SignupUser.findById(staff_id);
+        const outlet = await Outlet.findById(outlet_id);
+        const serviceObjects = await Service.find({ '_id': { $in: services } });
+        const packageObjects = await Package.find({ '_id': { $in: packages } });
+
+        if (!staff || !serviceObjects.length || !packageObjects.length) {
+            return res.status(404).json({ message: "Staff, services, or packages not found." });
+        }
+
         service_appointment.customer_name = customer_name;
         service_appointment.customer_email = customer_email;
         service_appointment.customer_mobile_phone = customer_mobile_phone;
         service_appointment.status = status;
         service_appointment.time = time;
-        service_appointment.staff_id = await SignupUser.findById(staff_id);
-        service_appointment.service_id = await Service.findById(service_id);
-        service_appointment.package_id = await Package.findById(package_id);
-        service_appointment.appointment_id = await Appointment.findById(appointment_id);
-        service_appointment.outlet_id = await Outlet.findById(outlet_id);
-        
+        service_appointment.staff_id = staff._id;
+        service_appointment.outlet_id = outlet._id;
+        service_appointment.service_id = serviceObjects.map(s => s._id);
+        service_appointment.package_id = packageObjects.map(p => p._id);
+        service_appointment.appointment_id = appointment_id ? await Appointment.findById(appointment_id) : null;
+
         await service_appointment.save();
+        console.log("service_appointment", service_appointment);
         res.status(200).json({ message: "Appointment updated successfully", service_appointment });
 
     } catch (error) {
@@ -158,7 +168,6 @@ Router.put('/update-appointment-staff/:id', async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 });
-
 // Delete an appointment
 Router.delete('/delete-appointment-staff/:id', async (req, res) => {
     try {
