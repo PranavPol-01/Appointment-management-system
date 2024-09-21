@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const outletSchema = new Schema({
-  city: {
+  district: {
     type: String,
     required: true
   },
@@ -38,10 +38,10 @@ const outletSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  outlet_password:{
-    type: String,
-    required:false
-  }
+  // outlet_password:{
+  //   type: String,
+  //   required:false
+  // }
 });
 
 const outlet = mongoose.model('outlet', outletSchema);

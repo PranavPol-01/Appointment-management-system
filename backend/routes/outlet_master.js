@@ -1,25 +1,23 @@
 const Outlets = require("../models/outlets");
 const express = require("express");
 const Router = express.Router();
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+// const verifyToken = require("../middleware/verifyToken");
 require("dotenv").config();
 
 Router.post("/outlet", async (req, res) => {
   try {
-    const hashedPassword = await bcrypt.hash(req.body.outlet_password, 10);
-
     const outlet = new Outlets({
-      name: req.body.name,
+      outlet_name: req.body.name,
       email: req.body.email,
-      city: req.body.city,
+      district: req.body.district,
       state: req.body.state,
       address: req.body.address,
       pincode: req.body.pincode,
       outlet_name: req.body.outlet_name,
       google_map_link: req.body.google_map_link,
       telephone_number: req.body.telephone_number,
-      outlet_password: hashedPassword,
     });
     await outlet.save();
     res.status(200).json(outlet);

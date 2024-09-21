@@ -1,7 +1,7 @@
 const Outlets = require("../models/outlets");
 const express = require("express");
 const Router = express.Router();
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const request = require("request");
 require("dotenv").config();
@@ -10,29 +10,29 @@ const SignupUser = require("../models/signupUser");
 
 const inMemoryUserDetails = new Object();
 
-Router.post("/outlet", async (req, res) => {
-  try {
-    const hashedPassword = await bcrypt.hash(req.body.outlet_password, 10);
+// Router.post("/outlet", async (req, res) => {
+//   try {
+//     const hashedPassword = await bcrypt.hash(req.body.outlet_password, 10);
 
-    const outlet = new Outlets({
-      name: req.body.name,
-      email: req.body.email,
-      city: req.body.city,
-      state: req.body.state,
-      address: req.body.address,
-      pincode: req.body.pincode,
-      outlet_name: req.body.outlet_name,
-      google_map_link: req.body.google_map_link,
-      telephone_number: req.body.telephone_number,
-      outlet_password: hashedPassword,
-    });
-    await outlet.save();
-    res.status(200).json(outlet);
-  } catch (error) {
-    console.log("Some error occured while creating outlet", error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
+//     const outlet = new Outlets({
+//       name: req.body.name,
+//       email: req.body.email,
+//       city: req.body.city,
+//       state: req.body.state,
+//       address: req.body.address,
+//       pincode: req.body.pincode,
+//       outlet_name: req.body.outlet_name,
+//       google_map_link: req.body.google_map_link,
+//       telephone_number: req.body.telephone_number,
+//       outlet_password: hashedPassword,
+//     });
+//     await outlet.save();
+//     res.status(200).json(outlet);
+//   } catch (error) {
+//     console.log("Some error occured while creating outlet", error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// });
 
 Router.post("/staff-outlet-login", async (req, res) => {
   if (!req.body || !req.body.mobile_number || !req.body.outlet_password) {

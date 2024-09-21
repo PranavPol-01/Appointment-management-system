@@ -1,7 +1,7 @@
 const verifyToken = require("../middlewares/verify_jwt_token");
 const Outlets = require("../models/outlets");
 const User = require("../models/signupUser");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const express = require("express");
 const Router = express.Router();
 
