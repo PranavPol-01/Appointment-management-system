@@ -8,6 +8,7 @@ const {packageRoutes} = require("./routes/package")
 const {AppointmentRoutes} = require("./routes/add_appointments")
 const cors = require('cors');
 const { outletMaster } = require("./routes/outlet_master");
+const session = require('express-session')
 
 // Server configuration
 const server = app();
@@ -17,6 +18,13 @@ const port = 5000
 server.use(cors());  // should always be kept at the top
 server.use(app.json());
 server.use(app.urlencoded({ extended: true }));
+// Code for using sessions for login
+server.use(session({
+  secret:process.env.SESSION_SECRET,
+  resave:false,
+  saveUninitialized:true,
+  cookie:{secure:false}
+}))
 server.use('/api', makeSignupUser)
 server.use('/api', outletRoute)
 server.use('/api', serviceRoutes);
