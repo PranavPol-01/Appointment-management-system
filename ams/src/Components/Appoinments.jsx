@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, Outlet } from "react-router-dom";
 import edit from "../assets/edit _button.svg";
 import axios from "axios";
+import Select from "react-select";
 
 const filterAppointments = (appointments, filter) => {
   const now = new Date();
@@ -11,7 +12,7 @@ const filterAppointments = (appointments, filter) => {
       return appointments.filter((appointment) => {
         console.log(appointment.time);
         const inTime = new Date(appointment.time);
-        return inTime.toDateString() === now.toDateString();
+        return inTime.toDateString() === now.toDateString() && Outlet.includes(appointment.outlet_id);
       });
 
     case "Last Week":
@@ -40,23 +41,28 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
 
   const handleConfirm = async (id) => {
     try {
-      const response = await axios.put(`http://127.0.0.1:5000/api/confirm-appointment/${id}`);
+      const response = await axios.put(
+        `http://127.0.0.1:5000/api/confirm-appointment/${id}`
+      );
       console.log(response.data.message);
-      
+
       onConfirm(); // Callback to refresh appointments
-      
     } catch (error) {
       console.error("Error confirming appointment:", error);
     }
   };
 
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this appointment?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this appointment?"
+    );
     if (confirmDelete) {
       try {
-        const response = await axios.delete(`http://127.0.0.1:5000/api/delete-appointment-staff/${id}`);
+        const response = await axios.delete(
+          `http://127.0.0.1:5000/api/delete-appointment-staff/${id}`
+        );
         console.log(response.data.message);
-        
+
         onCancel(); // Callback to refresh appointments
       } catch (error) {
         console.error("Error deleting appointment:", error);
@@ -64,23 +70,61 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
     }
   };
 
+  const [outlets, setOutlets] = useState([]);
+  const [outletNames, setOutletNames] = useState([]);
+  const getOutlets = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/outlet", {
+        headers: {
+          // Authorization: `Bearer ${
+          //   JSON.parse(localStorage.getItem("auth_data")).token
+          // }`,
+        },
+      });
+      const outlets = response.data;
+      setOutlets(outlets);
+      setOutletNames(outlets.map((outlet) => ({ value: outlet._id, label: outlet.outlet_name })));
+      console.log("outlets", outlets);
+    } catch (error) {
+      console.log("Error while fetching outlets", error);
+    }
+  };
+
+
+  useEffect(() => {
+    getOutlets();
+    console.log(outletNames)
+  }, [appointments]);
+
   const filteredAppointments = filterAppointments(appointments, filter);
+
 
   return (
     <div className="p-4">
       <h1 className="text-3xl mb-4">Appointments</h1>
 
-      <div className="flex justify-end mb-4">
-        <label className="mr-2">Sort by:</label>
-        <select
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          className="border border-gray-300 rounded px-2 py-1"
-        >
-          <option value="Today">Today</option>
-          <option value="Last Week">Last Week</option>
-          <option value="Last Month">Last Month</option>
-        </select>
+      <div className="flex flex-row justify-between">
+        <div className="flex justify-end mb-4">
+          <label className="mr-2">Choose Outlets:</label>
+          <Select
+            isMulti
+            options={outlets.map((outlet) => ({ value: outlet._id, label: outlet.outlet_name }))}
+            value={outletNames}
+            onChange={(selectedOutlets) => {setOutletNames(selectedOutlets),console.log("Selected outlet",selectedOptions)}}
+          />
+        </div>
+        <div className="flex justify-end mb-4">
+          <label className="mr-2">Sort by:</label>
+          <select
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            className="border border-gray-300 rounded px-2 py-1"
+          >
+            <option value="Today">Today</option>
+            <option value="Last Week">Last Week</option>
+            <option value="Last Month">Last Month</option>
+          </select>
+        </div>
       </div>
 
       <div className="overflow-x-auto">
@@ -125,7 +169,6 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
                   <button
                     className="text-green-500 px-3 py-1 rounded m-1"
                     onClick={() => handleConfirm(appointment._id)}
-
                   >
                     Confirm
                   </button>
@@ -141,9 +184,9 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
                       state={{
                         appointment: {
                           ...appointment,
-                          services: appointment.service_id, 
-                          packages: appointment.package_id, 
-                          time: appointment.time,  
+                          services: appointment.service_id,
+                          packages: appointment.package_id,
+                          time: appointment.time,
                         },
                       }}
                       className="px-3 py-1 rounded m-1 w-20"

@@ -3,6 +3,7 @@ const express = require("express");
 const Router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const verifyToken = require("../middlewares/verify_jwt_token");
 // const verifyToken = require("../middleware/verifyToken");
 require("dotenv").config();
 
@@ -54,6 +55,17 @@ Router.delete("/outlet/:id", async (req, res) => {
     res.status(200).json({ message: "Outlet deleted successfully" });
   } catch (error) {
     console.log("Some error occured while deleting outlet", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+Router.get("/outlet", async (req, res) => {
+  try {
+    const outlet = await Outlets.find();
+    console.log("outlets", outlet);
+    res.status(200).json(outlet);
+  } catch (error) {
+    console.log("Some error occured while fetching outlet", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
