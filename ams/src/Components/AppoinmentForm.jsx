@@ -313,8 +313,9 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
   useEffect(() => {
     // const userData = JSON.parse();
     const userData = JSON.parse(localStorage.getItem("auth_data"));
+    const outlet = localStorage.getItem('outlet_id')
     // const staffId = userData ? userData.user_data._id : null;
-    const outlet_id = userData ? userData.user_data.outlet_id : null;
+    const outlet_id = outlet ? outlet : null;
    
     // console.log(userData);
     // console.log(staffId)

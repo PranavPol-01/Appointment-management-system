@@ -4,15 +4,25 @@ import edit from "../assets/edit _button.svg";
 import axios from "axios";
 import Select from "react-select";
 
-const filterAppointments = (appointments, filter) => {
+const filterAppointments = (appointments, filter, outletNames) => {
   const now = new Date();
 
   switch (filter) {
     case "Today":
       return appointments.filter((appointment) => {
-        console.log(appointment.time);
         const inTime = new Date(appointment.time);
-        return inTime.toDateString() === now.toDateString() && Outlet.includes(appointment.outlet_id);
+        const isToday = inTime.toDateString() === now.toDateString();
+
+        const matchesOutlet = outletNames.some(
+          (outlet) => outlet.value === appointment.outlet_id?._id
+        );
+
+        // Debugging
+        // console.log("Checking appointment:", appointment);
+        // console.log("Is today:", isToday);
+        // console.log("Matches outlet:", matchesOutlet);
+
+        return isToday && matchesOutlet;
       });
 
     case "Last Week":
@@ -20,7 +30,15 @@ const filterAppointments = (appointments, filter) => {
       oneWeekAgo.setDate(now.getDate() - 7);
       return appointments.filter((appointment) => {
         const inTime = new Date(appointment.time);
-        return inTime > oneWeekAgo && inTime <= now;
+        const lastWeek = inTime > oneWeekAgo && inTime <= now
+        const matchesOutlet = outletNames.some(
+          (outlet) => outlet.value === appointment.outlet_id?._id
+        );
+        // console.log("Checking appointment:", appointment);
+        // console.log("Is last week:", lastWeek);
+        // console.log("Matches outlet:", matchesOutlet);
+
+        return lastWeek && matchesOutlet;
       });
 
     case "Last Month":
@@ -28,7 +46,15 @@ const filterAppointments = (appointments, filter) => {
       oneMonthAgo.setMonth(now.getMonth() - 1);
       return appointments.filter((appointment) => {
         const inTime = new Date(appointment.time);
-        return inTime > oneMonthAgo && inTime <= now;
+        const lastMonth = inTime > oneMonthAgo && inTime <= now
+        const matchesOutlet = outletNames.some(
+          (outlet) => outlet.value === appointment.outlet_id?._id
+        );
+        // console.log("Checking appointment:", appointment);
+        // console.log("Is last week:", lastMonth);
+        // console.log("Matches outlet:", matchesOutlet);
+        
+        return lastMonth && matchesOutlet;
       });
 
     default:
@@ -83,21 +109,24 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
       });
       const outlets = response.data;
       setOutlets(outlets);
-      setOutletNames(outlets.map((outlet) => ({ value: outlet._id, label: outlet.outlet_name })));
       console.log("outlets", outlets);
+      console.log("outletsNames", outletNames);
+      localStorage.setItem('outlet_id',outletNames[0].value)
     } catch (error) {
       console.log("Error while fetching outlets", error);
     }
   };
 
-
   useEffect(() => {
     getOutlets();
-    console.log(outletNames)
-  }, [appointments]);
+    console.log("Appointments", appointments);
+  }, [appointments,outletNames]);
 
-  const filteredAppointments = filterAppointments(appointments, filter);
-
+  const filteredAppointments = filterAppointments(
+    appointments,
+    filter,
+    outletNames
+  );
 
   return (
     <div className="p-4">
@@ -108,9 +137,15 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
           <label className="mr-2">Choose Outlets:</label>
           <Select
             isMulti
-            options={outlets.map((outlet) => ({ value: outlet._id, label: outlet.outlet_name }))}
+            options={outlets.map((outlet) => ({
+              value: outlet._id,
+              label: outlet.outlet_name,
+            }))}
             value={outletNames}
-            onChange={(selectedOutlets) => {setOutletNames(selectedOutlets),console.log("Selected outlet",selectedOptions)}}
+            onChange={(outletNames) => {
+              setOutletNames(outletNames),
+                console.log("selected outlet names", outletNames)                
+            }}
           />
         </div>
         <div className="flex justify-end mb-4">
