@@ -76,7 +76,7 @@ const AppointmentPage = () => {
           //   Authorization: `Bearer ${token.token}`,
           // },
         });
-        console.log(response.data.service_appointments)
+        console.log("All service appointments",response.data.service_appointments)
         setAppointments(response.data.service_appointments);
         // console.log(appointments);
       } catch (error) {

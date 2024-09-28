@@ -20,7 +20,7 @@ const filterAppointments = (appointments, filter, outletNames) => {
         // Debugging
         // console.log("Checking appointment:", appointment);
         // console.log("Is today:", isToday);
-        // console.log("Matches outlet:", matchesOutlet);
+        console.log("Matches outlet:", matchesOutlet);
 
         return isToday && matchesOutlet;
       });
@@ -36,7 +36,7 @@ const filterAppointments = (appointments, filter, outletNames) => {
         );
         // console.log("Checking appointment:", appointment);
         // console.log("Is last week:", lastWeek);
-        // console.log("Matches outlet:", matchesOutlet);
+        console.log("Matches outlet:", matchesOutlet);
 
         return lastWeek && matchesOutlet;
       });
@@ -52,7 +52,7 @@ const filterAppointments = (appointments, filter, outletNames) => {
         );
         // console.log("Checking appointment:", appointment);
         // console.log("Is last week:", lastMonth);
-        // console.log("Matches outlet:", matchesOutlet);
+        console.log("Matches outlet:", matchesOutlet);
         
         return lastMonth && matchesOutlet;
       });

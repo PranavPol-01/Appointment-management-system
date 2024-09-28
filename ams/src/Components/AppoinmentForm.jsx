@@ -254,7 +254,7 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
     customer_name: "",
     customer_email: "",
     customer_mobile_phone: "",
-    status: "",
+    status: "pending",
     time: "",
     services: [],
     packages: [],
@@ -387,6 +387,15 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <input
+            type="tel"
+            name="customer_mobile_phone"
+            value={formData.customer_mobile_phone}
+            onChange={handleChange}
+            placeholder="Customer Mobile Phone"
+            className="p-2 border rounded-md"
+            required
+          />
+          <input
             type="text"
             name="customer_name"
             value={formData.customer_name}
@@ -400,14 +409,6 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
             value={formData.customer_email}
             onChange={handleChange}
             placeholder="Customer Email"
-            className="p-2 border rounded-md"
-          />
-          <input
-            type="tel"
-            name="customer_mobile_phone"
-            value={formData.customer_mobile_phone}
-            onChange={handleChange}
-            placeholder="Customer Mobile Phone"
             className="p-2 border rounded-md"
           />
           <input
