@@ -10,11 +10,11 @@ async function sendEmail(to, html) {
         console.error('Error: EMAIL and PASSWORD environment variables must be set.');
         return;
       }
-      
+
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
-    secure: false, // should be false for port 587
+    secure: false,
     auth: {
       user: process.env.EMAIL,
       pass: process.env.PASSWORD
