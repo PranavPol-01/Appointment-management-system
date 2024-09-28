@@ -15,6 +15,8 @@ import ServiceForm from "./Pages/ServiceForm";
 import OtpverifyPage from "./Pages/OtpverifyPage";
 import PaymentPage from './Pages/PaymentPage';
 import PaymentForm from './Components/PaymentForm';
+import UserPage from "./Pages/UserPage";
+import UserTable from "./Pages/UserTable";
 
 function App() {
   const location = useLocation();
@@ -48,6 +50,8 @@ function App() {
           <Route path="/edit-service/:id" element={<ServiceForm />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/payment-form" element={<PaymentForm />} />
+          <Route path='/add-user' element={<UserPage/>}/>
+          <Route path="/user" element={<UserTable />} />
         </Routes>
       </div>
     </>
