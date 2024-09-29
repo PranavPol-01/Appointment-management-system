@@ -23,7 +23,7 @@ Router.post("/signup", async (req, res) => {
   console.log(user);
 });
 
-Router.get("/signup",verifyToken, async (req, res) => {
+Router.get("/signup", verifyToken, async (req, res) => {
   const user = await User.find();
   res.json(user);
   console.log(user);

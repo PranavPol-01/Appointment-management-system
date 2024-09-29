@@ -83,7 +83,7 @@ const Router = express.Router();
 const verifyToken = require("../middlewares/verify_jwt_token");
 
 // Add a new appointment
-Router.post('/add-appointment-staff',verifyToken, async (req, res) => {
+Router.post('/add-appointment-staff', async (req, res) => {
     try {
         const {
             customer_name, customer_email, customer_mobile_phone, status, time,
@@ -91,7 +91,7 @@ Router.post('/add-appointment-staff',verifyToken, async (req, res) => {
         } = req.body;
 
         // Validate if staff, services, and packages exist
-        const staff = await SignupUser.findById(staff_id);
+        // const staff = await SignupUser.findById(staff_id);
         const outlet = await Outlet.findById(outlet_id);
         const serviceObjects = await Service.find({ '_id': { $in: services } });
         const packageObjects = await Package.find({ '_id': { $in: packages } });
@@ -106,11 +106,11 @@ Router.post('/add-appointment-staff',verifyToken, async (req, res) => {
             customer_mobile_phone,
             status,
             time,
-            staff_id: staff._id,
+            // staff_id: staff._id,
             outlet_id: outlet._id,
             service_id: serviceObjects.map(s => s._id),
             package_id: packageObjects.map(p => p._id),
-            appointment_id: appointment_id ? await Appointment.findById(appointment_id) : null
+            // appointment_id: appointment_id ? await Appointment.findById(appointment_id) : null
         });
 
         await service_appointment.save();
@@ -171,7 +171,7 @@ Router.put('/update-appointment-staff/:id',  async (req, res) => {
 // Get all appointments without any filtering
 Router.get('/get-all-appointments-staff', async (req, res) => {
     try {
-        const service_appointments = await ServiceAppointment.find({ status: 'pending' })
+        const service_appointments = await ServiceAppointment.find({ status: "pending" })
             .populate('staff_id', 'staff_name email')  
             .populate('service_id', 'service_name')   
             .populate('package_id', 'package_name')  

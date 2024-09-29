@@ -107,6 +107,7 @@ Router.post('/verify-otp', async (req, res) => {
   
   try {
     const jwt_token = jwt.sign({ otp: otp }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    req.session.jwt_token = jwt_token;
     res.status(200).send({ msg: "OTP verified", token: jwt_token , user_data: inMemoryUserDetails.user_data});
 
   } catch (error) {
@@ -115,6 +116,11 @@ Router.post('/verify-otp', async (req, res) => {
   }
 });
 
+Router.get('/logout', verifyToken, (req, res) => {
+  req.session.destroy();
+  console.log('Logged out')
+  res.status(200).json({ message: "You are logged out" });
+});
 
 module.exports = {
   outletRoute: Router,

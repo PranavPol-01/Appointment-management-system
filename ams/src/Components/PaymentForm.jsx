@@ -120,57 +120,128 @@ import React, { useState } from "react";
 
 // export default PaymentForm;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Input from '@mui/material/Input';
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Input from "@mui/material/Input";
 //import { styled } from '@mui/material/styles';
-import { TextField } from '@mui/material';
+import { TextField } from "@mui/material";
+import { Stack } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 const bull = (
   <Box
     component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
+    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
   >
     •
   </Box>
 );
 
 export default function PaymentForm() {
+  const Div = styled("div")(({ theme }) => ({
+    ...theme.typography.button,
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(1),
+  }));
+
   return (
+    <div>
+      <Card sx={{ minWidth: 275 }}>
+        <CardContent>
+          <div>
+            {/* <Typography
+              variant="h5"
+              gutterBottom
+              sx={{ color: "text.secondary", fontSize: 14 }}
+            >
+              Name
+            </Typography> */}
+            <div>
+              <Div>{"Name"}</Div>
+              <Stack spacing={4}>
+                <Stack direction="row" spacing={2}>
+                  <TextField label="Name" size="small" color="primary" />
+                </Stack>
+              </Stack>
+            </div>
 
-    <Card sx={{ minWidth: 275 }}>
-      <CardContent>
-      <div style={{display:'flex'}}>
-        <Typography variant="h5" gutterBottom sx={{ color: 'text.secondary', fontSize: 14 }}>
-          Name
-        </Typography>
-        <TextField sx="{{fontSize: 12}}" id="filled-basic" label="Filled" variant="filled" />
-        </div>
-       {/* <Input placeholder="Placeholder" inputProps={ariaLabel} /> */}
-      </CardContent>
-    </Card>
+            <div>
+              <Div>{"Outlet"}</Div>
+              <Stack spacing={4}>
+                <Stack direction="row" spacing={2}>
+                  <TextField label="select" size="small" color="primary" />
+                </Stack>
+              </Stack>
+            </div>
 
+            <div>
+              <Div>{"Service"}</Div>
+              <Stack spacing={4}>
+                <Stack direction="row" spacing={2}>
+                  <TextField label="select" size="small" color="primary" />
+                </Stack>
+              </Stack>
+            </div>
+
+
+            <div>
+              <Div>{"Service"}</Div>
+              <Stack spacing={4}>
+                <Stack direction="row" spacing={2}>
+                  <TextField label="select" size="small" color="primary" />
+                </Stack>
+              </Stack>
+            </div>
+
+
+            <div>
+              <Div>{"Time"}</Div>
+              <Stack spacing={4}>
+                <Stack direction="row" spacing={2}>
+                  <TextField label="select" size="small" color="primary" />
+                </Stack>
+              </Stack>
+            </div>
+
+
+            <div>
+              <Div>{"Staff name"}</Div>
+              <Stack spacing={4}>
+                <Stack direction="row" spacing={2}>
+                  <TextField label="select" size="small" color="primary" />
+                </Stack>
+              </Stack>
+            </div>
+
+
+            <Div>{"Mode of payment"}</Div>
+
+            <div>
+              <Div>{"Cash"}</Div>
+              <Stack spacing={4}>
+                <Stack direction="row" spacing={2}>
+                  <TextField label="select" size="small" color="primary" />
+                </Stack>
+              </Stack>
+            </div>
+
+            <div>
+              <Div>{"Online or offline"}</Div>
+              <Stack spacing={4}>
+                <Stack direction="row" spacing={2}>
+                  <TextField label="select" size="small" color="primary" />
+                </Stack>
+              </Stack>
+            </div>
+          </div>
+          {/* <Input placeholder="Placeholder" inputProps={ariaLabel} /> */}
+        </CardContent>
+      </Card>
+    </div>
   );
 }

@@ -72,11 +72,11 @@ const AppointmentPage = () => {
     //    // Replace with actual outlet ID
     //     const response = await axios.get(`http://127.0.0.1:5000/api/get-all-appointments-staff/${outletId}`, {
       const response = await axios.get("http://127.0.0.1:5000/api/get-all-appointments-staff", {
-          headers: {
-            Authorization: `Bearer ${token.token}`,
-          },
+          // headers: {
+          //   Authorization: `Bearer ${token.token}`,
+          // },
         });
-        console.log(response.data.service_appointments)
+        console.log("All service appointments",response.data.service_appointments)
         setAppointments(response.data.service_appointments);
         // console.log(appointments);
       } catch (error) {
@@ -97,8 +97,8 @@ const AppointmentPage = () => {
       } catch (error) {
         console.log(error);
       }
-      fetchAppointments();
     }
+    fetchAppointments();
   }, []);
 
   
