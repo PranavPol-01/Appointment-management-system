@@ -1,4 +1,3 @@
-
 // import React, { useState, useEffect } from "react";
 
 // const AppointmentForm = ({
@@ -248,6 +247,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Select from "react-select"; // Import react-select for dynamic dropdown
+import { useNavigate } from "react-router-dom";
+import AsyncSelect from "react-select/async";
 
 const AppointmentForm = ({ appointment, onSave, onCancel }) => {
   const [formData, setFormData] = useState({
@@ -264,13 +265,20 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
 
   const [allServices, setAllServices] = useState([]);
   const [allPackages, setAllPackages] = useState([]);
+  const [mobileOptions, setMobileOptions] = useState([]); // Mobile number options
+  const [isUserFound, setIsUserFound] = useState(true); // To track if user found
+  const navigate = useNavigate(); // To navigate to Add User page
 
   // Fetch services and packages when the component mounts
   useEffect(() => {
     const fetchServicesAndPackages = async () => {
       try {
-        const servicesResponse = await axios.get("http://127.0.0.1:5000/api/services");
-        const packagesResponse = await axios.get("http://127.0.0.1:5000/api/packages");
+        const servicesResponse = await axios.get(
+          "http://127.0.0.1:5000/api/services"
+        );
+        const packagesResponse = await axios.get(
+          "http://127.0.0.1:5000/api/packages"
+        );
 
         // Map services and packages to the react-select format (label, value)
         const servicesOptions = servicesResponse.data.map((service) => ({
@@ -297,50 +305,46 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
     const userData = JSON.parse(localStorage.getItem("auth_data"));
     const staffId = userData ? userData.user_data._id : null;
     const outlet_id = userData ? userData.user_data.outlet_id : null;
-   
+
     // console.log(userData);
     // console.log(staffId)
-    console.log(outlet_id)
+    console.log(outlet_id);
     if (staffId) {
       setFormData((prevState) => ({
         ...prevState,
         staff_id: staffId,
-        
       }));
     }
   }, []);
-  
+
   useEffect(() => {
     // const userData = JSON.parse();
     const userData = JSON.parse(localStorage.getItem("auth_data"));
-    const outlet = localStorage.getItem('outlet_id')
+    const outlet = localStorage.getItem("outlet_id");
     // const staffId = userData ? userData.user_data._id : null;
     const outlet_id = outlet ? outlet : null;
-   
+
     // console.log(userData);
     // console.log(staffId)
-    console.log(outlet_id)
+    console.log(outlet_id);
     if (outlet_id) {
       setFormData((prevState) => ({
         ...prevState,
         outlet_id: outlet_id,
-        
       }));
     }
   }, []);
-  
-  
+
   useEffect(() => {
     if (appointment) {
       setFormData({
         ...appointment,
         services: appointment.services?.map((s) => s._id) || [],
-        packages: appointment.packages?.map((p) => p._id) || [], 
+        packages: appointment.packages?.map((p) => p._id) || [],
         time: appointment.time || "",
       });
     }
   }, [appointment]);
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -353,24 +357,83 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
   // Handle service selection using react-select
   const handleServiceChange = (selectedOptions) => {
     const selectedServices = selectedOptions
-      ? selectedOptions.map((option) => option.value) 
+      ? selectedOptions.map((option) => option.value)
       : [];
     setFormData((prevState) => ({
       ...prevState,
-      services: selectedServices, 
+      services: selectedServices,
     }));
   };
-  
+
   const handlePackageChange = (selectedOptions) => {
     const selectedPackages = selectedOptions
-      ? selectedOptions.map((option) => option.value) 
+      ? selectedOptions.map((option) => option.value)
       : [];
     setFormData((prevState) => ({
       ...prevState,
-      packages: selectedPackages, 
+      packages: selectedPackages,
     }));
   };
-  
+
+  // Fetch mobile numbers based on input
+  const fetchMobileNumbers = async (inputValue) => {
+    if (!inputValue) return [];
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:5000/api/get-users?mobile_phone=${inputValue}`
+      );
+      const users = response.data;
+
+      if (users.length > 0) {
+        setIsUserFound(true);
+        return users.map((user) => ({
+          label: `${user.full_name} (${user.mobile_phone})`,
+          value: user.mobile_phone,
+          userData: user,
+        }));
+      } else {
+        setIsUserFound(false);
+        return [];
+      }
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      setIsUserFound(false);
+      return [];
+    }
+  };
+
+  // Handle mobile number selection
+  const handleMobileChange = (selectedOption) => {
+    if (selectedOption?.userData) {
+      setFormData((prevState) => ({
+        ...prevState,
+        customer_name: selectedOption.userData.full_name,
+        customer_email: selectedOption.userData.email || "",
+        customer_mobile_phone: selectedOption.userData.mobile_phone,
+      }));
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        customer_mobile_phone: selectedOption?.value || "",
+      }));
+    }
+  };
+
+  // Navigate to Add User page
+  const handleAddUser = () => {
+    navigate("/add-user");
+  };
+
+  // Custom message when no options are available
+  const noOptionsMessage = () => (
+    <button
+      type="button"
+      className="p-2 bg-green-500 text-white rounded-md w-full text-center"
+      onClick={handleAddUser}
+    >
+      Add New User
+    </button>
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -378,15 +441,19 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
   };
 
   // Pre-select services and packages by matching their IDs
-  const selectedServices = allServices.filter((service) => formData.services.includes(service.value));
-  const selectedPackages = allPackages.filter((pkg) => formData.packages.includes(pkg.value));
+  const selectedServices = allServices.filter((service) =>
+    formData.services.includes(service.value)
+  );
+  const selectedPackages = allPackages.filter((pkg) =>
+    formData.packages.includes(pkg.value)
+  );
 
   return (
     <div className="p-4">
       <h1 className="text-xl mb-4">Appointment Form</h1>
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
+          {/* <input
             type="tel"
             name="customer_mobile_phone"
             value={formData.customer_mobile_phone}
@@ -394,7 +461,28 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
             placeholder="Customer Mobile Phone"
             className="p-2 border rounded-md"
             required
-          />
+          /> */}
+          {/* Mobile Phone Field with AsyncSelect */}
+          <div className="relative">
+           
+
+<AsyncSelect
+              cacheOptions
+              loadOptions={fetchMobileNumbers} // Dynamically fetch mobile numbers
+              onChange={handleMobileChange}
+              placeholder="Customer Mobile Phone"
+              isClearable
+              defaultOptions={false}
+              noOptionsMessage={noOptionsMessage} // Show "Add New User" button if no match found
+              value={
+                formData.customer_mobile_phone
+                  ? { label: formData.customer_mobile_phone, value: formData.customer_mobile_phone }
+                  : null
+              }
+            />
+          
+          </div>
+
           <input
             type="text"
             name="customer_name"
@@ -432,7 +520,6 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
             <option value="">Select Status</option>
             <option value="confirmed">Confirmed</option>
             <option value="pending">Pending</option>
-            <option value="cancelled">Cancelled</option>
           </select>
         </div>
 

@@ -144,16 +144,13 @@ Router.put('/update-appointment-staff/:id',  async (req, res) => {
         const serviceObjects = await Service.find({ '_id': { $in: services } });
         const packageObjects = await Package.find({ '_id': { $in: packages } });
 
-        if (!staff || !serviceObjects.length || !packageObjects.length) {
-            return res.status(404).json({ message: "Staff, services, or packages not found." });
-        }
 
         service_appointment.customer_name = customer_name;
         service_appointment.customer_email = customer_email;
         service_appointment.customer_mobile_phone = customer_mobile_phone;
         service_appointment.status = status;
         service_appointment.time = time;
-        service_appointment.staff_id = staff._id;
+        // service_appointment.staff_id = staff._id;
         service_appointment.outlet_id = outlet._id;
         service_appointment.service_id = serviceObjects.map(s => s._id);
         service_appointment.package_id = packageObjects.map(p => p._id);

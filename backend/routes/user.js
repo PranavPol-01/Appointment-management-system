@@ -24,16 +24,19 @@ Router.post('/add-user', async (req, res) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
-
-// Get all users
+// Get users by mobile_phone
 Router.get('/get-users', async (req, res) => {
   try {
-    const users = await User.find();
+    const { mobile_phone } = req.query;
+    const query = mobile_phone ? { mobile_phone: new RegExp(mobile_phone, 'i') } : {};
+    
+    const users = await User.find(query);
     res.status(200).json(users);
   } catch (error) {
     console.error('Error fetching users:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+
 
 module.exports = Router;
