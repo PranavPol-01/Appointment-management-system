@@ -57,7 +57,7 @@ function App() {
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/payment-form" element={<PaymentForm />} />
           <Route path='/add-user' element={<UserPage/>}/>
-          <Route path="/user" element={<UserTable />} />
+          <Route path="/users" element={<UserTable />} />
         </Routes>
       </div>
       </LocalizationProvider>
