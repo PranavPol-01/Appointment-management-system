@@ -132,6 +132,9 @@ import Input from "@mui/material/Input";
 import { TextField } from "@mui/material";
 import { Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { DatePicker, TimePicker, DateTimePicker } from "@mui/x-date-pickers";
+import { Autocomplete } from '@mui/material';
+
 
 const bull = (
   <Box
@@ -142,6 +145,10 @@ const bull = (
   </Box>
 );
 
+// for autocomplete line number 214 of package
+const packages = ["Beard", "Moustache"]
+const outlets = ["Juhu", "Andheri", "Bandra", "Mulund", "Dombivali", "Borivali", "Kalyan"]
+
 export default function PaymentForm() {
   const Div = styled("div")(({ theme }) => ({
     ...theme.typography.button,
@@ -149,99 +156,163 @@ export default function PaymentForm() {
     padding: theme.spacing(1),
   }));
 
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [selectedDateTime, setSelectedDateTime] = useState(null);
+
+
   return (
     <div>
-      <Card sx={{ minWidth: 275 }}>
+      <Card sx={{ minWidth: 150 }}>
         <CardContent>
           <div>
-            {/* <Typography
-              variant="h5"
-              gutterBottom
-              sx={{ color: "text.secondary", fontSize: 14 }}
+            <Box
+              component="form"
+              sx={{
+                display: "flex",
+                gap: 8, // spacing between fields
+                alignItems: "center",
+              }}
             >
-              Name
-            </Typography> */}
-            <div>
-              <Div>{"Name"}</Div>
-              <Stack spacing={4}>
-                <Stack direction="row" spacing={2}>
-                  <TextField label="Name" size="small" color="primary" />
+              <div>
+                <Div>{"Name"}</Div>
+                <Stack spacing={4}>
+                  <Stack direction="row" spacing={2}>
+                    <TextField label="Name" size="medium" color="primary" />
+                  </Stack>
                 </Stack>
-              </Stack>
-            </div>
+              </div>
 
-            <div>
-              <Div>{"Outlet"}</Div>
-              <Stack spacing={4}>
-                <Stack direction="row" spacing={2}>
-                  <TextField label="select" size="small" color="primary" />
+              <div>
+                <Div>{"Outlet"}</Div>
+                <Autocomplete
+                  options={outlets}
+                  sx={{ width: 220 }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Outlets" sx={{ height: 60 }} size="medium" />
+                  )}
+                />
+              </div>
+            </Box>
+
+            <Box
+              component="form"
+              sx={{
+                display: "flex",
+                gap: 8, // spacing between fields
+                alignItems: "center",
+              }}
+            >
+              <div>
+                <Div>{"Service"}</Div>
+                <Stack spacing={4}>
+                  <Stack direction="row" spacing={2}>
+                    <TextField label="select" size="medium" color="primary" />
+                  </Stack>
                 </Stack>
-              </Stack>
-            </div>
+              </div>
 
-            <div>
-              <Div>{"Service"}</Div>
-              <Stack spacing={4}>
-                <Stack direction="row" spacing={2}>
-                  <TextField label="select" size="small" color="primary" />
+              <div>
+                <Div>{"Package"}</Div>
+                <Autocomplete
+                  options={packages}
+                  sx={{ width: 220 }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Packages" sx={{ height: 60 }} size="medium" />
+                  )}
+                />
+              </div>
+            </Box>
+
+            <Box
+              component="form"
+              sx={{
+                display: "flex",
+                gap: 8, // spacing between fields
+                alignItems: "center",
+              }}
+            >
+              <div>
+                <Div>{"Time"}</Div>
+                <TimePicker
+                  label="Time Picker"
+                  value={selectedTime}
+                  onChange={(newValue) => {
+                    setSelectedTime(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </div>
+              {/* </Box> */}
+
+              <div>
+                <Div>{"Staff name"}</Div>
+                <Stack spacing={4}>
+                  <Stack direction="row" spacing={2}>
+                    <TextField label="select" size="medium" color="primary" />
+                  </Stack>
                 </Stack>
-              </Stack>
-            </div>
-
-
-            <div>
-              <Div>{"Service"}</Div>
-              <Stack spacing={4}>
-                <Stack direction="row" spacing={2}>
-                  <TextField label="select" size="small" color="primary" />
-                </Stack>
-              </Stack>
-            </div>
-
-
-            <div>
-              <Div>{"Time"}</Div>
-              <Stack spacing={4}>
-                <Stack direction="row" spacing={2}>
-                  <TextField label="select" size="small" color="primary" />
-                </Stack>
-              </Stack>
-            </div>
-
-
-            <div>
-              <Div>{"Staff name"}</Div>
-              <Stack spacing={4}>
-                <Stack direction="row" spacing={2}>
-                  <TextField label="select" size="small" color="primary" />
-                </Stack>
-              </Stack>
-            </div>
-
+              </div>
+            </Box>
 
             <Div>{"Mode of payment"}</Div>
 
-            <div>
-              <Div>{"Cash"}</Div>
-              <Stack spacing={4}>
-                <Stack direction="row" spacing={2}>
-                  <TextField label="select" size="small" color="primary" />
+            <Box
+              component="form"
+              sx={{
+                display: "flex",
+                gap: 8, // spacing between fields
+                alignItems: "center",
+              }}
+            >
+              <div>
+                <Div>{"Cash"}</Div>
+                <Stack spacing={4}>
+                  <Stack direction="row" spacing={2}>
+                    <TextField label="select" size="medium" color="primary" />
+                  </Stack>
                 </Stack>
-              </Stack>
-            </div>
+              </div>
 
-            <div>
-              <Div>{"Online or offline"}</Div>
-              <Stack spacing={4}>
-                <Stack direction="row" spacing={2}>
-                  <TextField label="select" size="small" color="primary" />
+              <div>
+                <Div>{"Online or offline"}</Div>
+                <Stack spacing={4}>
+                  <Stack direction="row" spacing={2}>
+                    <TextField label="select" size="medium" color="primary" />
+                  </Stack>
                 </Stack>
-              </Stack>
-            </div>
+              </div>
+            </Box>
           </div>
           {/* <Input placeholder="Placeholder" inputProps={ariaLabel} /> */}
         </CardContent>
       </Card>
+
+      {/*the date and time picker */}
+      {/* <DatePicker
+        label="Date Picker"
+        value={selectedDate}
+        onChange={(newValue) => {
+          setSelectedDate(newValue);
+        }}
+        renderInput={(params) => <TextField {...params} />}
+      />
+      <TimePicker
+        label="Time Picker"
+        value={selectedTime}
+        onChange={(newValue) => {
+          setSelectedTime(newValue);
+        }}
+        renderInput={(params) => <TextField {...params} />}
+      />
+      <DateTimePicker
+        label="Date Time Picker"
+        value={selectedDateTime}
+        onChange={(newValue) => {
+          setSelectedDateTime(newValue);
+        }}
+        renderInput={(params) => <TextField {...params} />}
+      /> */}
     </div>
   );
 }

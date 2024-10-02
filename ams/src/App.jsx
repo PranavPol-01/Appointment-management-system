@@ -17,7 +17,11 @@ import PaymentPage from './Pages/PaymentPage';
 import PaymentForm from './Components/PaymentForm';
 import UserPage from "./Pages/UserPage";
 import UserTable from "./Pages/UserTable";
-//import { LocalizationProvider } from '@mui/lab'
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
+
+
 
 function App() {
   const location = useLocation();
@@ -25,6 +29,7 @@ function App() {
 
   return (
     <>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
       {!noSidebarRoutes.includes(location.pathname) && <Sidebar />}
       <div
         className={
@@ -55,6 +60,7 @@ function App() {
           <Route path="/user" element={<UserTable />} />
         </Routes>
       </div>
+      </LocalizationProvider>
     </>
   );
 }
