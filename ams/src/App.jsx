@@ -22,6 +22,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import Reports from "./Pages/Reports";
 import { OutletForm } from "./Pages/OutletForm";
+import ProfilePage from "./Pages/ProfilePage";
 
 
 
@@ -62,6 +63,7 @@ function App() {
           <Route path="/users" element={<UserTable />} />
           <Route path="/reports" element={<Reports/>} />
           {/* <Route path="/outlet-form" element={<OutletForm />} /> */}
+          <Route path="/profilepage" element={<ProfilePage />} />
         </Routes>
       </div>
       </LocalizationProvider>
