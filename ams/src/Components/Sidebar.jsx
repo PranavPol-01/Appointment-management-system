@@ -192,9 +192,9 @@ function Sidebar() {
         >
           <div className=" py-16">
             <ul className=" font-medium">
-              {/* <li>
+              <li>
                 <Link
-                  to={``}
+                  to={`/dashboard`}
                   className="flex items-center p-2 text-black hover:bg-red-200  "
                 >
                   <svg
@@ -209,7 +209,7 @@ function Sidebar() {
                   </svg>
                   <span className="ms-3">Dashboard</span>
                 </Link>
-              </li> */}
+              </li>
               <li>
                 <Link
                   to={`/appointments`}

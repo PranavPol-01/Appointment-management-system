@@ -23,6 +23,8 @@ import dayjs from 'dayjs';
 import Reports from "./Pages/Reports";
 import { OutletForm } from "./Pages/OutletForm";
 import ProfilePage from "./Pages/ProfilePage";
+import Dashboard from "./Pages/Dashboard";
+
 
 
 
@@ -64,6 +66,7 @@ function App() {
           <Route path="/reports" element={<Reports/>} />
           {/* <Route path="/outlet-form" element={<OutletForm />} /> */}
           <Route path="/profilepage" element={<ProfilePage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
       </LocalizationProvider>
