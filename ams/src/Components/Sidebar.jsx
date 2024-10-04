@@ -235,7 +235,7 @@ function Sidebar() {
               </li>
               <li>
               <Link
-                  to={``}
+                  to={`/payment-form`}
                   className="flex items-center p-2 text-black hover:bg-red-200 group "
                 >
                   <svg
@@ -255,7 +255,7 @@ function Sidebar() {
               </li>
               <li>
                 <Link
-                  to={``}
+                  to={'/reports'}
                   className="flex items-center p-2 text-black hover:bg-red-200 group "
                 >
                   <svg
