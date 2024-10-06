@@ -183,6 +183,23 @@ Router.get('/get-all-appointments-staff', async (req, res) => {
     }
 });
 
+Router.get('/get-all-appointments-staff-without-filter', async (req, res) => {
+    try {
+        const service_appointments = await ServiceAppointment.find()
+            .populate('staff_id', 'staff_name email')  
+            .populate('service_id', 'service_name')   
+            .populate('package_id', 'package_name')  
+            .populate('outlet_id', 'outlet_name') 
+            .populate('appointment_id', 'date');      
+
+        res.status(200).json({ service_appointments });
+        // console.log(service_appointments)
+    } catch (error) {
+        console.log("Error while fetching appointments", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
 
 // Confirm an appointment
 Router.put('/confirm-appointment/:id', async (req, res) => {

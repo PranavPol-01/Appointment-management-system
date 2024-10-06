@@ -192,9 +192,9 @@ function Sidebar() {
         >
           <div className=" py-16">
             <ul className=" font-medium">
-              {/* <li>
+              <li>
                 <Link
-                  to={``}
+                  to={`/dashboard`}
                   className="flex items-center p-2 text-black hover:bg-red-200  "
                 >
                   <svg
@@ -209,7 +209,7 @@ function Sidebar() {
                   </svg>
                   <span className="ms-3">Dashboard</span>
                 </Link>
-              </li> */}
+              </li>
               <li>
                 <Link
                   to={`/appointments`}
@@ -334,9 +334,9 @@ function Sidebar() {
                 </Link>
               </li>
               <li>
-                {" "}
+                {/* {" "} */}
                 <Link
-                  to={``}
+                  to={`/outlet-form`}
                   className="flex items-center p-2 text-black hover:bg-red-200 group "
                 >
                   <svg
@@ -357,6 +357,24 @@ function Sidebar() {
           </div>
           <div className="pt-[5rem]">
             <ul>
+               {/* Profile Link */}
+    <li>
+      <Link
+        to="/profilepage"
+        className="flex items-center p-2 text-black hover:bg-blue-200 group"
+      >
+        <svg
+          className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-blue-200 dark:group-hover:text-white"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2c-2.33 0-7 1.17-7 3.5V18h14v-2.5c0-2.33-4.67-3.5-7-3.5Z" />
+        </svg>
+        <span className="flex-1 ms-3 whitespace-nowrap">Profile</span>
+      </Link>
+    </li>
               <li>
                 <Link
                   to={``}
