@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
 import { SelectGroup, SelectLabel } from "@radix-ui/react-select";
 import axios from "axios";
 
-export function OutletForm() {
+export default function OutletForm() {
   const [selectedState, setSelectedState] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [formData, setFormData] = useState({

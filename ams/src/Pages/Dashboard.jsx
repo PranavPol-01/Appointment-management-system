@@ -4,6 +4,7 @@ import { Calendar, DollarSign, PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 // Define colors for pie chart segments
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8"];
@@ -22,20 +23,44 @@ export default function Dashboard() {
     // Fetch today's appointment status breakdown from API
     const fetchAppointmentStatus = async () => {
       try {
-        const response = await fetch(
-          `/api/appointments/today?outlet_id=${outletData.outlet_id}`
-        );
-        const data = await response.json();
-        setAppointmentStatus(data.statusBreakdown);
-        const total = data.statusBreakdown.reduce(
-          (sum, item) => sum + item.count,
-          0
-        );
-        setTotalAppointments(total);
+        const response = await axios.get("http://127.0.0.1:5000/api/get-all-appointments-staff-without-filter");
+        const allAppointments = response.data.service_appointments;
+    
+        // Get today's date in string format to compare
+        const today = new Date().toDateString();
+    
+        // Filter today's appointments
+        const todayAppointments = allAppointments.filter(appointment => {
+          const appointmentDate = new Date(appointment.time).toDateString();
+          return appointmentDate === today;
+        });
+    
+        // Count total appointments for today
+        setTotalAppointments(todayAppointments.length);
+    
+        // Get status breakdown
+        const statusBreakdown = todayAppointments.reduce((acc, appointment) => {
+          
+          const status = appointment.status || 'Unknown'; 
+          console.log(status)
+          if (!acc[status]) acc[status] = 0;
+          acc[status]++;
+          return acc;
+        }, {});
+    
+        // Convert the status breakdown to an array for the pie chart
+        const statusData = Object.entries(statusBreakdown).map(([name, count]) => ({
+          name,
+          count
+        }));
+        console.log(statusData)
+    
+        setAppointmentStatus(statusData);
       } catch (error) {
         console.error("Error fetching appointment data:", error);
       }
     };
+    
 
     // Fetch today's revenue - this would need to be replaced with actual logic
     const fetchTodayRevenue = async () => {

@@ -334,9 +334,9 @@ function Sidebar() {
                 </Link>
               </li>
               <li>
-                {" "}
+                {/* {" "} */}
                 <Link
-                  to={``}
+                  to={`/outlet-form`}
                   className="flex items-center p-2 text-black hover:bg-red-200 group "
                 >
                   <svg
