@@ -310,8 +310,13 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
       }
     }
   };
+  useEffect(()=>{
+    handleConfirm();
+    handleDelete();
+  },[]);
 
   useEffect(() => {
+    
     console.log("Appointments", appointments);
   }, [appointments]);
 
