@@ -16,14 +16,14 @@ import {
 
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
-import { statesAndDistricts } from "@/Data/list";
+// import { statesAndDistricts } from "@/Data/list";
 import { useEffect, useState } from "react";
 import { SelectGroup, SelectLabel } from "@radix-ui/react-select";
 import axios from "axios";
 
 export default function OutletForm() {
   const [selectedState, setSelectedState] = useState("");
-  const [selectedDistrict, setSelectedDistrict] = useState("");
+  // const [selectedDistrict, setSelectedDistrict] = useState("");
   const [formData, setFormData] = useState({
     outlet_name: "",
     email: "",
@@ -87,7 +87,7 @@ export default function OutletForm() {
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <div className="grid gap-2">
+                {/* <div className="grid gap-2">
                   <Label htmlFor="email">State</Label>
                   <Select
                     onValueChange={(state) => {setSelectedState(state), setFormData({...formData, state:state})}}
@@ -107,8 +107,8 @@ export default function OutletForm() {
                       </SelectGroup>
                     </SelectContent>
                   </Select>
-                </div>
-                <div className="grid gap-2">
+                </div> */}
+                {/* <div className="grid gap-2">
                   <Label htmlFor="password">District</Label>
                   <Select
                     onValueChange={(district) => {setSelectedDistrict(district), setFormData({...formData, district:district})}}
@@ -129,7 +129,7 @@ export default function OutletForm() {
                       </SelectGroup>
                     </SelectContent>
                   </Select>
-                </div>
+                </div> */}
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="address">Address</Label>

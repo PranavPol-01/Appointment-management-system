@@ -1,15 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const outletSchema = new Schema({
-  district: {
-    type: String,
-    required: true
-  },
-  state: {
-    type: String,
-    required: true
-  },
+const outletSchema = new Schema({ 
   email: {
     type: String,
     required: true

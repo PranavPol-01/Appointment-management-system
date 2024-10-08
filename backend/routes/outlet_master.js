@@ -12,8 +12,6 @@ Router.post("/outlet", async (req, res) => {
     const outlet = new Outlets({
       outlet_name: req.body.name,
       email: req.body.email,
-      district: req.body.district,
-      state: req.body.state,
       address: req.body.address,
       pincode: req.body.pincode,
       outlet_name: req.body.outlet_name,
