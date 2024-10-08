@@ -16,7 +16,7 @@ import {
 
 import { Input } from "@/Components/ui/input";
 import { Label } from "@/Components/ui/label";
-// import { statesAndDistricts } from "./Data/states-and-districts";
+import { statesAndDistricts } from "@/Data/list";
 import { useEffect, useState } from "react";
 import { SelectGroup, SelectLabel } from "@radix-ui/react-select";
 import axios from "axios";
