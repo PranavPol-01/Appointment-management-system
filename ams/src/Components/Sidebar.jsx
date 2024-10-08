@@ -235,7 +235,7 @@ function Sidebar() {
               </li>
               <li>
               <Link
-                  to={`/payment-form`}
+                  to={`/payment`}
                   className="flex items-center p-2 text-black hover:bg-red-200 group "
                 >
                   <svg

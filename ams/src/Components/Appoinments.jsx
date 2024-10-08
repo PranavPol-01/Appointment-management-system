@@ -277,7 +277,7 @@ const filterAppointments = (appointments, filter) => {
   }
 };
 
-const Appointments = ({ appointments, onConfirm, onCancel }) => {
+const Appointments = ({ appointments, onRefresh }) => {
   const [filter, setFilter] = useState("Today");
 
   const handleConfirm = async (id) => {
@@ -287,7 +287,7 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
       );
       console.log(response.data.message);
 
-      onConfirm(); // Callback to refresh appointments
+      onRefresh(); // Callback to refresh appointments
     } catch (error) {
       console.error("Error confirming appointment:", error);
     }
@@ -304,19 +304,19 @@ const Appointments = ({ appointments, onConfirm, onCancel }) => {
         );
         console.log(response.data.message);
 
-        onCancel(); // Callback to refresh appointments
+        onRefresh(); // Callback to refresh appointments
       } catch (error) {
         console.error("Error deleting appointment:", error);
       }
     }
   };
-  useEffect(()=>{
-    handleConfirm();
-    handleDelete();
-  },[]);
+  // useEffect(()=>{
+  //   handleConfirm();
+  //   handleDelete();
+  // },[]);
+  
 
   useEffect(() => {
-    
     console.log("Appointments", appointments);
   }, [appointments]);
 

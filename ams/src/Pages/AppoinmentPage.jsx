@@ -64,7 +64,7 @@ const AppointmentPage = () => {
   });
   const [appointments, setAppointments] = useState([]);
 
-  useEffect(() => {
+  
     const fetchAppointments = async () => {
       try {
     //     const userData = JSON.parse(localStorage.getItem("auth_data"));
@@ -83,7 +83,7 @@ const AppointmentPage = () => {
         console.error("Error fetching appointments:", error);
       }
     };
-
+    useEffect(() => {
     const authData = JSON.parse(localStorage.getItem("auth_data"));
     if (authData) {
       setToken(authData);
@@ -108,8 +108,7 @@ const AppointmentPage = () => {
       {token ? (
         <Appointments
           appointments={appointments}
-          onConfirm={() => { /* Handle confirm logic */ }}
-          onCancel={() => { /* Handle cancel logic */ }}
+          onRefresh={fetchAppointments}
         />
       ) : (
         <LogoutWarning />
