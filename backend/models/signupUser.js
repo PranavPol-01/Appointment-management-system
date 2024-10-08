@@ -13,8 +13,7 @@ const signupUserSchema = new mongoose.Schema({
     },
     staff_mobile_number:{
         type: Number,
-        required: true,
-        unique: true
+        required: true
     },
     email: {
         type: String,
@@ -23,7 +22,7 @@ const signupUserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: function() { return this.category === 'manager'; } // Password required for managers only
     },
     role: {                  // Barber, Hair Stylist, Nail Technician, Masseuse, Facialist, Receptionist
         type: String,

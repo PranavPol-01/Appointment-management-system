@@ -24,6 +24,9 @@ import Reports from "./Pages/Reports";
 import  OutletForm  from "./Pages/OutletForm";
 import ProfilePage from "./Pages/ProfilePage";
 import Dashboard from "./Pages/Dashboard";
+// import { path } from 'path';
+import EmployeeForm from "./Pages/EmployeeForm";
+import ManagerForm from "./Pages/ManagerForm";
 
 
 
@@ -67,6 +70,8 @@ function App() {
           <Route path="/outlet-form" element={<OutletForm />} />
           <Route path="/profilepage" element={<ProfilePage />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/employeeform" element={<EmployeeForm/>} />
+          <Route path="/managerform" element={<ManagerForm />} />
         </Routes>
       </div>
       </LocalizationProvider>

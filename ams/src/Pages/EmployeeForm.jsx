@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import axios from "axios";
+import Select from "react-select";
 
 const EmployeeForm = () => {
   const [formData, setFormData] = useState({
@@ -9,22 +10,45 @@ const EmployeeForm = () => {
     category: "staff",  // Fixed as "staff"
     role: "Barber",
     staff_mobile_number: "",
-    outletname: ""
+    outlet_id: null, 
   });
-
+  const [outlets, setOutlets] = useState([]);
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSelectChange = (selectedOption) => {
+    setFormData({ ...formData, outlet_id: selectedOption.value });  
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/signup", formData);
+      await axios.post("http://localhost:5000/api/signup-staff", formData);
       alert("Employee added successfully");
     } catch (error) {
       console.error("Error adding employee", error);
     }
   };
+
+  // Fetch outlets dynamically from the API
+  useEffect(() => {
+    const getOutlets = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/api/outlet");
+        const outletOptions = response.data.map((outlet) => ({
+          value: outlet._id,
+          label: outlet.outlet_name,
+        }));
+        setOutlets(outletOptions);
+      } catch (error) {
+        console.log("Error while fetching outlets", error);
+      }
+    };
+
+    getOutlets();
+  }, []);
 
   return (
     <form onSubmit={handleSubmit} className="p-6 bg-gray-200 rounded-md shadow-md">
@@ -86,17 +110,21 @@ const EmployeeForm = () => {
       </div>
       
       {/* Outlet Name */}
-      <div className="mb-4">
+       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">Outlet Name</label>
-        <input
+        <Select
           name="outletname"
+          options={outlets} 
           value={formData.outletname}
-          onChange={handleChange}
+          onChange={handleSelectChange}
           className="w-full p-2 border border-gray-300 rounded"
-          placeholder="Enter outlet name"
+          placeholder="Select or search an outlet"
+          isSearchable={true}
           required
         />
       </div>
+
+      
 
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">Role</label>
