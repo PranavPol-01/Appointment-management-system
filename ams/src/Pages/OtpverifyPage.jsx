@@ -25,7 +25,7 @@ function OtpverifyPage() {
       })
       const data = response.data;
       console.log(data);
-      localStorage.setItem('auth_data', JSON.stringify(data));
+      sessionStorage.setItem('auth_data', JSON.stringify(data));
       navigate('/profilepage');
     }
     else alert("Invalid OTP");

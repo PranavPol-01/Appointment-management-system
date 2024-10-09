@@ -61,7 +61,7 @@ const ServiceForm = () => {
     }
   };
   useEffect(() => {
-    setToken(JSON.parse(localStorage.getItem("auth_data")));
+    setToken(JSON.parse(sessionStorage.getItem("auth_data")));
     console.log(token.token);
     try {
       const decoded = jwtDecode(token.token)

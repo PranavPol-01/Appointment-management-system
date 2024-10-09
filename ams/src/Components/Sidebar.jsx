@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import newlogo from "../assets/newlogo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Appointments from "./Appoinments";
 import "./Sidebar.css";
+import axios from "axios";
 
 function Sidebar() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [userData, setUserData] = useState({
@@ -34,8 +36,24 @@ function Sidebar() {
     setIsOpen(!isOpen);
   };
   useEffect(() => {
-    setUserData(JSON.parse(localStorage.getItem("auth_data")));
+    setUserData(JSON.parse(sessionStorage.getItem("auth_data")));
   }, []);
+
+  //  Logic for logging out the user
+  const handleLogoutProcess = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.get("http://localhost:5000/api/logout", {
+        headers: {
+          Authorization: `Bearer ${userData.token}`,
+        },
+      });
+      console.log("Logout Information", response.data);
+      sessionStorage.removeItem("auth_data");
+      navigate("/");
+    } catch (error) {}
+  };
+
   return (
     <div>
       <nav
@@ -429,6 +447,7 @@ function Sidebar() {
               </li> */}
               <li>
                 <Link
+                  onClick={handleLogoutProcess}
                   to={``}
                   className="flex items-center p-2 text-black hover:bg-red-200 group "
                 >
