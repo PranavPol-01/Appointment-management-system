@@ -121,11 +121,13 @@ const PaymentPage = () => {
     };
     fetchAppointments();
   }, []);
-
-  const handleConfirm = async (id) => {
+  const handleConfirm = async (appointment) => {
     try {
-      await axios.put(`http://127.0.0.1:5000/api/confirm-appointment/${id}`);
-      navigate("/payment-form");
+      console.log(appointment);
+      
+      await axios.put(`http://127.0.0.1:5000/api/confirm-appointment/${appointment._id}`);
+      // Pass appointment data to PaymentForm
+      navigate("/payment-form", { state: { appointment } });
     } catch (error) {
       console.error("Error confirming appointment:", error);
     }
@@ -165,7 +167,7 @@ const PaymentPage = () => {
                 <td className="px-4 py-2 border-b text-center">
                   <button
                     className="text-green-500 px-3 py-1 rounded m-1"
-                    onClick={() => handleConfirm(appointment._id)}
+                    onClick={() => handleConfirm(appointment)}
                   >
                     Confirm for Payment
                   </button>

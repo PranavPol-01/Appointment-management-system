@@ -430,148 +430,266 @@
 
 
 
-import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
-import Autocomplete from "@mui/material/Autocomplete";
-import Grid from '@mui/material/Grid';
-import { styled } from "@mui/material/styles";
-import { TimePicker } from "@mui/x-date-pickers";
+// import axios from "axios";
+// import React, { useState } from "react";
 
-const packages = ["Beard", "Moustache"];
-const outlets = [
-  "Juhu",
-  "Andheri",
-  "Bandra",
-  "Mulund",
-  "Dombivali",
-  "Borivali",
-  "Kalyan",
-];
 
-const Div = styled("div")(({ theme }) => ({
-  ...theme.typography.button,
-  backgroundColor: theme.palette.background.paper,
-  padding: theme.spacing(1),
-  marginBottom: theme.spacing(2),
-  textAlign: "left", // Align labels to the left
-}));
+// export default function PaymentForm() {
+  
+//   const [selectedTime, setSelectedTime] = useState(null);
+//   const [formData, setFormData] = useState({
+//     name: "",
+//     outlet: "",
+//     service: "",
+//     package: "",
+//     staffName: "",
+//   });
+
+
+  
+
+//   return (
+//     <div className="flex justify-center">
+//       <div className="bg-gray-100 shadow-lg rounded-lg p-6 w-full max-w-lg">
+//         <h2 className="text-2xl font-bold text-center mb-4">Payment Form</h2>
+
+//         <form>
+//           {/* Name Input */}
+//           <div className="mb-4">
+//             <label className="block text-left font-medium mb-1" htmlFor="name">Name</label>
+//             <input
+//               id="name"
+//               type="text"
+//               className="w-full p-2 border border-gray-300 rounded"
+//               value={formData.name}
+//               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+//               placeholder="Name"
+//             />
+//           </div>
+
+//           {/* Outlet Input */}
+//           <div className="mb-4">
+//             <label className="block text-left font-medium mb-1" htmlFor="outlet">Outlet</label>
+//             <select
+//               id="outlet"
+//               className="w-full p-2 border border-gray-300 rounded"
+//               value={formData.outlet}
+//               onChange={(e) => setFormData({ ...formData, outlet: e.target.value })}
+//             >
+//               <option value="" disabled>Select Outlet</option>
+//               {outlets.map((outlet) => (
+//                 <option key={outlet} value={outlet}>{outlet}</option>
+//               ))}
+//             </select>
+//           </div>
+
+//           {/* Service Input */}
+//           <div className="mb-4">
+//             <label className="block text-left font-medium mb-1" htmlFor="service">Service</label>
+//             <input
+//               id="service"
+//               type="text"
+//               className="w-full p-2 border border-gray-300 rounded"
+//               value={formData.service}
+//               onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+//               placeholder="Service"
+//             />
+//           </div>
+
+//           {/* Package Input */}
+//           <div className="mb-4">
+//             <label className="block text-left font-medium mb-1" htmlFor="package">Package</label>
+//             <select
+//               id="package"
+//               className="w-full p-2 border border-gray-300 rounded"
+//               value={formData.package}
+//               onChange={(e) => setFormData({ ...formData, package: e.target.value })}
+//             >
+//               <option value="" disabled>Select Package</option>
+//               {packages.map((pkg) => (
+//                 <option key={pkg} value={pkg}>{pkg}</option>
+//               ))}
+//             </select>
+//           </div>
+
+//           {/* Time Picker */}
+//           <div className="mb-4">
+//             <label className="block text-left font-medium mb-1" htmlFor="time">Time</label>
+//             <input
+//               id="time"
+//               type="time"
+//               className="w-full p-2 border border-gray-300 rounded"
+//               value={selectedTime}
+//               onChange={(e) => setSelectedTime(e.target.value)}
+//             />
+//           </div>
+
+//           {/* Staff Name */}
+//           <div className="mb-4">
+//             <label className="block text-left font-medium mb-1" htmlFor="staffName">Staff Name</label>
+//             <input
+//               id="staffName"
+//               type="text"
+//               className="w-full p-2 border border-gray-300 rounded"
+//               value={formData.staffName}
+//               onChange={(e) => setFormData({ ...formData, staffName: e.target.value })}
+//               placeholder="Staff Name"
+//             />
+//           </div>
+
+//           {/* Mode of Payment */}
+//           <div className="mb-4">
+//             <label className="block text-left font-medium mb-1">Mode of Payment</label>
+//             <div className="flex space-x-2">
+//               <button type="button" className="bg-blue-500 text-white px-4 py-2 rounded">Cash</button>
+//               <button type="button" className="border border-blue-500 text-blue-500 px-4 py-2 rounded">Online</button>
+//             </div>
+//           </div>
+
+//           {/* Total Amount */}
+//           <div className="mb-4">
+//             <p className="text-lg font-semibold">Total Amount: 800 /-</p>
+//           </div>
+
+//           {/* Submit Button */}
+//           <div>
+//             <button
+//               type="submit"
+//               className="bg-blue-500 text-white px-4 py-2 rounded w-full"
+//             >
+//               Save
+//             </button>
+//           </div>
+//         </form>
+//       </div>
+//     </div>
+//   );
+// }
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function PaymentForm() {
+  const location = useLocation();
+  const { appointment } = location.state || {};
+
   const [selectedTime, setSelectedTime] = useState(null);
-
+  const [formData, setFormData] = useState({
+    name: appointment ? appointment.customer_name : "",
+    outlet: appointment ? appointment.outlet_id.outlet_name : "No outlet found",
+    service: appointment ? appointment.service_id.map(service => service.service_name).join(", ") : "",
+    package: appointment ? appointment.package_id.map(pkg => pkg.package_name).join(", ") : "",
+    staffName: "",
+  });
+  useEffect(()=>{
+    console.log(formData);
+    
+  },[])
   return (
-    <div>
-      <Card sx={{ minWidth: 275, boxShadow: 5, borderRadius: 3 }}>
-        <CardContent>
-          <Box
-            sx={{
-              width: "100%",
-              maxWidth: "600px",
-              margin: "0 auto", // Center the card
-              padding: 3,
-              backgroundColor: "#f7f9fc", // Light background color for form
-              borderRadius: 4,
-            }}
-          >
-            <Typography variant="h5" align="center" gutterBottom>
-              Payment Form
-            </Typography>
+    <div className="flex justify-center">
+      <div className="bg-gray-100 shadow-lg rounded-lg p-6 w-full max-w-lg">
+        <h2 className="text-2xl font-bold text-center mb-4">Payment Form</h2>
 
-            <Grid container spacing={3}>
-              {/* Name Input */}
-              <Grid item xs={12} sm={6}>
-                <Div>Name</Div>
-                <TextField fullWidth label="Name" size="medium" />
-              </Grid>
+        <form>
+          {/* Name Input */}
+          <div className="mb-4">
+            <label className="block text-left font-medium mb-1" htmlFor="name">Name</label>
+            <input
+              id="name"
+              type="text"
+              className="w-full p-2 border border-gray-300 rounded"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              placeholder="Name"
+            />
+          </div>
 
-              {/* Outlet Input */}
-              <Grid item xs={12} sm={6}>
-                <Div>Outlet</Div>
-                <Autocomplete
-                  options={outlets}
-                  fullWidth
-                  renderInput={(params) => (
-                    <TextField {...params} label="Outlets" size="medium" />
-                  )}
-                />
-              </Grid>
+          {/* Outlet Input */}
+          <div className="mb-4">
+            <label className="block text-left font-medium mb-1" htmlFor="outlet">Outlet</label>
+            <input
+              id="outlet"
+              className="w-full p-2 border border-gray-300 rounded"
+              value={formData.outlet}
+              onChange={(e) => setFormData({ ...formData, outlet: e.target.value })}
+            />
+           
+          </div>
 
-              {/* Service Input */}
-              <Grid item xs={12} sm={6}>
-                <Div>Service</Div>
-                <TextField fullWidth label="Service" size="medium" />
-              </Grid>
+          {/* Service Input */}
+          <div className="mb-4">
+            <label className="block text-left font-medium mb-1" htmlFor="service">Service</label>
+            <input
+              id="service"
+              type="text"
+              className="w-full p-2 border border-gray-300 rounded"
+              value={formData.service}
+              onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+              placeholder="Service"
+            />
+          </div>
 
-              {/* Package Input */}
-              <Grid item xs={12} sm={6}>
-                <Div>Package</Div>
-                <Autocomplete
-                  options={packages}
-                  fullWidth
-                  renderInput={(params) => (
-                    <TextField {...params} label="Packages" size="medium" />
-                  )}
-                />
-              </Grid>
+          {/* Package Input */}
+          <div className="mb-4">
+            <label className="block text-left font-medium mb-1" htmlFor="package">Package</label>
+            <input
+              id="package"
+              className="w-full p-2 border border-gray-300 rounded"
+              value={formData.package}
+              onChange={(e) => setFormData({ ...formData, package: e.target.value })}
+            />
+          
+          </div>
 
-              {/* Time Picker */}
-              <Grid item xs={12} sm={6}>
-                <Div>Time</Div>
-                <TimePicker
-                  label="Time Picker"
-                  value={selectedTime}
-                  onChange={(newValue) => setSelectedTime(newValue)}
-                  renderInput={(params) => <TextField fullWidth {...params} />}
-                />
-              </Grid>
+          {/* Time Picker */}
+          {/* <div className="mb-4">
+            <label className="block text-left font-medium mb-1" htmlFor="time">Time</label>
+            <input
+              id="time"
+              type="time"
+              className="w-full p-2 border border-gray-300 rounded"
+              value={selectedTime}
+              onChange={(e) => setSelectedTime(e.target.value)}
+            />
+          </div> */}
 
-              {/* Staff Name */}
-              <Grid item xs={12} sm={6}>
-                <Div>Staff Name</Div>
-                <TextField fullWidth label="Staff Name" size="medium" />
-              </Grid>
+          {/* Staff Name */}
+          <div className="mb-4">
+            <label className="block text-left font-medium mb-1" htmlFor="staffName">Staff Name</label>
+            <input
+              id="staffName"
+              type="text"
+              className="w-full p-2 border border-gray-300 rounded"
+              value={formData.staffName}
+              onChange={(e) => setFormData({ ...formData, staffName: e.target.value })}
+              placeholder="Staff Name"
+            />
+          </div>
 
-              {/* Mode of Payment */}
-              <Grid item xs={12}>
-                <Div>Mode of Payment</Div>
-                <Stack direction="row" spacing={2}>
-                  <Button variant="contained" color="primary">
-                    Cash
-                  </Button>
-                  <Button variant="outlined" color="primary">
-                    Online
-                  </Button>
-                </Stack>
-              </Grid>
+          {/* Mode of Payment */}
+          <div className="mb-4">
+            <label className="block text-left font-medium mb-1">Mode of Payment</label>
+            <div className="flex space-x-2">
+              <button type="button" className="bg-blue-500 text-white px-4 py-2 rounded">Cash</button>
+              <button type="button" className="border border-blue-500 text-blue-500 px-4 py-2 rounded">Online</button>
+            </div>
+          </div>
 
-              {/* Total Amount */}
-              <Grid item xs={12}>
-                <Typography variant="h6">
-                  Total Amount: 800 /-
-                </Typography>
-              </Grid>
+          {/* Total Amount */}
+          <div className="mb-4">
+            <p className="text-lg font-semibold">Total Amount: 800 /-</p>
+          </div>
 
-              {/* Submit Button */}
-              <Grid item xs={12}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="large"
-                  fullWidth
-                >
-                  Save
-                </Button>
-              </Grid>
-            </Grid>
-          </Box>
-        </CardContent>
-      </Card>
+          {/* Submit Button */}
+          <div>
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-4 py-2 rounded w-full"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
