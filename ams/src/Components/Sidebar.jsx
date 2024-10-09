@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import newlogo from "../assets/newlogo.png";
 import { Link, useNavigate } from "react-router-dom";
 import Appointments from "./Appoinments";
-import "./Sidebar.css";
+import "./sidebar.css";
 import axios from "axios";
 
 function Sidebar() {
