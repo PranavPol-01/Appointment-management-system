@@ -160,8 +160,8 @@ Router.put("/update-appointment-staff/:id", async (req, res) => {
     // Validate if staff, services, and packages exist
     const staff = await SignupUser.findById(staff_id);
     const outlet = await Outlet.findById(outlet_id);
-    const serviceObjects = await Service.find({ _id: { $in: services } });
-    const packageObjects = await Package.find({ _id: { $in: packages } });
+    const serviceObjects = await Service.find({ '_id': { $in: services } , 'price': { $in: services }});
+        const packageObjects = await Package.find({ '_id': { $in: packages } , 'price': { $in: packages }});
 
     service_appointment.customer_name = customer_name;
     service_appointment.customer_email = customer_email;
@@ -196,8 +196,8 @@ Router.get("/get-all-appointments-staff", async (req, res) => {
       status: "pending",
     })
       .populate("staff_id", "staff_name email")
-      .populate("service_id", "service_name")
-      .populate("package_id", "package_name")
+      .populate('service_id', 'service_name price')   
+            .populate('package_id', 'package_name price') 
       .populate("outlet_id", "outlet_name")
       .populate("appointment_id", "date");
 
@@ -215,8 +215,8 @@ Router.get("/get-all-appointments-staff-confirm", async (req, res) => {
       status: "confirmed",
     })
       .populate("staff_id", "staff_name email")
-      .populate("service_id", "service_name")
-      .populate("package_id", "package_name")
+      .populate('service_id', 'service_name price')   
+      .populate('package_id', 'package_name price') 
       .populate("outlet_id", "outlet_name")
       .populate("appointment_id", "date");
 
@@ -232,8 +232,8 @@ Router.get("/get-all-appointments-staff-without-filter", async (req, res) => {
   try {
     const service_appointments = await ServiceAppointment.find()
       .populate("staff_id", "staff_name email")
-      .populate("service_id", "service_name")
-      .populate("package_id", "package_name")
+      .populate('service_id', 'service_name price')   
+      .populate('package_id', 'package_name price')  
       .populate("outlet_id", "outlet_name")
       .populate("appointment_id", "date");
 
