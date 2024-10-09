@@ -21,12 +21,20 @@ async function sendEmail(to, html) {
     }
   });
 
+  // const mailOptions = {
+  //   // from: `Siddhant <sid210103@gmail.com>`,
+  //   from: `AMS <2004.sapp@gmail.com>`,
+  //   to: to,
+  //   subject: "Appointmenet booking mail",
+  //   html: html,
+  // };
+
   const mailOptions = {
-    from: `Siddhant <sid210103@gmail.com>`,
+    from: `AMS <${process.env.EMAIL}>`,
     to: to,
-    subject: "Test Email",
+    subject: "Appointment Confirmation",
     html: html,
-  };
+};
 
   try {
     const info = await transporter.sendMail(mailOptions);
@@ -36,5 +44,6 @@ async function sendEmail(to, html) {
   }
 }
 
-// Example usage
-sendEmail("2004.sapp@gmail.com", "<h1>Siddhant here</h1> <p>Just testing the email system</p>");
+// // Example usage
+// sendEmail("2004.sapp@gmail.com", "<h1>Siddhant here</h1> <p>Just testing the email system</p>");
+module.exports = { sendEmail };

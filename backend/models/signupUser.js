@@ -24,7 +24,7 @@ const signupUserSchema = new mongoose.Schema({
         type: String,
         required: function() { return this.category === 'manager'; } // Password required for managers only
     },
-    role: {                  // Barber, Hair Stylist, Nail Technician, Masseuse, Facialist, Receptionist
+    role: {                  
         type: String,
         required: true
     },
