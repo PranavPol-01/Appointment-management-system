@@ -284,11 +284,13 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
         const servicesOptions = servicesResponse.data.map((service) => ({
           label: service.service_name,
           value: service._id, // Assuming _id is the correct field for the service ID
+          service_price: Number(service.price),
         }));
 
         const packagesOptions = packagesResponse.data.map((pkg) => ({
           label: pkg.package_name,
-          value: pkg._id, // Assuming _id is the correct field for the package ID
+          value: pkg._id,
+          pkg_price: Number(pkg.price), // Assuming _id is the correct field for the package ID
         }));
 
         setAllServices(servicesOptions);
@@ -308,6 +310,7 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
 
     // console.log(userData);
     // console.log(staffId)
+    console.log("List of packages",allPackages, "List of services",allServices);
     console.log(outlet_id);
     if (staffId) {
       setFormData((prevState) => ({
@@ -315,7 +318,7 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
         staff_id: staffId,
       }));
     }
-  }, []);
+  }, [allPackages, allServices]);
 
   useEffect(() => {
     // const userData = JSON.parse();
@@ -339,8 +342,8 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
     if (appointment) {
       setFormData({
         ...appointment,
-        services: appointment.services?.map((s) => s._id) || [],
-        packages: appointment.packages?.map((p) => p._id) || [],
+        services: appointment.services?.map((s) => {s._id,s.service_name,s.price}) || [],
+        packages: appointment.packages?.map((p) => {p._id,p.package_name,p.price}) || [],
         time: appointment.time || "",
       });
     }
@@ -357,23 +360,32 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
   // Handle service selection using react-select
   const handleServiceChange = (selectedOptions) => {
     const selectedServices = selectedOptions
-      ? selectedOptions.map((option) => option.value)
+      ? selectedOptions.map((option) => ({
+          _id: option.value,
+          name: option.label,
+          price: option.service_price,
+        }))
       : [];
     setFormData((prevState) => ({
       ...prevState,
       services: selectedServices,
     }));
   };
-
+  
   const handlePackageChange = (selectedOptions) => {
     const selectedPackages = selectedOptions
-      ? selectedOptions.map((option) => option.value)
+      ? selectedOptions.map((option) => ({
+          _id: option.value,
+          name: option.label,
+          price: option.pkg_price,
+        }))
       : [];
     setFormData((prevState) => ({
       ...prevState,
       packages: selectedPackages,
     }));
   };
+  
 
   // Fetch mobile numbers based on input
   const fetchMobileNumbers = async (inputValue) => {
@@ -442,11 +454,13 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
 
   // Pre-select services and packages by matching their IDs
   const selectedServices = allServices.filter((service) =>
-    formData.services.includes(service.value)
+    formData.services.some((selectedService) => selectedService._id === service.value)
   );
+  
   const selectedPackages = allPackages.filter((pkg) =>
-    formData.packages.includes(pkg.value)
+    formData.packages.some((selectedPackage) => selectedPackage._id === pkg.value)
   );
+  
 
   return (
     <div className="p-4">
@@ -464,9 +478,7 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
           /> */}
           {/* Mobile Phone Field with AsyncSelect */}
           <div className="relative">
-           
-
-<AsyncSelect
+            <AsyncSelect
               cacheOptions
               loadOptions={fetchMobileNumbers} // Dynamically fetch mobile numbers
               onChange={handleMobileChange}
@@ -476,11 +488,13 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
               noOptionsMessage={noOptionsMessage} // Show "Add New User" button if no match found
               value={
                 formData.customer_mobile_phone
-                  ? { label: formData.customer_mobile_phone, value: formData.customer_mobile_phone }
+                  ? {
+                      label: formData.customer_mobile_phone,
+                      value: formData.customer_mobile_phone,
+                    }
                   : null
               }
             />
-          
           </div>
 
           <input

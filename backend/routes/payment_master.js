@@ -7,14 +7,14 @@ Router.post('/payment', async (req, res) => {
         const payment = new Payment({
             mode: req.body.mode,
             amount: req.body.amount,
-            payment_date: req.body.payment_date,
+            payment_date: Date.now(),
             payment_status: req.body.payment_status,
-            payment_interface: req.body.payment_interface,
-            customer_id: req.body.customer_id,
+            // payment_interface: req.body.payment_interface,
+            // customer_id: req.body.customer_id,
             appointment_id: req.body.appointment_id
         });
         await payment.save();
-        res.status(200).json(payment);
+        res.status(200).json("Payment done successfully !!",payment);
     } catch (error) {
         console.log("Some error occured while creating payment", error);
         res.status(500).json({ message: "Internal server error" });
@@ -51,7 +51,7 @@ Router.delete('/payment/:id', async (req, res) => {
 
 Router.get('/payment', async (req, res) => {
     try {
-        const payment = await Payment.find();
+        const payment = await Payment.find().populate('payment_details','_id mode amount payment_date payment_status appointment_id');
         res.status(200).json(payment);
     } catch (error) {
         console.log("Some error occured while fetching payment", error);

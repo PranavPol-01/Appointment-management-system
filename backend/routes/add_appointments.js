@@ -93,8 +93,8 @@ Router.post('/add-appointment-staff', async (req, res) => {
         // Validate if staff, services, and packages exist
         // const staff = await SignupUser.findById(staff_id);
         const outlet = await Outlet.findById(outlet_id);
-        const serviceObjects = await Service.find({ '_id': { $in: services } });
-        const packageObjects = await Package.find({ '_id': { $in: packages } });
+        const serviceObjects = await Service.find({ '_id': { $in: services }});
+        const packageObjects = await Package.find({ '_id': { $in: packages }});
 
         // if (!staff || !serviceObjects.length || !packageObjects.length) {
         //     return res.status(404).json({ message: "Staff, services, or packages not found." });
@@ -106,12 +106,17 @@ Router.post('/add-appointment-staff', async (req, res) => {
             customer_mobile_phone,
             status,
             time,
-            // staff_id: staff._id,
             outlet_id: outlet._id,
-            service_id: serviceObjects.map(s => s._id),
-            package_id: packageObjects.map(p => p._id),
-            // appointment_id: appointment_id ? await Appointment.findById(appointment_id) : null
+            service_id: serviceObjects.map(s => s._id), // Map only the ObjectId
+            package_id: packageObjects.map(p => p._id), // Map only the ObjectId
+            // additional fields can be added here if necessary
         });
+        
+        // Save the appointment
+        await service_appointment.save();
+        
+        
+        
 
         await service_appointment.save();
         res.status(200).json({ message: "Appointment added successfully", service_appointment });
@@ -141,8 +146,8 @@ Router.put('/update-appointment-staff/:id',  async (req, res) => {
         // Validate if staff, services, and packages exist
         const staff = await SignupUser.findById(staff_id);
         const outlet = await Outlet.findById(outlet_id);
-        const serviceObjects = await Service.find({ '_id': { $in: services } });
-        const packageObjects = await Package.find({ '_id': { $in: packages } });
+        const serviceObjects = await Service.find({ '_id': { $in: services } , 'price': { $in: services }});
+        const packageObjects = await Package.find({ '_id': { $in: packages } , 'price': { $in: packages }});
 
 
         service_appointment.customer_name = customer_name;
@@ -170,9 +175,9 @@ Router.get('/get-all-appointments-staff', async (req, res) => {
     try {
         const service_appointments = await ServiceAppointment.find({ status: "pending" })
             .populate('staff_id', 'staff_name email')  
-            .populate('service_id', 'service_name')   
-            .populate('package_id', 'package_name')  
-            .populate('outlet_id', 'outlet_name') 
+            .populate('service_id', 'service_name price')   
+            .populate('package_id', 'package_name price')  
+            .populate('outlet_id', 'outlet_name ') 
             .populate('appointment_id', 'date');      
 
         res.status(200).json({ service_appointments });
@@ -187,8 +192,8 @@ Router.get('/get-all-appointments-staff-confirm', async (req, res) => {
     try {
         const service_appointments = await ServiceAppointment.find({status :"confirmed"})
             .populate('staff_id', 'staff_name email')  
-            .populate('service_id', 'service_name')   
-            .populate('package_id', 'package_name')  
+            .populate('service_id', 'service_name price')   
+            .populate('package_id', 'package_name price')  
             .populate('outlet_id', 'outlet_name') 
             .populate('appointment_id', 'date');      
 

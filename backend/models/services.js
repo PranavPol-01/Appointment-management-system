@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const serviceSchema = new Schema({
 
   price: {
-    type: mongoose.Types.Decimal128,
+    type: Number,
     required: true
   },
   category: {

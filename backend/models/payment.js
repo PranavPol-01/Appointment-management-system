@@ -7,7 +7,7 @@ const paymentSchema = new mongoose.Schema({
         required: true
     },
     amount: {
-        type: mongoose.Types.Decimal128,
+        type: Number,
         required: true
     },
     payment_date: {
@@ -20,17 +20,17 @@ const paymentSchema = new mongoose.Schema({
     },
     payment_interface: {
         type: String,
-        required: true
+        required: false
     },
-    customer_id: {
-        type: Object,
-        ref: 'customer',
-        required: true,
-        unique: true
-    },
+    // customer_id: {
+    //     type: Object,
+    //     ref: 'customer',
+    //     required: true,
+    //     unique: true
+    // },
     appointment_id: {
         type: Object,
-        ref: 'appointment',
+        ref: 'ServiceAppointment',
         required: true,
         unique: true
     }

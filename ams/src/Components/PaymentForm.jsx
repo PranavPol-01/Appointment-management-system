@@ -137,7 +137,6 @@
 // // import { Grid } from "@mui/material";
 // import Grid from '@mui/material/Grid';
 
-
 // const bull = (
 //   <Box
 //     component="span"
@@ -183,7 +182,7 @@
 //               width: '6', // Adjust width to match your screenshot size
 //               backgroundColor: 'white', // You can change to match theme
 //               borderRadius: 8, // Rounded corners like in the second screenshot
-//               boxShadow: 3, 
+//               boxShadow: 3,
 //             }}
 //           >
 //             <div>
@@ -389,53 +388,11 @@
 //   );
 // }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // import axios from "axios";
 // import React, { useState } from "react";
 
-
 // export default function PaymentForm() {
-  
+
 //   const [selectedTime, setSelectedTime] = useState(null);
 //   const [formData, setFormData] = useState({
 //     name: "",
@@ -444,9 +401,6 @@
 //     package: "",
 //     staffName: "",
 //   });
-
-
-  
 
 //   return (
 //     <div className="flex justify-center">
@@ -567,23 +521,63 @@
 // }
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { Label } from "@/Components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/Components/ui/radio-group";
+import { Button } from "./ui/button";
 
 export default function PaymentForm() {
   const location = useLocation();
   const { appointment } = location.state || {};
 
+  const [amount, setAmount] = useState(0);
   const [selectedTime, setSelectedTime] = useState(null);
+  const [paymentMode, setPaymentMode] = useState("Online");
+  const [paymentStatus, setPaymentStatus] = useState("pending");
   const [formData, setFormData] = useState({
     name: appointment ? appointment.customer_name : "",
     outlet: appointment ? appointment.outlet_id.outlet_name : "No outlet found",
-    service: appointment ? appointment.service_id.map(service => service.service_name).join(", ") : "",
-    package: appointment ? appointment.package_id.map(pkg => pkg.package_name).join(", ") : "",
+    service: appointment
+      ? appointment.service_id.map((service) => service.service_name).join(", ")
+      : "",
+    package: appointment
+      ? appointment.package_id.map((pkg) => pkg.package_name).join(", ")
+      : "",
     staffName: "",
+    paymentmode: "",
+    amount_value: 0,
+    payment_status: "pending",
+    appointment_id:{}
   });
-  useEffect(()=>{
+
+  useEffect(() => {
     console.log(formData);
-    
-  },[])
+    console.log(paymentMode);
+    console.log(appointment);
+    setAmount(
+      appointment.service_id.reduce(
+        (total, service) => total + service.price,
+        0
+      ) +
+        // Calculate the total amount from packages
+        appointment.package_id.reduce((total, pkg) => total + pkg.price, 0)
+    );
+  }, [paymentMode, amount]);
+
+
+  // Function for submitting the payments
+  const handlePaymentSubmit = async (e) => {
+    e.preventDefault();
+    formData.paymentmode = paymentMode;
+    formData.payment_status = "Paid";
+    formData.service = appointment.service_id
+    formData.package = appointment.package_id
+    formData.amount_value = amount;
+    formData.appointment_id = appointment
+    console.log(formData);
+    // code goes here
+  };
+
+
   return (
     <div className="flex justify-center">
       <div className="bg-gray-100 shadow-lg rounded-lg p-6 w-full max-w-lg">
@@ -592,52 +586,89 @@ export default function PaymentForm() {
         <form>
           {/* Name Input */}
           <div className="mb-4">
-            <label className="block text-left font-medium mb-1" htmlFor="name">Name</label>
+            <label className="block text-left font-medium mb-1" htmlFor="name">
+              Name
+            </label>
             <input
               id="name"
+              name="name"
               type="text"
               className="w-full p-2 border border-gray-300 rounded"
               value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
               placeholder="Name"
             />
           </div>
 
           {/* Outlet Input */}
           <div className="mb-4">
-            <label className="block text-left font-medium mb-1" htmlFor="outlet">Outlet</label>
+            <label
+              className="block text-left font-medium mb-1"
+              htmlFor="outlet"
+            >
+              Outlet
+            </label>
             <input
               id="outlet"
+              name="outlet"
               className="w-full p-2 border border-gray-300 rounded"
               value={formData.outlet}
-              onChange={(e) => setFormData({ ...formData, outlet: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, outlet: e.target.value })
+              }
             />
-           
           </div>
 
           {/* Service Input */}
           <div className="mb-4">
-            <label className="block text-left font-medium mb-1" htmlFor="service">Service</label>
+            <label
+              className="block text-left font-medium mb-1"
+              htmlFor="service"
+            >
+              Service
+            </label>
             <input
               id="service"
+              name="service"
               type="text"
               className="w-full p-2 border border-gray-300 rounded"
               value={formData.service}
-              onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  service: appointment.service_id
+                    .map((service) => service.service_name)
+                    .join(", "),
+                })
+              }
               placeholder="Service"
             />
           </div>
 
           {/* Package Input */}
           <div className="mb-4">
-            <label className="block text-left font-medium mb-1" htmlFor="package">Package</label>
+            <label
+              className="block text-left font-medium mb-1"
+              htmlFor="package"
+            >
+              Package
+            </label>
             <input
               id="package"
+              name="package"
               className="w-full p-2 border border-gray-300 rounded"
               value={formData.package}
-              onChange={(e) => setFormData({ ...formData, package: e.target.value })}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  package: appointment.package_id
+                    .map((pkg) => pkg.package_name)
+                    .join(", "),
+                })
+              }
             />
-          
           </div>
 
           {/* Time Picker */}
@@ -654,39 +685,61 @@ export default function PaymentForm() {
 
           {/* Staff Name */}
           <div className="mb-4">
-            <label className="block text-left font-medium mb-1" htmlFor="staffName">Staff Name</label>
+            <label
+              className="block text-left font-medium mb-1"
+              htmlFor="staffName"
+            >
+              Staff Name
+            </label>
             <input
               id="staffName"
+              name="staffName"
               type="text"
               className="w-full p-2 border border-gray-300 rounded"
               value={formData.staffName}
-              onChange={(e) => setFormData({ ...formData, staffName: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, staffName: e.target.value })
+              }
               placeholder="Staff Name"
             />
           </div>
 
           {/* Mode of Payment */}
           <div className="mb-4">
-            <label className="block text-left font-medium mb-1">Mode of Payment</label>
-            <div className="flex space-x-2">
-              <button type="button" className="bg-blue-500 text-white px-4 py-2 rounded">Cash</button>
-              <button type="button" className="border border-blue-500 text-blue-500 px-4 py-2 rounded">Online</button>
+            <label className="block text-left font-medium mb-1">
+              Mode of Payment
+            </label>
+            <div className="flex space-x-2 flex-row">
+              <RadioGroup defaultValue="Online" onValueChange={setPaymentMode}>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Online" id="Online" name="mode" />
+                  <Label htmlFor="Online">Online</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="Cash" id="Cash" name="mode" />
+                  <Label htmlFor="Cash">Cash</Label>
+                </div>
+              </RadioGroup>
             </div>
           </div>
 
           {/* Total Amount */}
           <div className="mb-4">
-            <p className="text-lg font-semibold">Total Amount: 800 /-</p>
+            <p className="text-lg font-semibold">
+              Total Amount: {amount}
+              {(e) => setFormData({ ...formData, amount_value: e.target.value })}
+              /-
+            </p>
           </div>
 
           {/* Submit Button */}
           <div>
-            <button
-              type="submit"
+            <Button              
+              onClick={handlePaymentSubmit}
               className="bg-blue-500 text-white px-4 py-2 rounded w-full"
             >
               Save
-            </button>
+            </Button>
           </div>
         </form>
       </div>
