@@ -152,7 +152,7 @@ const PackageMaster = () => {
   return (
     <>
       {token ? (
-        <div className="p-4">
+        <div className="p-6">
           <h1 className="text-3xl mb-4">Package Master</h1>
           <div className="overflow-x-auto">
             <table className="min-w-full bg-white border border-gray-200">

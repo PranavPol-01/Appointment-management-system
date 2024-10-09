@@ -30,39 +30,48 @@ const UserPage = () => {
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-3xl mb-4">Add User</h1>
+    <div className=" mx-auto p-6 bg-gray-100 shadow-md rounded-md">
+      <h1 className="text-3xl font-semibold mb-6  text-gray-800">Add User</h1>
       <form onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            name="full_name"
-            value={formData.full_name}
-            onChange={handleChange}
-            placeholder="Full Name"
-            className="p-2 border rounded-md"
-            required
-          />
-          <input
-            type="tel"
-            name="mobile_phone"
-            value={formData.mobile_phone}
-            onChange={handleChange}
-            placeholder="Mobile Phone"
-            className="p-2 border rounded-md"
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="Email (Optional)"
-            className="p-2 border rounded-md"
-          />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+            <input
+              type="text"
+              name="full_name"
+              value={formData.full_name}
+              onChange={handleChange}
+              placeholder="Full Name"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Phone</label>
+            <input
+              type="tel"
+              name="mobile_phone"
+              value={formData.mobile_phone}
+              onChange={handleChange}
+              placeholder="Mobile Phone"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium text-gray-700 mb-1">Email (Optional)</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Email (Optional)"
+              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
         </div>
-        <div className="mt-4">
-          <button type="submit" className="p-2 bg-blue-500 text-white rounded-md">
+        <div className="mt-6 text-center">
+          <button type="submit" className="w-full md:w-auto px-6 py-3 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
             Add User
           </button>
         </div>

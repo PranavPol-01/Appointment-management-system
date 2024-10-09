@@ -243,7 +243,7 @@ function Sidebar() {
                   className="flex items-center p-2 text-black hover:bg-red-200  "
                 >
                   <svg
-                    className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-black group-hover:text-red-200 dark:group-hover:text-white"
+                    className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-red-200 dark:group-hover:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -267,7 +267,7 @@ function Sidebar() {
                   className="flex items-center p-2 text-black hover:bg-red-200 group "
                 >
                   <svg
-                    className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-red-200 dark:group-hover:text-white"
+                    className="flex-shrink-0 w-5 h-5 text-black transition duration-75 "
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -288,13 +288,20 @@ function Sidebar() {
                   className="flex items-center p-2 text-black hover:bg-red-200 group "
                 >
                   <svg
-                    className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-red-200 dark:group-hover:text-white"
-                    aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
+                    width="24"
+                    height="24"
                     viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-file-chart-line"
                   >
-                    <path d="M3 5v14h8V5H3Zm10 0v14h8V5h-8ZM2 3h20v2H2V3Zm8 12h2v2h-2v-2Zm4 0h2v2h-2v-2Zm-8-4h2v2H6v-2Zm4 0h2v2h-2v-2Zm4 0h2v2h-2v-2Z" />
+                    <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+                    <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                    <path d="m16 13-3.5 3.5-2-2L8 17" />
                   </svg>
 
                   <span className="flex-1 ms-3 whitespace-nowrap">Reports</span>
@@ -306,13 +313,21 @@ function Sidebar() {
                   className="flex items-center p-2 text-black hover:bg-red-200 group"
                 >
                   <svg
-                    className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-red-200 dark:group-hover:text-white"
-                    aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
+                    width="24"
+                    height="24"
                     viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-package"
                   >
-                    <path d="M2.24 6.18 11.6 1.36a2 2 0 0 1 1.8 0l9.36 4.82a2 2 0 0 1 1.04 1.76v9.76a2 2 0 0 1-1.04 1.76l-9.36 4.82a2 2 0 0 1-1.8 0l-9.36-4.82A2 2 0 0 1 1.2 17.7V7.94a2 2 0 0 1 1.04-1.76Zm10.92-.64L19.9 8 12 12.18 4.1 8 12 3.54Zm1 13.64v-7.44l8-4.08v7.44l-8 4.08ZM4 8.76v7.44l8 4.08v-7.44l-8-4.08Z" />
+                    <path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" />
+                    <path d="M12 22V12" />
+                    <path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7" />
+                    <path d="m7.5 4.27 9 5.15" />
                   </svg>
 
                   <span className="flex-1 ms-3 whitespace-nowrap">Package</span>
@@ -324,7 +339,7 @@ function Sidebar() {
                   className="flex items-center p-2 text-black hover:bg-red-200 group "
                 >
                   <svg
-                    className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-red-200 dark:group-hover:text-white"
+                    className="flex-shrink-0 w-5 h-5 text-black transition duration-75 "
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
@@ -350,7 +365,7 @@ function Sidebar() {
                   className="flex items-center p-2 text-black hover:bg-red-200 group "
                 >
                   <svg
-                    className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-red-200 dark:group-hover:text-white"
+                    className="flex-shrink-0 w-5 h-5 text-black transition duration-75 "
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -371,13 +386,22 @@ function Sidebar() {
                   className="flex items-center p-2 text-black hover:bg-red-200 group "
                 >
                   <svg
-                    className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-red-200 dark:group-hover:text-white"
-                    aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
+                    width="24"
+                    height="24"
                     viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-store"
                   >
-                    <path d="M12 3l8 8h-3v8h-4v-6h-2v6H7v-8H4l8-8zM2 12h2v10h6v-6h4v6h6V12h2l-12-12-12 12z" />
+                    <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7" />
+                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                    <path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4" />
+                    <path d="M2 7h20" />
+                    <path d="M22 7v3a2 2 0 0 1-2 2a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12a2 2 0 0 1-2-2V7" />
                   </svg>
 
                   <span className="flex-1 ms-3 whitespace-nowrap">Outlets</span>
@@ -390,13 +414,21 @@ function Sidebar() {
                   className="flex items-center p-2 text-black hover:bg-red-200 group "
                 >
                   <svg
-                    className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-red-200 dark:group-hover:text-white"
-                    aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
+                    width="24"
+                    height="24"
                     viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-users"
                   >
-                    <path d="M12 3l8 8h-3v8h-4v-6h-2v6H7v-8H4l8-8zM2 12h2v10h6v-6h4v6h6V12h2l-12-12-12 12z" />
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                   </svg>
 
                   <span className="flex-1 ms-3 whitespace-nowrap">Users</span>
@@ -413,13 +445,20 @@ function Sidebar() {
                   className="flex items-center p-2 text-black hover:bg-blue-200 group"
                 >
                   <svg
-                    className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-blue-200 dark:group-hover:text-white"
-                    aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-user-pen"
                   >
-                    <path d="M10 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2c-2.33 0-7 1.17-7 3.5V18h14v-2.5c0-2.33-4.67-3.5-7-3.5Z" />
+                    <path d="M11.5 15H7a4 4 0 0 0-4 4v2" />
+                    <path d="M21.378 16.626a1 1 0 0 0-3.004-3.004l-4.01 4.012a2 2 0 0 0-.506.854l-.837 2.87a.5.5 0 0 0 .62.62l2.87-.837a2 2 0 0 0 .854-.506z" />
+                    <circle cx="10" cy="7" r="4" />
                   </svg>
                   <span className="flex-1 ms-3 whitespace-nowrap">Profile</span>
                 </Link>
@@ -452,15 +491,20 @@ function Sidebar() {
                   className="flex items-center p-2 text-black hover:bg-red-200 group "
                 >
                   <svg
-                    className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-red-200 dark:group-hover:text-white"
-                    aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-log-out"
                   >
-                    <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z" />
-                    <path d="M6.737 11.061a2.961 2.961 0 0 1 .81-1.515l6.117-6.116A4.839 4.839 0 0 1 16 2.141V2a1.97 1.97 0 0 0-1.933-2H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18v-3.093l-1.546 1.546c-.413.413-.94.695-1.513.81l-3.4.679a2.947 2.947 0 0 1-1.85-.227 2.96 2.96 0 0 1-1.635-3.257l.681-3.397Z" />
-                    <path d="M8.961 16a.93.93 0 0 0 .189-.019l3.4-.679a.961.961 0 0 0 .49-.263l6.118-6.117a2.884 2.884 0 0 0-4.079-4.078l-6.117 6.117a.96.96 0 0 0-.263.491l-.679 3.4A.961.961 0 0 0 8.961 16Zm7.477-9.8a.958.958 0 0 1 .68-.281.961.961 0 0 1 .682 1.644l-.315.315-1.36-1.36.313-.318Zm-5.911 5.911 4.236-4.236 1.359 1.359-4.236 4.237-1.7.339.341-1.699Z" />
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" x2="9" y1="12" y2="12" />
                   </svg>
                   <span className="flex-1 ms-3 whitespace-nowrap">Logout</span>
                 </Link>

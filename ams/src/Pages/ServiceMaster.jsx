@@ -57,7 +57,7 @@ const ServiceMaster = () => {
   return (
     <>
       {token ? (
-        <div className="p-4">
+        <div className="p-6">
           <h1 className="text-3xl mb-4">Service Master</h1>
 
           <div className="overflow-x-auto">

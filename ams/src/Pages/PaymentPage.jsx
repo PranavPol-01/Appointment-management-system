@@ -125,7 +125,7 @@ const PaymentPage = () => {
     try {
       console.log(appointment);
       
-      await axios.put(`http://127.0.0.1:5000/api/confirm-appointment/${appointment._id}`);
+      await axios.put(`http://127.0.0.1:5000/api/confirm-payment/${appointment._id}`);
       // Pass appointment data to PaymentForm
       navigate("/payment-form", { state: { appointment } });
     } catch (error) {

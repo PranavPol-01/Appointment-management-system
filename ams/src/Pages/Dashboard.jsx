@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from "recharts";
-import { Calendar, DollarSign, PlusCircle } from "lucide-react";
+import { Calendar, IndianRupee, PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
@@ -18,12 +18,16 @@ export default function Dashboard() {
   useEffect(() => {
     // Get outlet name and ID from local storage
     const outletData = localStorage.getItem("outlet_name")||{};
+    const outletId = localStorage.getItem("outlet_id")||{};
     setOutletName(outletData || "Salon Outlet");
 
     // Fetch today's appointment status breakdown from API
     const fetchAppointmentStatus = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:5000/api/get-all-appointments-staff-without-filter");
+       const response = await axios.get(`http://127.0.0.1:5000/api/get-all-appointments-staff-without-filter`, {
+      params: { outlet_id: outletId }  // Pass outlet_id as query param
+    });
+    // console.log(response)
         const allAppointments = response.data.service_appointments;
     
         // Get today's date in string format to compare
@@ -93,10 +97,10 @@ export default function Dashboard() {
             <CardTitle className="text-sm font-medium">
               Today's Revenue
             </CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <IndianRupee className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${todayRevenue.toFixed(2)}</div>
+            <div className="text-2xl font-bold">Rs.{todayRevenue.toFixed(2)}</div>
           </CardContent>
         </Card>
 
