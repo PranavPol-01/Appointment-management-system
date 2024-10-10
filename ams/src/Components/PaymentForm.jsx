@@ -524,10 +524,13 @@ import { useLocation } from "react-router-dom";
 import { Label } from "@/Components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/Components/ui/radio-group";
 import { Button } from "./ui/button";
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 export default function PaymentForm() {
   const location = useLocation();
   const { appointment } = location.state || {};
+  const navigate = useNavigate();
 
   const [amount, setAmount] = useState(0);
   const [selectedTime, setSelectedTime] = useState(null);
@@ -575,7 +578,18 @@ export default function PaymentForm() {
     formData.appointment_id = appointment
     console.log(formData);
     // code goes here
+
+
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/api/payment', formData);  
+      
+        console.log('Payment done successfully!', response.data);
+      navigate('/payment');
+    } catch (error) {
+      console.error('Error while making payment', error);
+    }
   };
+  
 
 
   return (

@@ -1,12 +1,13 @@
-const Payment= require('../models/payment.js');
+const Payment= require('../models/payment');
 const express = require('express');
 const Router = express.Router();
 
 Router.post('/payment', async (req, res) => {
+    console.log(req.body)
     try {
         const payment = new Payment({
-            mode: req.body.mode,
-            amount: req.body.amount,
+            mode: req.body.paymentmode,
+            amount: req.body.amount_value,
             payment_date: Date.now(),
             payment_status: req.body.payment_status,
             // payment_interface: req.body.payment_interface,
@@ -14,7 +15,8 @@ Router.post('/payment', async (req, res) => {
             appointment_id: req.body.appointment_id
         });
         await payment.save();
-        res.status(200).json("Payment done successfully !!",payment);
+        res.status(200).json({ message: "Payment done successfully !!", payment });
+
     } catch (error) {
         console.log("Some error occured while creating payment", error);
         res.status(500).json({ message: "Internal server error" });

@@ -104,9 +104,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import Loader from '@/Components/Loader';
 
 const PaymentPage = () => {
   const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -117,6 +119,8 @@ const PaymentPage = () => {
         setAppointments(response.data.service_appointments);
       } catch (error) {
         console.error("Error fetching appointments:", error);
+      }finally {
+        setLoading(false);
       }
     };
     fetchAppointments();
@@ -130,8 +134,14 @@ const PaymentPage = () => {
       navigate("/payment-form", { state: { appointment } });
     } catch (error) {
       console.error("Error confirming appointment:", error);
+    }finally {
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="p-4">

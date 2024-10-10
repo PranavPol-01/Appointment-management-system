@@ -9,6 +9,7 @@ const {AppointmentRoutes} = require("./routes/add_appointments")
 const userRoutes = require("./routes/user");
 const cors = require('cors');
 const { outletMaster } = require("./routes/outlet_master");
+const { PaymentRouter } = require("./routes/payment_master");
 const session = require('express-session');
 
 // Server configuration
@@ -33,6 +34,7 @@ server.use('/api', packageRoutes)
 server.use('/api',AppointmentRoutes);
 server.use('/api',outletMaster);
 server.use("/api", userRoutes);
+server.use("/api", PaymentRouter);
 
 require("dotenv").config();
 
