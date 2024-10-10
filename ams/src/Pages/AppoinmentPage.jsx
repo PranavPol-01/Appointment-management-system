@@ -54,6 +54,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Appointments from "../Components/Appoinments";
+import ConfirmedAppointments from "../Pages/ConfirmedAppointments";
 import LogoutWarning from "@/Components/LogoutWarning";
 import {jwtDecode} from "jwt-decode";
 
@@ -63,6 +64,7 @@ const AppointmentPage = () => {
     user_data: {}
   });
   const [appointments, setAppointments] = useState([]);
+  const [Confirmed, setConfirmed] = useState([]);
 
   
     const fetchAppointments = async () => {
@@ -83,6 +85,21 @@ const AppointmentPage = () => {
         console.error("Error fetching appointments:", error);
       }
     };
+    const fetchConfirmedAppointments = async () => {
+      try {
+    
+      const response = await axios.get("http://127.0.0.1:5000/api/get-all-appointments-staff-confirm", {
+          // headers: {
+          //   Authorization: `Bearer ${token.token}`,
+          // },
+        });
+        console.log("All service appointments",response.data.service_appointments)
+        setConfirmed(response.data.service_appointments);
+        console.log(Confirmed);
+      } catch (error) {
+        console.error("Error fetching appointments:", error);
+      }
+    };
     useEffect(() => {
     const authData = JSON.parse(localStorage.getItem("auth_data"));
     if (authData) {
@@ -99,6 +116,7 @@ const AppointmentPage = () => {
       }
     }
     fetchAppointments();
+    fetchConfirmedAppointments();
   }, []);
 
   
@@ -106,10 +124,20 @@ const AppointmentPage = () => {
   return (
     <>
       {token ? (
-        <Appointments
-          appointments={appointments}
-          onRefresh={fetchAppointments}
-        />
+       <div className="p-6 space-y-6">
+       <div className="bg-white shadow-md rounded-md p-4 h-96 overflow-auto">
+         <Appointments
+           appointments={appointments}
+           onRefresh={fetchAppointments}
+         />
+       </div>
+       <div className="bg-white shadow-md rounded-md p-4 h-96 overflow-auto">
+         <ConfirmedAppointments
+           confirmappointments={Confirmed}
+           onconfirmRefresh={fetchConfirmedAppointments}
+         />
+       </div>
+     </div>
       ) : (
         <LogoutWarning />
       )}
