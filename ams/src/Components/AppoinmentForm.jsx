@@ -475,7 +475,7 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
   const selectedServices = allServices.filter((service) =>
     formData.services?.some((selectedService) => selectedService?._id === service.value)
   );
-  
+  console.log(selectedServices)
   const selectedPackages = allPackages.filter((pkg) =>
     formData.packages?.some((selectedPackage) => selectedPackage?._id === pkg.value)
   );

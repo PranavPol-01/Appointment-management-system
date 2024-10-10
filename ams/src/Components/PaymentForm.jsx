@@ -525,7 +525,7 @@ import { Label } from "@/Components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/Components/ui/radio-group";
 import { Button } from "./ui/button";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 export default function PaymentForm() {
   const location = useLocation();
@@ -549,7 +549,8 @@ export default function PaymentForm() {
     paymentmode: "",
     amount_value: 0,
     payment_status: "pending",
-    appointment_id:{}
+    appointment_id: {},
+    
   });
 
   useEffect(() => {
@@ -566,31 +567,33 @@ export default function PaymentForm() {
     );
   }, [paymentMode, amount]);
 
-
   // Function for submitting the payments
   const handlePaymentSubmit = async (e) => {
     e.preventDefault();
     formData.paymentmode = paymentMode;
     formData.payment_status = "Paid";
-    formData.service = appointment.service_id
-    formData.package = appointment.package_id
+    formData.service = appointment.service_id;
+    formData.package = appointment.package_id;
     formData.amount_value = amount;
-    formData.appointment_id = appointment
+    formData.appointment_id = appointment;
+    appointment.status = "Paid"
     console.log(formData);
     // code goes here
 
-
     try {
-      const response = await axios.post('http://127.0.0.1:5000/api/payment', formData);  
-      
-        console.log('Payment done successfully!', response.data);
-      navigate('/payment');
+      const response = await axios.post(
+        "http://127.0.0.1:5000/api/payment",
+        formData
+      );
+
+      console.log("Payment done successfully!", response.data);
+
+
+      navigate("/payment");
     } catch (error) {
-      console.error('Error while making payment', error);
+      console.error("Error while making payment", error);
     }
   };
-  
-
 
   return (
     <div className="flex justify-center">
@@ -741,14 +744,16 @@ export default function PaymentForm() {
           <div className="mb-4">
             <p className="text-lg font-semibold">
               Total Amount: {amount}
-              {(e) => setFormData({ ...formData, amount_value: e.target.value })}
+              {(e) =>
+                setFormData({ ...formData, amount_value: e.target.value })
+              }
               /-
             </p>
           </div>
 
           {/* Submit Button */}
           <div>
-            <Button              
+            <Button
               onClick={handlePaymentSubmit}
               className="bg-blue-500 text-white px-4 py-2 rounded w-full"
             >

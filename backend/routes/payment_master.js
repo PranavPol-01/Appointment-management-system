@@ -1,4 +1,5 @@
 const Payment= require('../models/payment');
+const ServiceAppointment = require('../models/service_appointment');
 const express = require('express');
 const Router = express.Router();
 
@@ -15,6 +16,7 @@ Router.post('/payment', async (req, res) => {
             appointment_id: req.body.appointment_id
         });
         await payment.save();
+        await ServiceAppointment.findByIdAndUpdate(req.body.appointment_id._id , { status: "Paid" });
         res.status(200).json({ message: "Payment done successfully !!", payment });
 
     } catch (error) {
