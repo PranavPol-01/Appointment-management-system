@@ -27,6 +27,7 @@ import Dashboard from "./Pages/Dashboard";
 // import { path } from 'path';
 import EmployeeForm from "./Pages/EmployeeForm";
 import ManagerForm from "./Pages/ManagerForm";
+import EmployeeTable from "./Pages/Employeetable";
 
 
 
@@ -72,6 +73,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/employeeform" element={<EmployeeForm/>} />
           <Route path="/managerform" element={<ManagerForm />} />
+          <Route path="/get-employee" element={<EmployeeTable />} />
         </Routes>
       </div>
       </LocalizationProvider>

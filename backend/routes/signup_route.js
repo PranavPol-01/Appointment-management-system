@@ -33,6 +33,20 @@ Router.post('/signup', async (req, res) => {
     res.status(500).json({ message: 'Error creating user', error });
   }
 });
+Router.get('/get-employee', async (req, res) => {
+  try {
+    const { staff_mobile_number } = req.query;
+    const mobileNumber = staff_mobile_number ? Number(staff_mobile_number) : null;
+    const query = mobileNumber ? { staff_mobile_number: mobileNumber } : {};
+    
+    const users = await SignupUser.find(query);
+    res.status(200).json(users);  // Returning the array of users
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 
 // Update existing staff to manager and set password
 Router.post('/update-to-manager', async (req, res) => {

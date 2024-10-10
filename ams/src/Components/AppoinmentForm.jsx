@@ -338,16 +338,35 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
     }
   }, []);
 
+  // useEffect(() => {
+  //   if (appointment) {
+  //     setFormData({
+  //       ...appointment,
+  //       services: appointment.services?.map((s) => {s._id,s.service_name,s.price}) || [],
+  //       packages: appointment.packages?.map((p) => {p._id,p.package_name,p.price}) || [],
+  //       time: appointment.time || "",
+  //     });
+  //   }
+  // }, [appointment]);
   useEffect(() => {
     if (appointment) {
       setFormData({
         ...appointment,
-        services: appointment.services?.map((s) => {s._id,s.service_name,s.price}) || [],
-        packages: appointment.packages?.map((p) => {p._id,p.package_name,p.price}) || [],
-        time: appointment.time || "",
+        services: appointment.services?.map((s) => ({
+          _id: s._id,
+          service_name: s.service_name,
+          price: s.price
+        })) || [],
+        packages: appointment.packages?.map((p) => ({
+          _id: p._id,
+          package_name: p.package_name,
+          price: p.price
+        })) || [],
+        
       });
     }
   }, [appointment]);
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -454,12 +473,13 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
 
   // Pre-select services and packages by matching their IDs
   const selectedServices = allServices.filter((service) =>
-    formData.services.some((selectedService) => selectedService._id === service.value)
+    formData.services?.some((selectedService) => selectedService?._id === service.value)
   );
   
   const selectedPackages = allPackages.filter((pkg) =>
-    formData.packages.some((selectedPackage) => selectedPackage._id === pkg.value)
+    formData.packages?.some((selectedPackage) => selectedPackage?._id === pkg.value)
   );
+  
   
 
   return (
