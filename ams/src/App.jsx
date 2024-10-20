@@ -1,33 +1,33 @@
 import { useState } from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import Login from "./Pages/Login";
-import Signup from "./Pages/Signup";
-import AppointmentPage from "./Pages/AppoinmentPage";
-import EditAppointmentPage from "./Pages/EditAppoinmentPage";
-import BookAppointmentPage from "./Pages/BookAppoinmentPage";
-import Sidebar from "./Components/Sidebar";
-import PackageForm from "./Pages/PackageForm";
-import PackageMaster from "./Pages/PackageMaster";
-import ServiceMaster from "./Pages/ServiceMaster";
+import Login from "@/Pages/Login";
+import Signup from "@/Pages/Signup";
+import AppointmentPage from "@/Pages/AppoinmentPage";
+import EditAppointmentPage from "@/Pages/EditAppoinmentPage";
+import BookAppointmentPage from "@/Pages/BookAppoinmentPage";
+import Sidebar from "@/Components/Sidebar";
+import PackageForm from "@/Pages/PackageForm";
+import PackageMaster from "@/Pages/PackageMaster";
+import ServiceMaster from "@/Pages/ServiceMaster";
 // import EditService from "./Pages/EditService";
-import ServiceForm from "./Pages/ServiceForm";
-import OtpverifyPage from "./Pages/OtpverifyPage";
-import PaymentPage from './Pages/PaymentPage';
-import PaymentForm from './Components/PaymentForm';
-import UserPage from "./Pages/UserPage";
-import UserTable from "./Pages/UserTable";
+import ServiceForm from "@/Pages/ServiceForm";
+import OtpverifyPage from "@/Pages/OtpverifyPage";
+import PaymentPage from '@/Pages/PaymentPage';
+import PaymentForm from '@/Components/PaymentForm';
+import UserPage from "@/Pages/UserPage";
+import UserTable from "@/Pages/UserTable";
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-import Reports from "./Pages/Reports";
-import  OutletForm  from "./Pages/OutletForm";
-import ProfilePage from "./Pages/ProfilePage";
-import Dashboard from "./Pages/Dashboard";
+import Reports from "@/Pages/Reports";
+import  OutletForm  from "@/Pages/OutletForm";
+import ProfilePage from "@/Pages/ProfilePage";
+import Dashboard from "@/Pages/Dashboard";
 // import { path } from 'path';
-import EmployeeForm from "./Pages/EmployeeForm";
-import ManagerForm from "./Pages/ManagerForm";
-import EmployeeTable from "./Pages/Employeetable";
+import EmployeeForm from "@/Pages/EmployeeForm";
+import ManagerForm from "@/Pages/ManagerForm";
+import EmployeeTable from "@/Pages/EmployeeTable";
 
 
 
