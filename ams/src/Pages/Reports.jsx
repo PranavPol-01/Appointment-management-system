@@ -96,7 +96,7 @@ export default function Reports() {
     if (appointments.length > 0) {
       // Fetching services after appointments have been set
       axios
-        .get("http://127.0.0.1:5000/api/services")
+        .get("http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/services")
         .then((response) => {
           const services = response.data;
           console.log("services", services);

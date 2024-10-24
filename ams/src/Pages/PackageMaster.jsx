@@ -113,7 +113,7 @@ const PackageMaster = () => {
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:5000/api/packages');
+        const response = await axios.get('http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/packages');
         console.log(response.data)
         setPackages(response.data);  // Set the fetched packages
       } catch (error) {
@@ -142,7 +142,7 @@ const PackageMaster = () => {
   // Delete a package by ID
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://127.0.0.1:5000/api/packages/${id}`);
+      await axios.delete(`http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/packages/${id}`);
       setPackages(packages.filter((pkg) => pkg._id !== id));  // Update state after deletion
     } catch (error) {
       console.error('Error deleting package:', error);

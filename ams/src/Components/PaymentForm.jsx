@@ -582,7 +582,7 @@ export default function PaymentForm() {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:5000/api/payment",
+        "http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/payment",
         formData
       );
 

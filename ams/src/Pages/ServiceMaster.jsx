@@ -35,7 +35,7 @@ const ServiceMaster = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:5000/api/services');
+        const response = await axios.get('http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/services');
         setServices(response.data);
       } catch (error) {
         console.error("There was an error fetching services!", error);
@@ -48,7 +48,7 @@ const ServiceMaster = () => {
     // Delete service
     const handleDelete = async (id) => {
       try {
-        await axios.delete(`http://127.0.0.1:5000/api/services/${id}`);
+        await axios.delete(`http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/services/${id}`);
         setServices(services.filter(service => service._id !== id));
       } catch (error) {
         console.error('Error deleting service:', error);

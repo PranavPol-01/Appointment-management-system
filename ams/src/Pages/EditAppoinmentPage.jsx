@@ -85,7 +85,7 @@ const EditAppointmentPage = () => {
     console.log("formData",formData)
     try {
       const response = await axios.put(
-        `http://127.0.0.1:5000/api/update-appointment-staff/${appointment._id}`,
+        `http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/update-appointment-staff/${appointment._id}`,
         formData,
         {
           headers: {
