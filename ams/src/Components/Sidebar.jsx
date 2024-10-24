@@ -43,7 +43,7 @@ function Sidebar() {
   const handleLogoutProcess = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get("http://localhost:5000/api/logout", {
+      const response = await axios.get("http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/logout", {
         headers: {
           Authorization: `Bearer ${userData.token}`,
         },

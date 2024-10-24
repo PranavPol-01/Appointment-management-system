@@ -100,7 +100,7 @@
 //   const [outletNames, setOutletNames] = useState([]);
 //   const getOutlets = async () => {
 //     try {
-//       const response = await axios.get("http://localhost:5000/api/outlet", {
+//       const response = await axios.get("http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/outlet", {
 //         headers: {
 //           // Authorization: `Bearer ${
 //           //   JSON.parse(localStorage.getItem("auth_data")).token

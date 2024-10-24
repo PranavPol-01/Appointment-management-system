@@ -21,7 +21,7 @@
 //   useEffect(() => {
 //     const getOutlets = async () => {
 //       try {
-//         const response = await axios.get("http://localhost:5000/api/outlet");
+//         const response = await axios.get("http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/outlet");
 //         const outletOptions = response.data.map(outlet => ({
 //           value: outlet._id,
 //           label: outlet.outlet_name
@@ -164,7 +164,7 @@ export default function ProfilePage() {
   useEffect(() => {
     const getOutlets = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/outlet");
+        const response = await axios.get("http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/outlet");
         const outletOptions = response.data.map((outlet) => ({
           value: outlet._id,
           label: outlet.outlet_name,

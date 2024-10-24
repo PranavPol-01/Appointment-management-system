@@ -18,7 +18,7 @@ function OtpverifyPage() {
   const handleSubmitOTP = async () => {
     if (inputOtp == otp) {
       console.log("This is correct OTP");
-      const response = await axios.post("http://localhost:5000/api/verify-otp", { otp: Number(inputOtp) }, {
+      const response = await axios.post("http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/verify-otp", { otp: Number(inputOtp) }, {
         headers: {
           'Content-Type': 'application/json',
         }

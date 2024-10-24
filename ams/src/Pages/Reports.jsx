@@ -59,7 +59,7 @@ export default function Reports() {
   useEffect(() => {
     // Fetching appointments and setting the data to populate the bar chart
     axios
-      .get("http://localhost:5000/api/get-all-appointments-staff")
+      .get("http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/get-all-appointments-staff")
       .then((response) => {
         const data = response.data.service_appointments;
         console.log("Appointments for report", data);
