@@ -9,7 +9,7 @@ const EmployeeTable = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/get-employee");
+        const response = await axios.get("http://localhost:5000/api/get-employee");
         console.log(response.data);
         setUsers(response.data);  // Setting the users fetched from the backend
       } catch (error) {

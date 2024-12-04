@@ -24,7 +24,7 @@ export default function Dashboard() {
     // Fetch today's appointment status breakdown from API
     const fetchAppointmentStatus = async () => {
       try {
-       const response = await axios.get(`http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/get-all-appointments-staff-without-filter`, {
+       const response = await axios.get(`http://localhost:5000/api/get-all-appointments-staff-without-filter`, {
       params: { outlet_id: outletId }  // Pass outlet_id as query param
     });
     // console.log(response)

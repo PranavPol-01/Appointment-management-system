@@ -82,10 +82,10 @@ const EditAppointmentPage = () => {
   const { appointment } = location.state || {};
 
   const handleSave = async (formData) => {
-    console.log("formData",formData)
+    console.log("formData",formData,"Appointment",appointment);
     try {
       const response = await axios.put(
-        `http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/update-appointment-staff/${appointment._id}`,
+        `http://localhost:5000/api/update-appointment-staff/${appointment._id}`,
         formData,
         {
           headers: {

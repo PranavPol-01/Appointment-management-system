@@ -181,7 +181,7 @@ const PackageForm = () => {
     // Fetch available services
     const fetchServices = async () => {
       try {
-        const response = await axios.get('http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/services');
+        const response = await axios.get('http://localhost:5000/api/services');
         console.log("redposnse",response)
         // Map services for react-select (label, value format)
         const servicesOptions = response.data.map(service => ({
@@ -200,7 +200,7 @@ const PackageForm = () => {
     // If editing an existing package, fetch the package data
     // if (id) {
     //   const fetchPackage = async () => {
-    //     const existingPackage = await axios.get(`http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/packages/${id}`);
+    //     const existingPackage = await axios.get(`http://localhost:5000/api/packages/${id}`);
     //     console.log("existingPackage",existingPackage.data)
     //     if (existingPackage) {
     //       setPackageData(existingPackage.data);
@@ -211,7 +211,7 @@ const PackageForm = () => {
     if (id) {
       const fetchPackage = async () => {
         try {
-          const response = await axios.get(`http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/packages/${id}`);
+          const response = await axios.get(`http://localhost:5000/api/packages/${id}`);
           const existingPackage = response.data;
 
           // Set package data, including selected services
@@ -268,10 +268,10 @@ const PackageForm = () => {
     try {
       if (id) {
         // Update existing package
-        await axios.put(`http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/packages/${id}`, packageData);
+        await axios.put(`http://localhost:5000/api/packages/${id}`, packageData);
       } else {
         // Create new package
-        await axios.post('http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/packages', packageData);
+        await axios.post('http://localhost:5000/api/packages', packageData);
       }
       navigate('/package-master');  // Redirect after submission
     } catch (error) {

@@ -68,7 +68,7 @@
 //   const handleConfirm = async (id) => {
 //     try {
 //       const response = await axios.put(
-//         `http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/confirm-appointment/${id}`
+//         `http://localhost:5000/api/confirm-appointment/${id}`
 //       );
 //       console.log(response.data.message);
 
@@ -85,7 +85,7 @@
 //     if (confirmDelete) {
 //       try {
 //         const response = await axios.delete(
-//           `http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/delete-appointment-staff/${id}`
+//           `http://localhost:5000/api/delete-appointment-staff/${id}`
 //         );
 //         console.log(response.data.message);
 
@@ -100,7 +100,7 @@
 //   const [outletNames, setOutletNames] = useState([]);
 //   const getOutlets = async () => {
 //     try {
-//       const response = await axios.get("http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/outlet", {
+//       const response = await axios.get("http://localhost:5000/api/outlet", {
 //         headers: {
 //           // Authorization: `Bearer ${
 //           //   JSON.parse(localStorage.getItem("auth_data")).token
@@ -325,7 +325,7 @@ const Appointments = ({ appointments, onRefresh }) => {
   const handleConfirm = async (id) => {
     try {
       const response = await axios.put(
-        `http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/confirm-appointment/${id}`
+        `http://localhost:5000/api/confirm-appointment/${id}`
       );
       console.log(response.data.message);
       onRefresh(); // Callback to refresh appointments
@@ -341,7 +341,7 @@ const Appointments = ({ appointments, onRefresh }) => {
     if (confirmDelete) {
       try {
         const response = await axios.delete(
-          `http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/delete-appointment-staff/${id}`
+          `http://localhost:5000/api/delete-appointment-staff/${id}`
         );
         console.log(response.data.message);
         onRefresh(); // Callback to refresh appointments

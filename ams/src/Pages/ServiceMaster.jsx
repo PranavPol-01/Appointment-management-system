@@ -35,7 +35,8 @@ const ServiceMaster = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get('http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/services');
+        const response = await axios.get('http://localhost:5000/api/services');
+        console.log(response.data)
         setServices(response.data);
       } catch (error) {
         console.error("There was an error fetching services!", error);
@@ -48,7 +49,7 @@ const ServiceMaster = () => {
     // Delete service
     const handleDelete = async (id) => {
       try {
-        await axios.delete(`http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/services/${id}`);
+        await axios.delete(`http://localhost:5000/api/services/${id}`);
         setServices(services.filter(service => service._id !== id));
       } catch (error) {
         console.error('Error deleting service:', error);
@@ -74,8 +75,8 @@ const ServiceMaster = () => {
               {services.map((service) => (
                   <tr key={service._id} className="hover:bg-gray-50">
                     <td className="px-4 py-2 border-b text-center">{service.service_name}</td>
-                    <td className="px-4 py-2 border-b text-center">{service.price.$numberDecimal}</td>
-                    <td className="px-4 py-2 border-b text-center">{service.estimated_time}</td>
+                    <td className="px-4 py-2 border-b text-center">{service.price}</td>
+                    <td className="px-4 py-2 border-b text-center">{service.estimated_time} mins</td>
                     <td className="px-4 py-2 border-b text-center flex justify-center items-center">
                       <button
                         className="px-3 py-1 ml-2 w-20"

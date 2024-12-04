@@ -42,7 +42,7 @@ export default function OutletForm() {
   const handleFormData = async(e) => {
     e.preventDefault();
     console.log("Outlet formData",formData);
-    const response = await axios.post('http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/outlet', formData,{
+    const response = await axios.post('http://localhost:5000/api/outlet', formData,{
       headers: {
         'Content-Type': 'application/json',
         // 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('auth_data')).token}`

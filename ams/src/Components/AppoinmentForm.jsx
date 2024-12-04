@@ -29,10 +29,10 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
     const fetchServicesAndPackages = async () => {
       try {
         const servicesResponse = await axios.get(
-          "http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/services"
+          "http://localhost:5000/api/services"
         );
         const packagesResponse = await axios.get(
-          "http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/packages"
+          "http://localhost:5000/api/packages"
         );
 
         // Map services and packages to the react-select format (label, value)
@@ -166,7 +166,7 @@ const AppointmentForm = ({ appointment, onSave, onCancel }) => {
     if (!inputValue) return [];
     try {
       const response = await axios.get(
-        `http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/get-users?mobile_phone=${inputValue}`
+        `http://localhost:5000/api/get-users?mobile_phone=${inputValue}`
       );
       const users = response.data;
 

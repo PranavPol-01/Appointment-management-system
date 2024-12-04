@@ -18,7 +18,7 @@ function Login() {
       console.log("Starting login process...");
       console.log(credentials)
       const response = await axios.post(
-        "http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/get-otp",
+        "http://localhost:5000/api/get-otp",
         credentials,);
 
       console.log("Received response:", response);

@@ -152,6 +152,7 @@ Router.put("/update-appointment-staff/:id", async (req, res) => {
     const service_appointment = await ServiceAppointment.findById(
       req.params.id
     );
+    console.log("service_appointment", service_appointment);
 
     if (!service_appointment) {
       return res.status(404).json({ message: "Appointment not found" });
@@ -160,8 +161,8 @@ Router.put("/update-appointment-staff/:id", async (req, res) => {
     // Validate if staff, services, and packages exist
     const staff = await SignupUser.findById(staff_id);
     const outlet = await Outlet.findById(outlet_id);
-    const serviceObjects = await Service.find({ '_id': { $in: services } , 'price': { $in: services }});
-        const packageObjects = await Package.find({ '_id': { $in: packages } , 'price': { $in: packages }});
+    const serviceObjects = await Service.find({ _id: { $in: services } });
+    const packageObjects = await Package.find({ _id: { $in: packages } });
 
     service_appointment.customer_name = customer_name;
     service_appointment.customer_email = customer_email;
@@ -170,20 +171,18 @@ Router.put("/update-appointment-staff/:id", async (req, res) => {
     service_appointment.time = time;
     // service_appointment.staff_id = staff._id;
     service_appointment.outlet_id = outlet._id;
-    service_appointment.service_id = serviceObjects.map((s) => s._id);
-    service_appointment.package_id = packageObjects.map((p) => p._id);
+    service_appointment.service_id = serviceObjects;
+    service_appointment.package_id = packageObjects;
     service_appointment.appointment_id = appointment_id
       ? await Appointment.findById(appointment_id)
       : null;
 
     await service_appointment.save();
     console.log("service_appointment", service_appointment);
-    res
-      .status(200)
-      .json({
-        message: "Appointment updated successfully",
-        service_appointment,
-      });
+    res.status(200).json({
+      message: "Appointment updated successfully",
+      service_appointment,
+    });
   } catch (error) {
     console.log("Error while updating appointment", error);
     res.status(500).json({ message: "Internal server error" });
@@ -196,8 +195,8 @@ Router.get("/get-all-appointments-staff", async (req, res) => {
       status: "pending",
     })
       .populate("staff_id", "staff_name email")
-      .populate('service_id', 'service_name price')   
-            .populate('package_id', 'package_name price') 
+      .populate("service_id", "service_name price")
+      .populate("package_id", "package_name price")
       .populate("outlet_id", "outlet_name")
       .populate("appointment_id", "date");
 
@@ -215,8 +214,8 @@ Router.get("/get-all-appointments-staff-confirm", async (req, res) => {
       status: "confirmed",
     })
       .populate("staff_id", "staff_name email")
-      .populate('service_id', 'service_name price')   
-      .populate('package_id', 'package_name price') 
+      .populate("service_id", "service_name price")
+      .populate("package_id", "package_name price")
       .populate("outlet_id", "outlet_name")
       .populate("appointment_id", "date");
 
@@ -230,17 +229,17 @@ Router.get("/get-all-appointments-staff-confirm", async (req, res) => {
 
 Router.get("/get-all-appointments-staff-without-filter", async (req, res) => {
   const { outlet_id } = req.query;
-console.log(outlet_id)
+  console.log(outlet_id);
   try {
     const service_appointments = await ServiceAppointment.find({ outlet_id })
       .populate("staff_id", "staff_name email")
-      .populate('service_id', 'service_name price')   
-      .populate('package_id', 'package_name price')  
+      .populate("service_id", "service_name price")
+      .populate("package_id", "package_name price")
       .populate("outlet_id", "outlet_name")
       .populate("appointment_id", "date");
 
     res.status(200).json({ service_appointments });
-    console.log(service_appointments)
+    console.log(service_appointments);
   } catch (error) {
     console.log("Error while fetching appointments", error);
     res.status(500).json({ message: "Internal server error" });
@@ -269,18 +268,15 @@ Router.put("/confirm-appointment/:id", async (req, res) => {
 `;
     await sendEmail(service_appointment.customer_email, emailContent); // Send confirmation email
 
-    res
-      .status(200)
-      .json({
-        message: "Appointment confirmed successfully",
-        service_appointment,
-      });
+    res.status(200).json({
+      message: "Appointment confirmed successfully",
+      service_appointment,
+    });
   } catch (error) {
     console.log("Error while confirming appointment", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
 
 // Confirm an appointment
 Router.put("/confirm-payment/:id", async (req, res) => {
@@ -294,20 +290,16 @@ Router.put("/confirm-payment/:id", async (req, res) => {
 
     service_appointment.status = "confirmed"; // Update status to confirmed
     await service_appointment.save();
-    
 
-    res
-      .status(200)
-      .json({
-        message: "Initialise payment",
-        service_appointment,
-      });
+    res.status(200).json({
+      message: "Initialise payment",
+      service_appointment,
+    });
   } catch (error) {
     console.log("Error while confirming appointment", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
 
 Router.delete("/delete-appointment-staff/:id", async (req, res) => {
   try {

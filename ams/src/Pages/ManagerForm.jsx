@@ -21,7 +21,7 @@ const fetchMobileNumbers = async (inputValue) => {
     if (!inputValue) return [];
     try {
       const response = await axios.get(
-        `http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/get-users-staff?staff_mobile_number=${inputValue}`
+        `http://localhost:5000/api/get-users-staff?staff_mobile_number=${inputValue}`
       );
       const users = response.data;
   
@@ -81,7 +81,7 @@ const handleAddUser = () => {
     e.preventDefault();
     try {
       // Send request to update user to manager and set the password
-      await axios.post("http://afe62695a98434d1d82d98f959376357-1478653283.us-east-1.elb.amazonaws.com/api/update-to-manager", {
+      await axios.post("http://localhost:5000/api/update-to-manager", {
         staff_mobile_number: formData.staff_mobile_number,
         password: formData.password, // Update password for the user
       });
