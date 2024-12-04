@@ -14,13 +14,13 @@ export default function Dashboard() {
   const [totalAppointments, setTotalAppointments] = useState(0);
   const [todayRevenue, setTodayRevenue] = useState(0);
   const [appointmentStatus, setAppointmentStatus] = useState([]);
-
+  const [appointments, setAppointments] = useState(0)
   useEffect(() => {
     // Get outlet name and ID from local storage
     const outletData = localStorage.getItem("outlet_name")||{};
     const outletId = localStorage.getItem("outlet_id")||{};
     setOutletName(outletData || "Salon Outlet");
-
+    const today = new Date().toDateString();
     // Fetch today's appointment status breakdown from API
     const fetchAppointmentStatus = async () => {
       try {
@@ -29,18 +29,19 @@ export default function Dashboard() {
     });
     // console.log(response)
         const allAppointments = response.data.service_appointments;
-    
+        console.log(allAppointments)
         // Get today's date in string format to compare
-        const today = new Date().toDateString();
+        
     
         // Filter today's appointments
         const todayAppointments = allAppointments.filter(appointment => {
           const appointmentDate = new Date(appointment.time).toDateString();
           return appointmentDate === today;
         });
-    
+        
         // Count total appointments for today
         setTotalAppointments(todayAppointments.length);
+        setAppointments(todayAppointments)
     
         // Get status breakdown
         const statusBreakdown = todayAppointments.reduce((acc, appointment) => {
@@ -68,12 +69,38 @@ export default function Dashboard() {
 
     // Fetch today's revenue - this would need to be replaced with actual logic
     const fetchTodayRevenue = async () => {
-      // Mocked API call, replace with actual logic
-      setTodayRevenue(1250.0);
+      // Using the `/api/get-all-appointments-staff-without-filter` to get all the appointments
+      const response = await axios.get(`http://localhost:5000/api/get-all-appointments-staff-without-filter`, {
+        params: { outlet_id: outletId }  // Pass outlet_id as query param
+      });
+
+      // Filtering today's appointments
+      const appointments = response.data.service_appointments.filter(appointment => {
+        const appointmentDate = new Date(appointment.time).toDateString();
+        return appointmentDate === today;
+      });
+
+      // Checking the appointments data for debugging purposes
+      console.log("Appointments",appointments)
+
+      // Calculating the revenue for the day (today)
+      const revenue = appointments.reduce((acc, appointment) => {
+        return (
+          acc +
+          appointment.service_id.reduce((serviceAcc, service) => serviceAcc + service.price, 0) +
+          appointment.package_id.reduce((packageAcc, pkg) => packageAcc + pkg.price, 0)
+        );
+      },0);
+      
+      // Consoling the final answer for debugging purposes
+      console.log(revenue)
+      // Setting the revenue to the state and showing it on the dashboard
+      setTodayRevenue(revenue);
+  
     };
 
-    fetchAppointmentStatus();
     fetchTodayRevenue();
+    fetchAppointmentStatus();
   }, []);
 
   return (
